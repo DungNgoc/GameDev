@@ -5,6 +5,7 @@
 
 #include "Game.h"
 
+bool isHitting = false;
 
 
 void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -14,7 +15,7 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	x += dx;
 	y += dy;
-	vy += NINJA_GRAVITY * dt;
+	//vy += NINJA_GRAVITY * dt;
 	//vx = 0.1f;*/
 	/*if (isMoveSinWave == true)
 	{
@@ -46,7 +47,7 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	}*/
 	CGameObject::Update(dt);
-
+	//if(isHitting == true)
 	//// Calculate dx, dy 
 	//CGameObject::Update(dt);
 
@@ -63,11 +64,16 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	//	CalcPotentialCollisions(coObjects, coEvents);
 
 	//// reset untouchable timer if untouchable time has passed
-	//if ( GetTickCount() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
-	//{
-	//	untouchable_start = 0;
-	//	untouchable = 0;
-	//}
+	if (GetTickCount() - untouchable_start > NINJA_HITTING_TIME)
+	{
+		untouchable_start = 0;
+		untouchable = 0;
+		SetState(NINJA_STATE_IDLE);
+	}
+	if (isHitting == true) {
+		SetState(NINJA_STATE_HIT);
+		StartHitting();
+	}
 
 	//// No collision occured, proceed normally
 	//if (coEvents.size()==0)
@@ -163,10 +169,25 @@ void Ninja::Render(ViewPort *viewport)
 	if (vx > 0)
 		ani = NINJA_WALKING_RIGHT;
 	else if (vx == 0)
-		ani = NINJA_IDLE_RIGHT;
+	{
+		if (nx > 0)
+			ani = NINJA_IDLE_RIGHT;
+		else if (nx < 0) ani = NINJA_IDLE_LEFT;
+		else {
+			ani = NINJA_HIT_RIGHT;
+			//nx = 1;
+		}
+	}
+	else if (vx < 0)
+	{
+		ani = NINJA_WALKING_LEFT;
+	//	nx = 1;
+	}
 	int alpha = 255;
-	if (untouchable) alpha = 128;
+	if (untouchable)   alpha = 255;
 	animations[ani]->Render(viewport, x, y, alpha);
+	if(isHitting ==  false)
+		ani = NINJA_IDLE_RIGHT;
 
 	RenderBoundingBox();
 }
@@ -193,7 +214,16 @@ void Ninja::SetState(int state)
 		//case MARIO_STATE_DIE:
 		//	vy = -MARIO_DIE_DEFLECT_SPEED;
 		//	break;
+	case NINJA_STATE_WALKING_LEFT:
+		vx = - NINJA_WALKING_SPEED;
+		nx = -1;
+		break;
+	case NINJA_STATE_HIT:
+		vx = 0;
+		nx = 0;
+		break;
 	}
+
 }
 
 void Ninja::GetBoundingBox(float &left, float &top, float &right, float &bottom)

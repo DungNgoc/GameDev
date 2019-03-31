@@ -44,6 +44,7 @@
 #define ID_TEX_TILESET_31 1
 
 
+
 CGame *game;
 
 Ninja *ninja;
@@ -64,18 +65,18 @@ CSampleKeyHander * keyHandler;
 void CSampleKeyHander::OnKeyDown(int KeyCode)
 {
 	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
-	//switch (KeyCode)
-	//{
-	//case DIK_SPACE:
-	//	ninja->SetState(ninja_STATE_JUMP);
-	//	break;
-	//case DIK_A: // reset
-	//	ninja->SetState(ninja_STATE_IDLE);
-	//	ninja->SetPosition(50.0f,0.0f);
-	//	ninja->SetSpeed(0, 0);
-	//	break;
-	//}
-
+	switch (KeyCode)
+	{
+	/*case DIK_X:
+		ninja->SetState(NINJA_STATE_HIT);
+		break;*/
+		//case DIK_A: // reset
+		//	ninja->SetState(ninja_STATE_IDLE);
+		//	ninja->SetPosition(50.0f,0.0f);
+		//	ninja->SetSpeed(0, 0);
+		//	break;
+		//}
+	}
 }
 
 void CSampleKeyHander::OnKeyUp(int KeyCode)
@@ -107,14 +108,19 @@ void CSampleKeyHander::KeyState(BYTE *states)
 		ninja->SetMoveSinWave(true);
 	}
 	if (game->IsKeyDown(DIK_RIGHT)) {
-		//ninja->SetPosition(0, 0);
-		//ninja->SetMoveSinWave(false);
-	//	ninja->SetMoveSquare(true);
 		ninja->SetState(NINJA_STATE_WALKING_RIGHT);
 
 	}
+	else if (game->IsKeyDown(DIK_LEFT)) {
+		ninja->SetState(NINJA_STATE_WALKING_LEFT);
+	}
+	else if (game->IsKeyDown(DIK_X) ){
+		//ninja->SetState(NINJA_STATE_HIT);
+		ninja->setHitting(true);
+	}
 	else
 		ninja->SetState(NINJA_STATE_IDLE);
+	
 }
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -140,8 +146,9 @@ void LoadResources()
 {
 	CTextures * textures = CTextures::GetInstance();
 
-	textures->Add(ID_TEX_NINJA, L"textures\\ninja.png",D3DCOLOR_XRGB(255,255,255));
-	textures->Add(ID_TEX_TILESET_31, L"textures\\tileset31.png", D3DCOLOR_XRGB(255, 255, 255));
+	textures->Add(ID_TEX_NINJA, L"textures\\ninja.png",D3DCOLOR_XRGB(255, 163, 177));
+	textures->Add(ID_TEX_TILESET_31, L"textures\\tileset31.png", D3DCOLOR_XRGB(255, 163, 177));
+	
 	/*textures->Add(ID_TEX_MISC, L"textures\\misc.png", D3DCOLOR_XRGB(176, 224, 248));
 	textures->Add(ID_TEX_ENEMY, L"textures\\enemies.png", D3DCOLOR_XRGB(3, 26, 110));
 
@@ -153,21 +160,58 @@ void LoadResources()
 	CAnimations * animations = CAnimations::GetInstance();
 	
 	LPDIRECT3DTEXTURE9 texninja = textures->Get(ID_TEX_NINJA);
-
+	sprites->Add(1, 0, 0, 1263, 15, textures->Get(ID_TEX_TILESET_31));
 	 
-	//sprites->Add(10001, 246, 154, 260, 181, texninja);		// idle right
-	//
-	//sprites->Add(10002, 275, 154, 290, 181, texninja);		// walk
-	//sprites->Add(10003, 304, 154, 321, 181, texninja);
 
-	sprites->Add(10001, 339, 5, 359, 37, texninja); //
+	sprites->Add(10001, 339, 5, 359, 37, texninja); //walk right
 	sprites->Add(10002, 368, 5, 390, 37, texninja);
 	sprites->Add(10003, 400, 5, 420, 37, texninja);
 
-	sprites->Add(10004, 3, 5, 20, 37, texninja);
+	sprites->Add(10004, 3, 5, 20, 37, texninja);//idle right
 	
+	
+	sprites->Add(10005, 506, 6, 526, 37, texninja); 
+	sprites->Add(10006, 475, 6, 498, 37, texninja);//walk left
+	sprites->Add(10007, 445, 6, 465, 37, texninja);
 
-	sprites->Add(1, 0, 0, 1263, 15, textures->Get(ID_TEX_TILESET_31));
+
+	sprites->Add(10008, 845, 5, 862, 37, texninja);//idle left
+
+	sprites->Add(10009, 42, 6, 60, 37, texninja);//hit standing right
+	sprites->Add(10010, 66, 6, 106, 37, texninja);
+	sprites->Add(10011, 111, 6, 140, 37, texninja);
+
+	sprites->Add(10012, 805, 6, 824, 37, texninja);//hit standing left
+	sprites->Add(10013, 709, 8, 799, 37, texninja);
+	sprites->Add(10014, 725, 8, 754, 37, texninja);
+
+	sprites->Add(10015, 35, 53, 53, 76, texninja);//hit sitting right
+	sprites->Add(10016, 58, 53, 97, 76, texninja);
+	sprites->Add(10017, 100, 53, 129, 76, texninja);
+
+	sprites->Add(10018, 812, 53, 830, 76, texninja);//hit sitting left
+	sprites->Add(10019, 768, 53, 807, 76, texninja);
+	sprites->Add(10020, 736, 52, 765, 76, texninja);
+
+	sprites->Add(10021, 142, 53, 158, 75, texninja);// spin right
+	sprites->Add(10022, 166, 55, 188, 71, texninja);
+	sprites->Add(10023, 194, 53, 209, 75, texninja);
+	sprites->Add(10024, 217, 55, 239, 71, texninja);
+
+	sprites->Add(10025, 707, 53, 723, 75, texninja);//spin left
+	sprites->Add(10026, 677, 55, 699, 71, texninja);
+	sprites->Add(10027, 655, 53, 671, 75, texninja);
+	sprites->Add(10028, 626, 55, 648, 71, texninja);
+
+	sprites->Add(10029, 263, 50, 287, 75, texninja);//spin hitting right
+	sprites->Add(10030, 294, 51, 319, 75, texninja);
+	sprites->Add(10031, 327, 51, 351, 76, texninja);
+	sprites->Add(10032, 358, 51, 383, 75, texninja);
+
+	sprites->Add(10033, 578, 50, 602, 75, texninja);//spin hitting left
+	sprites->Add(10034, 546, 51, 571, 75, texninja);
+	sprites->Add(10035, 514, 51, 538, 76, texninja);
+	sprites->Add(10036, 482, 51, 507, 75, texninja);
 
 
 	LPANIMATION ani;
@@ -175,10 +219,11 @@ void LoadResources()
 	ani->Add(10001);
 	ani->Add(10002);
 	ani->Add(10003);
-	animations->Add(10001, ani);
+	animations->Add(1001, ani);
 	ninja = new Ninja();
-	ninja->AddAnimation(10001);
+	
 
+	
 
 	tilemap = new TileMap(2048, 208, sprites->Get(1), 16, 16);
 	tilemap->LoadListTileFromFile("Loadfile\\tileset31.txt");
@@ -186,13 +231,41 @@ void LoadResources()
 
 	ani = new CAnimation(100);
 	ani->Add(10004);
-	animations->Add(10002, ani);
-	ninja->AddAnimation(10002);
+	animations->Add(1002, ani);
 
-	ninja->SetPosition(0, 100);
-
+	ani = new CAnimation(100);
+	ani->Add(10008);
+	animations->Add(1003, ani);
 	
 
+	ani = new CAnimation(100);
+	ani->Add(10005);
+	ani->Add(10006);
+	ani->Add(10007);
+	animations->Add(1004, ani);
+	
+	ani = new CAnimation(100);
+	ani->Add(10009);
+	ani->Add(10010);
+	ani->Add(10011);
+	animations->Add(1005, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(10012);
+	ani->Add(10013);
+	ani->Add(10014);
+	animations->Add(1006, ani);
+	
+
+	ninja->AddAnimation(1001);//walking right
+	ninja->AddAnimation(1002);// idle right
+	ninja->AddAnimation(1003);// idle left
+	ninja->AddAnimation(1004);// walking left
+	ninja->AddAnimation(1005);//hit right
+	ninja->AddAnimation(1006);//hit left
+
+
+	ninja->SetPosition(0, 100);
 	//sprites->Add(10011, 186, 154, 200, 181, texninja);		// idle left
 	//sprites->Add(10012, 155, 154, 170, 181, texninja);		// walk
 	//sprites->Add(10013, 125, 154, 140, 181, texninja);
