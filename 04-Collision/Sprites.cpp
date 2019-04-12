@@ -1,4 +1,4 @@
-#include "Sprites.h"
+﻿#include "Sprites.h"
 #include "Game.h"
 #include "debug.h"
 
@@ -36,6 +36,41 @@ void CSprite::Draw(ViewPort *viewport, float x, float y, int alpha)
 {
 	CGame * game = CGame::GetInstance();
 	game->Draw(viewport,x, y, texture, left, top, right, bottom, alpha);
+}
+RECT CSprite::ReadCurrentSpritePosition()
+{
+	RECT rect;
+	vector<int>* tempVector = this->spritePositions->at(this->index);
+
+	// Giá trị đầu tiên là x, giá trị thứ 2 là y, giá trị thứ 3 là width, giá trị thứ 4 là height
+	rect.left = tempVector->at(0);
+	rect.top = tempVector->at(1);
+	rect.right = rect.left + tempVector->at(2);
+	rect.bottom = rect.top + tempVector->at(3);
+	
+	width = tempVector->at(2);
+	height = tempVector->at(3);
+	return rect;
+}
+void CSprite::Draw(D3DXVECTOR3 &position, bool flatright) {
+	if (this->texture == NULL)
+		return;
+	float width = (float) (this->right - this->left);
+	float height = (float)	(this->bottom - this->top);
+	RECT rect = ReadCurrentSpritePosition();// read text
+	D3DXVECTOR3  spriteCentre = D3DXVECTOR3(width, height, 0);
+
+	D3DXMATRIX mt;
+	float tempTurnRight = 1.0f;
+	if (!flatright) {
+		tempTurnRight = -1.0;
+	}
+	D3DXVECTOR3 scaling(tempTurnRight, 1.0f, -1.0f);
+	D3DXMatrixTransformation(&mt, &D3DXVECTOR3(width / 2, height / 2, 0), NULL, &scaling, &spriteCentre, NULL, &position);
+	
+	CGame::GetInstance()->GetSpriteHandler()->SetTransform(&mt);
+	CGame::GetInstance()->GetSpriteHandler()->Draw(this->texture, &rect, NULL, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
+
 }
 
 void CSprites::Add(int id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 tex)
@@ -123,4 +158,8 @@ void CAnimations::Add(int id, LPANIMATION ani)
 LPANIMATION CAnimations::Get(int id)
 {
 	return animations[id];
+}
+void CSprite::Reset()
+{
+	this->index = 0;
 }

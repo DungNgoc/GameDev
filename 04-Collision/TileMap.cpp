@@ -84,6 +84,7 @@ void TileMap::Render(ViewPort * viewport)
 
 	
 	D3DXVECTOR3 viewPortPosition = viewport->GetViewPortPosition();
+	
 	int rowStart;
 	int rowEnd;
 	int colStart;

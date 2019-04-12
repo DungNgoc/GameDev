@@ -43,6 +43,9 @@ public:
 	float vx;
 	float vy;
 
+	float width;
+	float height;
+
 	int nx;
 
 	int state;
@@ -56,10 +59,13 @@ public:
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
-
+	void SetWidth(float width) { this->width = width; }
+	void SetHeight(float height) { this->height = height; }
 	int GetState() { return this->state; }
 
 	void RenderBoundingBox();
+
+	void RenderBoundingBox(ViewPort * viewport);
 
 	LPCOLLISIONEVENT SweptAABBEx(LPGAMEOBJECT coO);
 	void CalcPotentialCollisions(vector<LPGAMEOBJECT> *coObjects, vector<LPCOLLISIONEVENT> &coEvents);

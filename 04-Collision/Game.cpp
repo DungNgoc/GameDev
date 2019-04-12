@@ -55,15 +55,44 @@ void CGame::Init(HWND hWnd)
 /*
 	Utility function to wrap LPD3DXSPRITE::Draw 
 */
+//void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)
+//{
+//	D3DXVECTOR3 p(x, y, 0);
+//	RECT r; 
+//	r.left = left;
+//	r.top = top;
+//	r.right = right;
+//	r.bottom = bottom;
+//	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
+//}
 void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)
 {
-	D3DXVECTOR3 p(x, y, 0);
-	RECT r; 
-	r.left = left;
-	r.top = top;
-	r.right = right;
-	r.bottom = bottom;
-	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
+
+	D3DXVECTOR3 position(x, y, 0);
+
+	int width = right - left;
+	int height = bottom - top;
+
+	RECT rect;
+	rect.top = top;
+	rect.bottom = bottom;
+	rect.left = left;
+	rect.right = right;
+
+	// Texture being used is width by height:
+	D3DXVECTOR3 spriteCentre = D3DXVECTOR3(width, height, 0);
+
+	// Build our matrix to rotate, scale and position our sprite
+	D3DXMATRIX mat;
+
+	D3DXVECTOR3 scaling(1.0f, 1.0f, 1.0f);
+
+	// out, scaling centre, scaling rotation, scaling, rotation centre, rotation, translation
+	D3DXMatrixTransformation(&mat, &D3DXVECTOR3(width / 2, height / 2, 0), NULL, &scaling, &spriteCentre, NULL, &position);
+
+	CGame::GetInstance()->GetSpriteHandler()->SetTransform(&mat);
+
+	CGame::GetInstance()->GetSpriteHandler()->Draw(texture, &rect, NULL, NULL, D3DCOLOR_ARGB(255, 255, 255, 255));
 }
 void CGame::Draw(D3DXVECTOR3 position, LPDIRECT3DTEXTURE9 texture, RECT rect, int alpha)
 {

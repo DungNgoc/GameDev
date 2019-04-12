@@ -31,6 +31,8 @@
 #include "Ninja.h"
 #include "ViewPort.h"
 
+#include "Brick.h"
+
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"04 - Collision"
 
@@ -42,7 +44,7 @@
 
 #define ID_TEX_NINJA 0
 #define ID_TEX_TILESET_31 1
-
+#define ID_TEX_MISC 20
 
 
 CGame *game;
@@ -52,6 +54,7 @@ ViewPort *viewport;
 TileMap *tilemap;
 
 vector<LPGAMEOBJECT> objects;
+vector<LPGAMEOBJECT> coObjects;
 
 class CSampleKeyHander: public CKeyEventHandler
 {
@@ -67,16 +70,15 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 	switch (KeyCode)
 	{
-	/*case DIK_X:
-		ninja->SetState(NINJA_STATE_HIT);
-		break;*/
-		//case DIK_A: // reset
-		//	ninja->SetState(ninja_STATE_IDLE);
-		//	ninja->SetPosition(50.0f,0.0f);
-		//	ninja->SetSpeed(0, 0);
-		//	break;
-		//}
+	case DIK_Z:
+	
+		ninja->SetState(NINJA_STATE_JUMP);
+		break;
+		case DIK_A: // reset
+			ninja->SetPosition(580, 50);
+			break;
 	}
+	
 }
 
 void CSampleKeyHander::OnKeyUp(int KeyCode)
@@ -86,14 +88,6 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 
 void CSampleKeyHander::KeyState(BYTE *states)
 {
-	// disable control key when ninja die 
-	/*if (ninja->GetState() == ninja_STATE_DIE) return;
-	if (game->IsKeyDown(DIK_RIGHT))
-		ninja->SetState(ninja_STATE_WALKING_RIGHT);
-	else if (game->IsKeyDown(DIK_LEFT))
-		ninja->SetState(ninja_STATE_WALKING_LEFT);
-	else
-		ninja->SetState(ninja_STATE_IDLE);*/
 
 	if (ninja->GetState() == NINJA_STATE_DIE) return;
 	if (game->IsKeyDown(DIK_1)) {
@@ -115,11 +109,12 @@ void CSampleKeyHander::KeyState(BYTE *states)
 		ninja->SetState(NINJA_STATE_WALKING_LEFT);
 	}
 	else if (game->IsKeyDown(DIK_X) ){
-		//ninja->SetState(NINJA_STATE_HIT);
+		ninja->StartHitting();
 		ninja->setHitting(true);
 	}
 	else
 		ninja->SetState(NINJA_STATE_IDLE);
+
 	
 }
 
@@ -145,14 +140,11 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 void LoadResources()
 {
 	CTextures * textures = CTextures::GetInstance();
-
 	textures->Add(ID_TEX_NINJA, L"textures\\ninja.png",D3DCOLOR_XRGB(255, 163, 177));
 	textures->Add(ID_TEX_TILESET_31, L"textures\\tileset31.png", D3DCOLOR_XRGB(255, 163, 177));
-	
-	/*textures->Add(ID_TEX_MISC, L"textures\\misc.png", D3DCOLOR_XRGB(176, 224, 248));
-	textures->Add(ID_TEX_ENEMY, L"textures\\enemies.png", D3DCOLOR_XRGB(3, 26, 110));
-
-
+	textures->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(0, 0, 255));
+	textures->Add(ID_TEX_MISC, L"textures\\misc.png", D3DCOLOR_XRGB(176, 224, 248));
+	/*textures->Add(ID_TEX_ENEMY, L"textures\\enemies.png", D3DCOLOR_XRGB(3, 26, 110));
 	textures->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(250, 250, 250));*/
 
 
@@ -174,16 +166,20 @@ void LoadResources()
 	sprites->Add(10006, 475, 6, 498, 37, texninja);//walk left
 	sprites->Add(10007, 445, 6, 465, 37, texninja);
 
-
 	sprites->Add(10008, 845, 5, 862, 37, texninja);//idle left
+	//sprites->Add(10008, 862, 5, 845, 37, texninja);//idle left
 
 	sprites->Add(10009, 42, 6, 60, 37, texninja);//hit standing right
 	sprites->Add(10010, 66, 6, 106, 37, texninja);
 	sprites->Add(10011, 111, 6, 140, 37, texninja);
 
-	sprites->Add(10012, 805, 6, 824, 37, texninja);//hit standing left
-	sprites->Add(10013, 709, 8, 799, 37, texninja);
-	sprites->Add(10014, 725, 8, 754, 37, texninja);
+	sprites->Add(10012, 805, 6, 823, 37, texninja);//hit standing left
+	sprites->Add(10013, 779, 6, 799, 37, texninja);
+	sprites->Add(10014, 725, 6, 754, 37, texninja);
+
+	//sprites->Add(10012, 823, 6, 805, 37, texninja);//hit standing left
+	//sprites->Add(10013, 799, 6, 759, 37, texninja);
+	//sprites->Add(10014, 754, 6, 725, 37, texninja);
 
 	sprites->Add(10015, 35, 53, 53, 76, texninja);//hit sitting right
 	sprites->Add(10016, 58, 53, 97, 76, texninja);
@@ -231,31 +227,44 @@ void LoadResources()
 
 	ani = new CAnimation(100);
 	ani->Add(10004);
-	animations->Add(1002, ani);
+	animations->Add(1002, ani);//idle right
 
 	ani = new CAnimation(100);
 	ani->Add(10008);
-	animations->Add(1003, ani);
+	animations->Add(1003, ani);// idle left
 	
 
 	ani = new CAnimation(100);
 	ani->Add(10005);
 	ani->Add(10006);
 	ani->Add(10007);
-	animations->Add(1004, ani);
+	animations->Add(1004, ani);//walking left
 	
 	ani = new CAnimation(100);
 	ani->Add(10009);
 	ani->Add(10010);
 	ani->Add(10011);
-	animations->Add(1005, ani);
+	animations->Add(1005, ani);//hit right
 
 	ani = new CAnimation(100);
 	ani->Add(10012);
 	ani->Add(10013);
 	ani->Add(10014);
-	animations->Add(1006, ani);
+	animations->Add(1006, ani);//hit left
 	
+	ani = new CAnimation(100);
+	ani->Add(10021);
+	ani->Add(10022);
+	ani->Add(10023);
+	ani->Add(10024);
+	animations->Add(1007, ani);//spin right
+
+	ani = new CAnimation(100);
+	ani->Add(10025);
+	ani->Add(10026);
+	ani->Add(10027);
+	ani->Add(10028);
+	animations->Add(1008, ani);//spin left
 
 	ninja->AddAnimation(1001);//walking right
 	ninja->AddAnimation(1002);// idle right
@@ -263,151 +272,45 @@ void LoadResources()
 	ninja->AddAnimation(1004);// walking left
 	ninja->AddAnimation(1005);//hit right
 	ninja->AddAnimation(1006);//hit left
+	ninja->AddAnimation(1007);//spin right
+	ninja->AddAnimation(1008);//spin left
 
 
-	ninja->SetPosition(0, 100);
-	//sprites->Add(10011, 186, 154, 200, 181, texninja);		// idle left
-	//sprites->Add(10012, 155, 154, 170, 181, texninja);		// walk
-	//sprites->Add(10013, 125, 154, 140, 181, texninja);
 
-	//sprites->Add(10099, 215, 120, 231, 135, texninja);		// die 
+	ninja->SetPosition(0, 50);
+	
+	CBrick *brick = new CBrick();
+	brick->SetWidth(543);
+	brick->SetHeight(16);
+	brick->SetPosition(0, 135);
+	coObjects.push_back(brick);
 
-	//// small
-	//sprites->Add(10021, 247, 0, 259, 15, texninja);			// idle small right
-	//sprites->Add(10022, 275, 0, 291, 15, texninja);			// walk 
-	//sprites->Add(10023, 306, 0, 320, 15, texninja);			// 
+	CBrick *brick1 = new CBrick();
+	brick1->SetWidth(32);
+	brick1->SetHeight(8);
+	brick1->SetPosition(576, 135);
+	coObjects.push_back(brick1);
+	//640, 672 (640, 135, 32, 8)
+	//704, 735 (704, 135, 32, 8)
+	//768, 800	(768, 135, 32, 8)
+	//800, 832	(800, 103 ,32,8
+	//832, 960 (832, 71, 128,8
+	//1024, 1088 (1024, 135, 64
+	//1120, 1407 (1120, 135, 288, 
+	//1216, 1248 ,(1216, 71, 32, 8)
+	//1280, 1375, 103, 8 (1280, 71, 96, 8)
+	//1408, 1440, 135, 8 (1408, 103, 32
+	// 1440, 1472, 103, 8 (1440, 71, 32
+	// 1472, 61, 39, 64
+	// 1600, 135, 16,
+	// 1664, 135, 16
+	// 1728, 135, 16,
+	// 1792, 135, 256, 8
 
-	//sprites->Add(10031, 187, 0, 198, 15, texninja);			// idle small left
-
-	//sprites->Add(10032, 155, 0, 170, 15, texninja);			// walk
-	//sprites->Add(10033, 125, 0, 139, 15, texninja);			// 
-
-
-	//LPDIRECT3DTEXTURE9 texMisc = textures->Get(ID_TEX_MISC);
-	//sprites->Add(20001, 408, 225, 424, 241, texMisc);
-
-	//LPDIRECT3DTEXTURE9 texEnemy = textures->Get(ID_TEX_ENEMY);
-	//sprites->Add(30001, 5, 14, 21, 29, texEnemy);
-	//sprites->Add(30002, 25, 14, 41, 29, texEnemy);
-
-	//sprites->Add(30003, 45, 21, 61, 29, texEnemy); // die sprite
-
-	//LPANIMATION ani;
-
-	//ani = new CAnimation(100);	// idle big right
-	//ani->Add(10001);
-	//animations->Add(400, ani);
-
-	//ani = new CAnimation(100);	// idle big left
-	//ani->Add(10011);
-	//animations->Add(401, ani);
-
-	//ani = new CAnimation(100);	// idle small right
-	//ani->Add(10021);
-	//animations->Add(402, ani);
-
-	//ani = new CAnimation(100);	// idle small left
-	//ani->Add(10031);
-	//animations->Add(403, ani);
-
-	//ani = new CAnimation(100);	// walk right big
-	//ani->Add(10001);
-	//ani->Add(10002);
-	//ani->Add(10003);
-	//animations->Add(500, ani);
-
-	//ani = new CAnimation(100);	// // walk left big
-	//ani->Add(10011);
-	//ani->Add(10012);
-	//ani->Add(10013);
-	//animations->Add(501, ani);
-
-	//ani = new CAnimation(100);	// walk right small
-	//ani->Add(10021);
-	//ani->Add(10022);
-	//ani->Add(10023);
-	//animations->Add(502, ani);
-
-	//ani = new CAnimation(100);	// walk left small
-	//ani->Add(10031);
-	//ani->Add(10032);
-	//ani->Add(10033);
-	//animations->Add(503, ani);
+	//1472, 1536, 70, 8
+	//1600, 1616, 
 
 
-	//ani = new CAnimation(100);		// ninja die
-	//ani->Add(10099);
-	//animations->Add(599, ani);
-
-	//
-
-	//ani = new CAnimation(100);		// brick
-	//ani->Add(20001);
-	//animations->Add(601, ani);
-
-	//ani = new CAnimation(300);		// Goomba walk
-	//ani->Add(30001);
-	//ani->Add(30002);
-	//animations->Add(701, ani);
-
-	//ani = new CAnimation(1000);		// Goomba dead
-	//ani->Add(30003);
-	//animations->Add(702, ani);
-
-	//ninja = new Cninja();
-	//ninja->AddAnimation(400);		// idle right big
-	//ninja->AddAnimation(401);		// idle left big
-	//ninja->AddAnimation(402);		// idle right small
-	//ninja->AddAnimation(403);		// idle left small
-
-	//ninja->AddAnimation(500);		// walk right big
-	//ninja->AddAnimation(501);		// walk left big
-	//ninja->AddAnimation(502);		// walk right small
-	//ninja->AddAnimation(503);		// walk left big
-
-	//ninja->AddAnimation(599);		// die
-
-	//ninja->SetPosition(0.0f, 0);
-	//objects.push_back(ninja);
-
-	//for (int i = 0; i < 5; i++)
-	//{
-	//	CBrick *brick = new CBrick();
-	//	brick->AddAnimation(601);
-	//	brick->SetPosition(100 + i*48.0f, 74);
-	//	objects.push_back(brick);
-
-	//	brick = new CBrick();
-	//	brick->AddAnimation(601);
-	//	brick->SetPosition(100 + i*48.0f, 90);
-	//	objects.push_back(brick);
-
-	//	brick = new CBrick();
-	//	brick->AddAnimation(601);
-	//	brick->SetPosition(84 + i*48.0f, 90);
-	//	objects.push_back(brick);
-	//}
-
-
-	//for (int i = 0; i < 30; i++)
-	//{
-	//	CBrick *brick = new CBrick();
-	//	brick->AddAnimation(601);
-	//	brick->SetPosition(0 + i*16.0f, 150);
-	//	objects.push_back(brick);
-	//}
-
-	//// and Goombas 
-	//for (int i = 0; i < 4; i++)
-	//{
-	//	goomba = new CGoomba();
-	//	goomba->AddAnimation(701);
-	//	goomba->AddAnimation(702);
-	//	goomba->SetPosition(200 + i*60, 135);
-	//	goomba->SetState(GOOMBA_STATE_WALKING);
-	//	objects.push_back(goomba);
-	//}
-//viewport->SetViewPortPosition(0, 100);
 	viewport = new ViewPort(0,-30);
 
 
@@ -421,7 +324,7 @@ void LoadResources()
 void Update(DWORD dt)
 
 {
-	ninja->Update(dt);
+	ninja->Update(dt, &coObjects);
 	//viewport->SetViewPortPosition(viewport->GetViewPortPosition().x, viewport->GetViewPortPosition().y-20);
 	// We know that ninja is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
@@ -458,11 +361,15 @@ void Render()
 		d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+	
+		/*D3DXMATRIX mt;
+		D3DXMatrixScaling(&mt, -1.0, -1.0f, .0f);*/
+
+	
 		tilemap->Render(viewport);
 		ninja->Render(viewport);
-		
-		//for (int i = 0; i < objects.size(); i++)
-		//	objects[i]->Render();
+		for (int i = 0; i < coObjects.size(); i++)
+			coObjects[i]->Render(viewport);
 
 		spriteHandler->End();
 		d3ddv->EndScene();
