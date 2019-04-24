@@ -49,7 +49,7 @@ public:
 	int nx;
 
 	int state;
-
+	bool isLeft;
 	DWORD dt;
 	ViewPort *viewport;
 	vector<LPANIMATION> animations;

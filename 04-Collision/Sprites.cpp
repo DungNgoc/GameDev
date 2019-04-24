@@ -37,6 +37,11 @@ void CSprite::Draw(ViewPort *viewport, float x, float y, int alpha)
 	CGame * game = CGame::GetInstance();
 	game->Draw(viewport,x, y, texture, left, top, right, bottom, alpha);
 }
+void CSprite::Draw(ViewPort *viewport, float x, float y, int alpha, bool isLeft)
+{
+	CGame * game = CGame::GetInstance();
+	game->Draw(viewport, x, y, texture, left, top, right, bottom, alpha, isLeft);
+}
 RECT CSprite::ReadCurrentSpritePosition()
 {
 	RECT rect;
@@ -139,6 +144,28 @@ void CAnimation::Render(ViewPort *viewport, float x, float y, int alpha)
 	}
 	 
 	frames[currentFrame]->GetSprite()->Draw(viewport, x, y, alpha);
+}
+void CAnimation::Render(ViewPort *viewport, float x, float y, int alpha, bool isLeft)
+{
+	DWORD now = GetTickCount();
+	if (currentFrame == -1)
+	{
+		currentFrame = 0;
+		lastFrameTime = now;
+	}
+	else
+	{
+		DWORD t = frames[currentFrame]->GetTime();
+		if (now - lastFrameTime > t)
+		{
+			currentFrame++;
+			lastFrameTime = now;
+			if (currentFrame == frames.size()) currentFrame = 0;
+		}
+
+	}
+
+	frames[currentFrame]->GetSprite()->Draw(viewport, x, y, alpha, isLeft);
 }
 
 

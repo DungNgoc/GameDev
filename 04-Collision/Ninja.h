@@ -1,13 +1,14 @@
 #pragma once
 #include "GameObject.h"
+#include "Sword.h"
 
 #define NINJA_WALKING_RIGHT		0
 #define NINJA_IDLE_RIGHT		1
-#define NINJA_IDLE_LEFT         2
-#define NINJA_WALKING_LEFT      3
-#define NINJA_HIT_RIGHT         4
-#define NINJA_HIT_LEFT			5
-#define NINJA_ANI_JUMP			6
+#define NINJA_HIT_RIGHT         2
+#define NINJA_ANI_JUMP			3
+#define NINJA_SIT_RIGHT         4
+#define NINJA_SIT_HIT			5
+
 
 #define NINJA_STATE_HIT -5
 #define NINJA_STATE_WALKING_RIGHT -4
@@ -15,10 +16,10 @@
 #define NINJA_STATE_DIE        -2
 #define NINJA_STATE_IDLE      0
 #define NINJA_STATE_JUMP      1
+#define NINJA_STATE_SIT		  2
+
 
 #define NINJA_WALKING_SPEED 0.1f
-
-
 
 #define NINJA_BBOX_WIDTH  20
 
@@ -29,6 +30,7 @@
 
 class Ninja: public CGameObject
 {
+	Sword *sword;
 	int level;
 	int untouchable;
 	DWORD untouchable_start;
@@ -37,20 +39,26 @@ class Ninja: public CGameObject
 	bool isMoveSquare;
 	bool isMoveSinWave;
 	bool isHitting;
+	
 	bool isJump;
 	bool isTouchBrick;
 	int flag;
+	bool isLeft;
 public:
-	Ninja() : CGameObject()
+	Ninja() //: CGameObject()
 	{
 		untouchable = 0;
-	}
+		sword = new Sword();
+
+	};
 	bool get() {
 		return isHitting;
 	}
+	
 	void setHitting(bool isHitting) {
 		this->isHitting = isHitting;
 	}
+	
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
 	void Render(ViewPort * viewport);
 	virtual void Render();
@@ -60,9 +68,11 @@ public:
 	void SetMoveSquare(bool isMoveSquare) { this->isMoveSquare = isMoveSquare; }
 	void SetMoveSinWave(bool isMoveSinWare) { this->isMoveSinWave = isMoveSinWare; }
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
-
+	bool getJump() { return isJump; }
 	void StartHitting(){ hitting = 1; hitting_start = GetTickCount(); }
-	
+	void reset(int ID) {
+		animations[ID]->reset();
+	}
 	//Ninja();
 	//~Ninja();
 };

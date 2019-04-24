@@ -27,7 +27,9 @@ public:
 	void Draw(D3DXVECTOR3 & position, RECT & rect, int alpha = 255);
 	
 	void Draw(ViewPort * viewport, float x, float y, int alpha);
+	void Draw(ViewPort * viewport, float x, float y, int alpha, bool isLeft);
 	void Draw(D3DXVECTOR3 & position, bool flatright);
+	
 };
 
 typedef CSprite * LPSPRITE;
@@ -75,7 +77,9 @@ public:
 	void Add(int spriteId, DWORD time = 0);
 	void Render(float x, float y, int alpha=255);
 	void Render(ViewPort * viewport, float x, float y, int alpha);
-	
+
+	void Render(ViewPort * viewport, float x, float y, int alpha, bool isLeft);
+	void reset() { currentFrame = -1; lastFrameTime = -1; }
 };
 
 typedef CAnimation *LPANIMATION;

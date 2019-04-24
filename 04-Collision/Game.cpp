@@ -108,6 +108,29 @@ void CGame::Draw(ViewPort *viewport, float x, float y, LPDIRECT3DTEXTURE9 textur
 	r.bottom = bottom;
 	spriteHandler->Draw(texture, &r, NULL, &viewport->SetPositionInViewPort(p), D3DCOLOR_ARGB(alpha, 255, 255, 255));
 }
+
+void CGame::Draw(ViewPort *viewport, float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha, bool isLeft)
+{
+	D3DXVECTOR3 p(x, y, 0);
+	D3DXVECTOR3 pos = viewport->SetPositionInViewPort(p);
+	D3DXMATRIX oldTransform;
+	spriteHandler->GetTransform(&oldTransform);
+	D3DXMATRIX newTransform;
+	D3DXVECTOR2 center = D3DXVECTOR2(pos.x + (right - left) / 2, pos.y + (bottom - top) / 2);
+	D3DXVECTOR2 rotate = D3DXVECTOR2(isLeft ? 1 : -1, 1);
+	D3DXMatrixTransformation2D(&newTransform, &center, 0.0f, &rotate, NULL, 0.0f, NULL);
+	D3DXMATRIX finalTransform = newTransform * oldTransform;
+	spriteHandler->SetTransform(&finalTransform);
+	RECT r;
+	r.left = left;
+	r.top = top;
+	r.right = right;
+	r.bottom = bottom;
+	spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+	spriteHandler->Draw(texture, &r, NULL, &pos, D3DCOLOR_ARGB(alpha, 255, 255, 255));
+	spriteHandler->End();
+	spriteHandler->SetTransform(&oldTransform);
+}
 int CGame::IsKeyDown(int KeyCode)
 {
 	return (keyStates[KeyCode] & 0x80) > 0;

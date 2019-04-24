@@ -128,7 +128,7 @@ void CGameObject::RenderBoundingBox()
 	rect.right = (int)r - (int)l;
 	rect.bottom = (int)b - (int)t;
 
-	CGame::GetInstance()->Draw(x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, 255);
+	CGame::GetInstance()->Draw(x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, 200);
 }
 void CGameObject::RenderBoundingBox(ViewPort * viewport)
 {
@@ -145,7 +145,7 @@ void CGameObject::RenderBoundingBox(ViewPort * viewport)
 	rect.right = (int)r - (int)l;
 	rect.bottom = (int)b - (int)t;
 
-	CGame::GetInstance()->Draw(viewport,x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, 255);
+	CGame::GetInstance()->Draw(viewport,x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, 100);
 }
 void CGameObject::AddAnimation(int aniId)
 {

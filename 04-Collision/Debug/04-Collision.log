@@ -1,2 +1,9 @@
 ﻿  Ninja.cpp
-  04-Collision.vcxproj -> C:\Users\DungNgoc\Desktop\Game\GameDev\Debug\04-Collision.exe
+  Sword.cpp
+  main.cpp
+c:\users\dungngoc\desktop\gamedev\04-collision\main.cpp(289): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\dungngoc\desktop\gamedev\04-collision\main.cpp(229): warning C4101: 'ani': unreferenced local variable
+c:\users\dungngoc\desktop\gamedev\04-collision\main.cpp(317): warning C4018: '<': signed/unsigned mismatch
+c:\users\dungngoc\desktop\gamedev\04-collision\main.cpp(352): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  04-Collision.vcxproj -> C:\Users\DungNgoc\Desktop\GameDev\Debug\04-Collision.exe
