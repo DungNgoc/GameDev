@@ -22,6 +22,8 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	if (isHitting && state == NINJA_STATE_IDLE)
 	{
 		sword->SetPosition(x, y, false);
+		if (sword->GetCurrentFrame() == 2)
+			sword->Update(dt, coObjects);
 		if (GetTickCount() - hitting_start > NINJA_HITTING_TIME)
 		{
 			hitting_start = 0;

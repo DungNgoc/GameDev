@@ -33,8 +33,13 @@
 
 #include "Brick.h"
 #include "Soldier.h"
+#include "Panther.h"
+#include "Butterfly.h"
+#include "Eagle.h"
 
 #include "main.h"
+#include "HitEffect.h"
+#include "LoadObject.h"
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"04 - Collision"
@@ -53,10 +58,15 @@
 CGame *game;
 
 Ninja *ninja;
-
+LoadObject *loadobjects;
 ViewPort *viewport;
 TileMap *tilemap;
 CSoldier *soldier;
+CPanther *panther;
+CButterfly *butterfly;
+CEagle *eagle;
+
+HitEffect *hiteffect;
 vector<LPGAMEOBJECT> objects;
 vector<LPGAMEOBJECT> coObjects;
 
@@ -96,14 +106,14 @@ void CSampleKeyHander::KeyState(BYTE *states)
 	if (ninja->GetState() == NINJA_STATE_DIE) return;
 	if (game->IsKeyDown(DIK_1)) {
 		ninja->SetPosition(0, 0);
-		ninja->SetMoveSinWave(false);
+		//ninja->SetMoveSinWave(false);
 		ninja->SetMoveSquare(true);
 	}
 	else if (game->IsKeyDown(DIK_2))
 	{
 		ninja->SetPosition(0, 0);
-		ninja->SetMoveSquare(false);
-		ninja->SetMoveSinWave(true);
+		//ninja->SetMoveSquare(false);
+		//ninja->SetMoveSinWave(true);
 	}
 	if (game->IsKeyDown(DIK_RIGHT)) {
 		ninja->SetState(NINJA_STATE_WALKING_RIGHT);
@@ -221,11 +231,9 @@ void LoadResources()
 
 	LPDIRECT3DTEXTURE9 texSoldier = textures->Get(ID_TEX_SOLDIER);
 	
-	
-	
-
-
-	sprites->Add(30004, 282, 51, 306, 92, texSoldier);
+	hiteffect = new HitEffect();
+	hiteffect->SetEnable(true);
+	//rites->Add(30004, 282, 51, 306, 92, texSoldier);
 	LPANIMATION ani;
 	
 	ninja = new Ninja();
@@ -250,51 +258,53 @@ void LoadResources()
 
 	ninja->SetPosition(0, 50);
 	
-	CBrick *brick = new CBrick();
-	brick->SetWidth(543);
-	brick->SetHeight(16);
-	brick->SetPosition(0, 135);
-	coObjects.push_back(brick);
 
-	CBrick *brick1 = new CBrick();
-	brick1->SetWidth(32);
-	brick1->SetHeight(8);
-	brick1->SetPosition(576, 135);
-	coObjects.push_back(brick1);
-	//640, 672 (640, 135, 32, 8)
-	//704, 735 (704, 135, 32, 8)
-	//768, 800	(768, 135, 32, 8)
-	//800, 832	(800, 103 ,32,8
-	//832, 960 (832, 71, 128,8
-	//1024, 1088 (1024, 135, 64
-	//1120, 1407 (1120, 135, 288, 
-	//1216, 1248 ,(1216, 71, 32, 8)
-	//1280, 1375, 103, 8 (1280, 71, 96, 8)
-	//1408, 1440, 135, 8 (1408, 103, 32
-	// 1440, 1472, 103, 8 (1440, 71, 32
-	// 1472, 61, 39, 64
-	// 1600, 135, 16,
-	// 1664, 135, 16
-	// 1728, 135, 16,
-	// 1792, 135, 256, 8
+	loadobjects = new LoadObject();
+	loadobjects->Load("Loadfile\\LoadObject.txt", &coObjects);
+	
 
-	//1472, 1536, 70, 8
-	//1600, 1616, 
-
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 2; i++)
 	{
 		soldier = new CSoldier();
 		soldier->AddAnimation(3001);
 		soldier->AddAnimation(3002);
 		soldier->SetPosition( 150 + i * 30, 95) ;
+		//soldier->SetEnable(true);
 		soldier->SetState(SOLDIER_STATE_WALKING);
 		coObjects.push_back(soldier);
 	}
 
-	viewport = new ViewPort(0,-30);
+
+	
+	for (int i = 0; i < 1; i++)
+	{
+		panther = new CPanther();
+		panther->AddAnimation(5001);
+		//panther->AddAnimation(5002);
+		panther->SetPosition(150 , 55);
+		panther->SetState(PANTHER_STATE_WALKING);
+		coObjects.push_back(panther);
+	}
+
+	butterfly = new CButterfly();
+	butterfly->AddAnimation(7001);
+	butterfly->SetPosition(180, 55);
+	coObjects.push_back(butterfly);
+	
 
 
-
+	/*for (int i = 0; i < 2; i++) {*/
+		eagle = new CEagle();
+		eagle->AddAnimation(8001);
+		eagle->SetPosition(200, 15);
+		coObjects.push_back(eagle);
+	/*}*/
+	//478 60 495 90 10
+	//80002 505 60 552 90 10
+	//478 60 495 90 10
+	//80002 505 60 552 90 10
+	viewport = new ViewPort(0, -30);
+//viewport = new ViewPort(0, 0);
 }
 
 /*
@@ -334,6 +344,8 @@ void Render()
 	LPDIRECT3DDEVICE9 d3ddv = game->GetDirect3DDevice();
 	LPDIRECT3DSURFACE9 bb = game->GetBackBuffer();
 	LPD3DXSPRITE spriteHandler = game->GetSpriteHandler();
+
+
 	
 	if (d3ddv->BeginScene())
 	{
@@ -348,7 +360,7 @@ void Render()
 	
 		tilemap->Render(viewport);
 		ninja->Render(viewport);
-		
+		hiteffect->Render(viewport);
 		for (int i = 0; i < coObjects.size(); i++)
 			coObjects[i]->Render(viewport);
 

@@ -1,6 +1,7 @@
 #pragma once
 #pragma once
-#include "GameObject.h"
+#include "Enemy.h"
+
 
 #define SOLDIER_WALKING_SPEED 0.05f
 
@@ -14,7 +15,7 @@
 #define SOLDIER_ANI_WALKING 0
 #define SOLDIER_ANI_DIE 1
 
-class CSoldier : public CGameObject
+class CSoldier : public CEnemy
 {
 	int untouchable;
 	bool isLeft;

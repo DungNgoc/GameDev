@@ -13,6 +13,10 @@ CGameObject::CGameObject()
 	x = y = 0;
 	vx = vy = 0;
 	nx = 1;	
+	isEnable = true;
+	isDead = false;
+	hitEffect = new HitEffect();
+
 }
 
 void CGameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -20,6 +24,11 @@ void CGameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	this->dt = dt;
 	dx = vx*dt;
 	dy = vy*dt;
+	if (isEnable) {
+		hitEffect->SetPosition(x, y);
+
+	}
+	hitEffect->Update(dt);
 }
 
 /*
@@ -145,7 +154,7 @@ void CGameObject::RenderBoundingBox(ViewPort * viewport)
 	rect.right = (int)r - (int)l;
 	rect.bottom = (int)b - (int)t;
 
-	CGame::GetInstance()->Draw(viewport,x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, 100);
+	CGame::GetInstance()->Draw(viewport,x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, 150);
 }
 void CGameObject::AddAnimation(int aniId)
 {

@@ -5,11 +5,11 @@
 #include <vector>
 #include "ViewPort.h"
 #include "Sprites.h"
-
+#include "HitEffect.h"
 
 using namespace std;
 
-#define ID_TEX_BBOX -100		// special texture to draw object bounding box
+#define ID_TEX_BBOX 100		// special texture to draw object bounding box
 
 class CGameObject; 
 typedef CGameObject * LPGAMEOBJECT;
@@ -45,11 +45,15 @@ public:
 
 	float width;
 	float height;
-
+	int id;
 	int nx;
-
+	int type;
 	int state;
 	bool isLeft;
+
+	bool isEnable;
+	bool isDead;
+	HitEffect *hitEffect;
 	DWORD dt;
 	ViewPort *viewport;
 	vector<LPANIMATION> animations;
@@ -62,7 +66,19 @@ public:
 	void SetWidth(float width) { this->width = width; }
 	void SetHeight(float height) { this->height = height; }
 	int GetState() { return this->state; }
-
+	void SetId(int id) {
+		this->id = id;
+	}
+	void SetType(int type) {
+		this->type = type;
+	}
+	bool GetEnable() { return this->isEnable; }
+	void SetEnable(bool isEnable) {
+		this->isEnable = isEnable;
+	}
+	HitEffect *GetHitEffect() {
+		return hitEffect;
+	}
 	void RenderBoundingBox();
 
 	void RenderBoundingBox(ViewPort * viewport);

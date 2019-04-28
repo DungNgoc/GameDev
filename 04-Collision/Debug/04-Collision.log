@@ -1,9 +1,8 @@
-﻿  Ninja.cpp
-  Sword.cpp
-  main.cpp
-c:\users\dungngoc\desktop\gamedev\04-collision\main.cpp(289): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\dungngoc\desktop\gamedev\04-collision\main.cpp(229): warning C4101: 'ani': unreferenced local variable
-c:\users\dungngoc\desktop\gamedev\04-collision\main.cpp(317): warning C4018: '<': signed/unsigned mismatch
-c:\users\dungngoc\desktop\gamedev\04-collision\main.cpp(352): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
+﻿  main.cpp
+c:\users\dungngoc\desktop\gamedev\04-collision\hiteffect.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\04-collision\hiteffect.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\04-collision\main.cpp(271): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\dungngoc\desktop\gamedev\04-collision\main.cpp(237): warning C4101: 'ani': unreferenced local variable
+c:\users\dungngoc\desktop\gamedev\04-collision\main.cpp(327): warning C4018: '<': signed/unsigned mismatch
+c:\users\dungngoc\desktop\gamedev\04-collision\main.cpp(364): warning C4018: '<': signed/unsigned mismatch
   04-Collision.vcxproj -> C:\Users\DungNgoc\Desktop\GameDev\Debug\04-Collision.exe

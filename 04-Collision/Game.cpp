@@ -106,7 +106,9 @@ void CGame::Draw(ViewPort *viewport, float x, float y, LPDIRECT3DTEXTURE9 textur
 	r.top = top;
 	r.right = right;
 	r.bottom = bottom;
+	spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 	spriteHandler->Draw(texture, &r, NULL, &viewport->SetPositionInViewPort(p), D3DCOLOR_ARGB(alpha, 255, 255, 255));
+	spriteHandler->End();
 }
 
 void CGame::Draw(ViewPort *viewport, float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha, bool isLeft)

@@ -7,11 +7,11 @@ void CSoldier::GetBoundingBox(float &left, float &top, float &right, float &bott
 	left = x;
 	top = y;
 	right = x + SOLDIER_BBOX_WIDTH;
-
-	if (state == SOLDIER_STATE_DIE)
-		bottom = y + SOLDIER_BBOX_HEIGHT_DIE;
-	else
-		bottom = y + SOLDIER_BBOX_HEIGHT;
+	bottom = y + SOLDIER_BBOX_HEIGHT;
+	//if (state == SOLDIER_STATE_DIE)
+	//	bottom = y + SOLDIER_BBOX_HEIGHT_DIE;
+	//else
+	//	bottom = y + SOLDIER_BBOX_HEIGHT;
 }
 
 void CSoldier::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -49,8 +49,9 @@ void CSoldier::Render(ViewPort * viewport)
 	{
 		isLeft = true;
 	}
-	animations[ani]->Render(viewport, x, y, alpha, isLeft);
-
+	if(GetEnable())
+		animations[ani]->Render(viewport, x, y, alpha, isLeft);
+	//if(GetEnable())
 	RenderBoundingBox(viewport);
 }
 
