@@ -65,6 +65,12 @@ public:
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
 	void SetWidth(float width) { this->width = width; }
 	void SetHeight(float height) { this->height = height; }
+	int GetWidth() {
+		return width;
+	}
+	int GetHeight() {
+		return height;
+	}
 	int GetState() { return this->state; }
 	void SetId(int id) {
 		this->id = id;
@@ -76,8 +82,15 @@ public:
 	void SetEnable(bool isEnable) {
 		this->isEnable = isEnable;
 	}
+
 	HitEffect *GetHitEffect() {
 		return hitEffect;
+	}
+	void SetDead(bool isDead) {
+		this->isDead = isDead;
+	}
+	bool GetDead() {
+		return isDead;
 	}
 	void RenderBoundingBox();
 
@@ -100,7 +113,7 @@ public:
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	virtual void Render() = 0;
-	virtual void Render(ViewPort *viewport) = 0;
+	virtual void Render(ViewPort *viewport);
 	virtual void SetState(int state) { this->state = state; }
 
 

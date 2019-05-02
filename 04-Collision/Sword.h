@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 
-#define SWORD_SET_POSITION_HIT_X 19
+#define SWORD_SET_POSITION_HIT_X 21
 #define SWORD_SET_POSITION_HIT_Y 0
 #define SWORD_SET_POSITION_SIT_X 19
 #define SWORD_SET_POSITION_SIT_Y 7
@@ -9,7 +9,9 @@
 #define SWORD_ANI_HIT 0
 
 #define SWORD_BBOX_HEIGHT 8
-#define SWORD_BBOX_WIDTH  17
+#define SWORD_BBOX_WIDTH  21
+
+#define NINJA_BBOX_WIDTH 19
 class Sword:public CGameObject
 {
 	int anirender;

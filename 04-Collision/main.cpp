@@ -27,9 +27,11 @@
 #include "GameObject.h"
 #include "Textures.h"
 #include "TileMap.h"
+#include "Item.h"
 
 #include "Ninja.h"
 #include "ViewPort.h"
+#include "Grid.h"
 
 #include "Brick.h"
 #include "Soldier.h"
@@ -38,15 +40,17 @@
 #include "Eagle.h"
 
 #include "main.h"
-#include "HitEffect.h"
+
+
 #include "LoadObject.h"
+#include "ScoreBoard.h"
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"04 - Collision"
 
 #define BACKGROUND_COLOR D3DCOLOR_XRGB(0, 0, 0)
 #define SCREEN_WIDTH 320
-#define SCREEN_HEIGHT 270
+#define SCREEN_HEIGHT 240
 
 #define MAX_FRAME_RATE 120
 
@@ -56,6 +60,7 @@
 #define ID_TEX_SOLDIER 10
 
 CGame *game;
+Grid *grid;
 
 Ninja *ninja;
 LoadObject *loadobjects;
@@ -65,9 +70,13 @@ CSoldier *soldier;
 CPanther *panther;
 CButterfly *butterfly;
 CEagle *eagle;
+//DWORD time = 0;
 
-HitEffect *hiteffect;
-vector<LPGAMEOBJECT> objects;
+int stage = 1;
+ScoreBoard *scoreboard;
+//HitEffect *hiteffect;
+vector<LPGAMEOBJECT> listObjectsItem;
+vector<LPITEM> listItem;
 vector<LPGAMEOBJECT> coObjects;
 
 class CSampleKeyHander: public CKeyEventHandler
@@ -220,7 +229,7 @@ void LoadAnimations(wstring file) {
 		}
 	}
 }
-void LoadResources()
+void LoadResources(LPDIRECT3DDEVICE9 d3ddv, LPD3DXSPRITE sprite)
 {
 	CTextures * textures = CTextures::GetInstance();
 	CSprites * sprites = CSprites::GetInstance();
@@ -231,8 +240,8 @@ void LoadResources()
 
 	LPDIRECT3DTEXTURE9 texSoldier = textures->Get(ID_TEX_SOLDIER);
 	
-	hiteffect = new HitEffect();
-	hiteffect->SetEnable(true);
+	//hiteffect = new HitEffect();
+	//hiteffect->SetEnable(true);
 	//rites->Add(30004, 282, 51, 306, 92, texSoldier);
 	LPANIMATION ani;
 	
@@ -244,7 +253,6 @@ void LoadResources()
 	tilemap = new TileMap(2048, 208, sprites->Get(1), 16, 16);
 	tilemap->LoadListTileFromFile("Loadfile\\tileset31.txt");
 
-	
 	
 
 	ninja->AddAnimation(1001);//walking right
@@ -268,65 +276,81 @@ void LoadResources()
 		soldier = new CSoldier();
 		soldier->AddAnimation(3001);
 		soldier->AddAnimation(3002);
-		soldier->SetPosition( 150 + i * 30, 95) ;
+		soldier->SetPosition( 150 + i * 30, 127) ;
 		//soldier->SetEnable(true);
 		soldier->SetState(SOLDIER_STATE_WALKING);
 		coObjects.push_back(soldier);
 	}
-
-
 	
 	for (int i = 0; i < 1; i++)
 	{
 		panther = new CPanther();
 		panther->AddAnimation(5001);
 		//panther->AddAnimation(5002);
-		panther->SetPosition(150 , 55);
+		panther->SetPosition(150 , 75);
 		panther->SetState(PANTHER_STATE_WALKING);
 		coObjects.push_back(panther);
 	}
-
+	
 	butterfly = new CButterfly();
 	butterfly->AddAnimation(7001);
-	butterfly->SetPosition(180, 55);
+	butterfly->SetPosition(180, 130);
 	coObjects.push_back(butterfly);
+	listObjectsItem.push_back(butterfly);
+	
+	Item *item = new Item(ITEM_SPIRIT_POINTS_BLU);
+	item->SetEnable(false);
+	//item->SetPosition(100, 100);
+	listItem.push_back(item);
+
+	/*for (int i = 0; i < 2; i++) {*/
+	eagle = new CEagle();
+	eagle->AddAnimation(8001);
+	eagle->SetPosition(200, 45);
+	coObjects.push_back(eagle);
+	
 	
 
 
-	/*for (int i = 0; i < 2; i++) {*/
-		eagle = new CEagle();
-		eagle->AddAnimation(8001);
-		eagle->SetPosition(200, 15);
-		coObjects.push_back(eagle);
-	/*}*/
-	//478 60 495 90 10
-	//80002 505 60 552 90 10
-	//478 60 495 90 10
-	//80002 505 60 552 90 10
-	viewport = new ViewPort(0, -30);
-//viewport = new ViewPort(0, 0);
+	viewport = new ViewPort(0, 0);
+	grid = new Grid(2048, 176, 256, 88);
+	grid->Add(&coObjects);
+
+
+	scoreboard = new ScoreBoard(ninja, 16, d3ddv, sprite);
 }
 
-/*
-	Update world status for this frame
-	dt: time period between beginning of last frame and beginning of this frame
-*/
+
 void Update(DWORD dt)
 
 {
 	ninja->Update(dt, &coObjects);
-	//viewport->SetViewPortPosition(viewport->GetViewPortPosition().x, viewport->GetViewPortPosition().y-20);
-	// We know that ninja is the first object in the list hence we won't add him into the colliable object list
-	// TO-DO: This is a "dirty" way, need a more organized way 
-	/*vector<LPGAMEOBJECT> coObjects;*/
-	//for (int i = 1; i < objects.size(); i++)
-	//{
-	//	coObjects.push_back(objects[i]);
-	//}
+	//time += dt;
+	scoreboard->Update(16, 1000, ninja->GetLife(), 1);
+	for (int i = 0; i < listObjectsItem.size(); i++)
+	{
+		listObjectsItem[i]->Update(dt, &coObjects);
+		if (listObjectsItem[i]->GetDead())
+		{
+			listObjectsItem[i]->SetDead(false);
+			listItem[i]->SetEnable(true);
+			listItem[i]->SetPosition(listObjectsItem[i]->x, listObjectsItem[i]->y);
+			coObjects.clear();
+			coObjects.push_back(listItem[i]);
+			grid->Add(&coObjects);
+		}
+
+	}
+	grid->GetListOfObjects(&coObjects, viewport);
+	for (int i = 0; i < listItem.size(); i++)
+	{
+		listItem[i]->Update(dt, &coObjects);
+	}
+	
 
 	for (int i = 0; i < coObjects.size(); i++)
 	{
-		coObjects[i]->Update(dt);
+		coObjects[i]->Update(dt,&coObjects);
 	}
 	if (ninja->x >= SCREEN_WIDTH / 2 - NINJA_BBOX_WIDTH / 2 && ninja->x <= 2048 - SCREEN_WIDTH / 2 - NINJA_BBOX_WIDTH / 2)
 	{
@@ -334,6 +358,7 @@ void Update(DWORD dt)
 		currentViewPortPos.x = ninja->x - SCREEN_WIDTH / 2 + NINJA_BBOX_WIDTH / 2;
 		viewport->SetViewPortPosition(currentViewPortPos.x, currentViewPortPos.y);
 	}
+
 }
 
 /*
@@ -356,14 +381,19 @@ void Render()
 	
 		/*D3DXMATRIX mt;
 		D3DXMatrixScaling(&mt, -1.0, -1.0f, .0f);*/
-
-	
 		tilemap->Render(viewport);
+		for (int i = 0; i < listItem.size(); i++)
+		{
+			listItem[i]->Render(viewport);
+		}
+		//listItem[0]->Render();
+		scoreboard->Render(viewport);
+		//listItem[0]->Render(viewport);
 		ninja->Render(viewport);
-		hiteffect->Render(viewport);
+		//hiteffect->Render(viewport);
 		for (int i = 0; i < coObjects.size(); i++)
 			coObjects[i]->Render(viewport);
-
+		
 		spriteHandler->End();
 		d3ddv->EndScene();
 	}
@@ -471,7 +501,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	LoadTextures(L"Loadfile\\LoadTexture.txt");
 	LoadSprites(L"Loadfile\\LoadSprite.txt");
 	LoadAnimations(L"Loadfile\\LoadAnimation.txt");
-	LoadResources();
+	LoadResources(game->d3ddv, game->spriteHandler);
 
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH*2, SCREEN_HEIGHT*2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 

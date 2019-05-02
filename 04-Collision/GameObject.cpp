@@ -25,10 +25,15 @@ void CGameObject::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	dx = vx*dt;
 	dy = vy*dt;
 	if (isEnable) {
-		hitEffect->SetPosition(x, y);
+		hitEffect->SetPosition(x-16, y);
 
 	}
 	hitEffect->Update(dt);
+}
+
+void CGameObject::Render(ViewPort * viewport)
+{
+	hitEffect->Render(viewport);
 }
 
 /*
@@ -141,7 +146,7 @@ void CGameObject::RenderBoundingBox()
 }
 void CGameObject::RenderBoundingBox(ViewPort * viewport)
 {
-	D3DXVECTOR3 p(x, y, 0);
+	D3DXVECTOR3 p(x, y + 16, 0);
 	RECT rect;
 
 	LPDIRECT3DTEXTURE9 bbox = CTextures::GetInstance()->Get(ID_TEX_BBOX);

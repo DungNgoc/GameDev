@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Sword.h"
 
+
 #define NINJA_WALKING_RIGHT		0
 #define NINJA_IDLE_RIGHT		1
 #define NINJA_HIT_RIGHT         2
@@ -44,11 +45,18 @@ class Ninja: public CGameObject
 	bool isTouchBrick;
 	int flag;
 	bool isLeft;
+	int energy;
+	int life;
+	int numberofweapon;
+	int hp;
+	int currentWeapon;
 public:
 	Ninja() //: CGameObject()
 	{
 		untouchable = 0;
 		sword = new Sword();
+		life = 3;
+		energy = 16;
 
 	};
 	bool get() {
@@ -62,6 +70,7 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
 	void Render(ViewPort * viewport);
 	virtual void Render();
+	int GetScore();
 	void SetState(int state);
 	void SetLevel(int l) { level = l; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
@@ -73,6 +82,12 @@ public:
 	void reset(int ID) {
 		animations[ID]->reset();
 	}
+	int GetEnergy() { return this->energy; }
+	int GetLife() { return life; }
+	int SetHP(int hp) { this->hp = hp; }
+	int GetHP() { return hp; }
+	void SetTypeOfWeapon(int type);
+	int GetTypeOfWeapon() { return currentWeapon; }
 	//Ninja();
 	//~Ninja();
 };

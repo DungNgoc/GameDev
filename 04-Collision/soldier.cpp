@@ -21,6 +21,7 @@ void CSoldier::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	//
 	// TO-DO: make sure SOLDIER can interact with the world and to each of them too!
 	// 
+	//vy += SOLDIER_GRAVITY * dt;
 
 	x += dx;
 	y += dy;
@@ -49,6 +50,8 @@ void CSoldier::Render(ViewPort * viewport)
 	{
 		isLeft = true;
 	}
+	/*if(GetDead())*/
+		CEnemy::Render(viewport);
 	if(GetEnable())
 		animations[ani]->Render(viewport, x, y, alpha, isLeft);
 	//if(GetEnable())

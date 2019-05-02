@@ -2,7 +2,7 @@
 #include "Sprites.h"
 #include "Textures.h"
 #include "ViewPort.h"
-#define ID_ANI_EFFECT 6001
+#define ID_ANI_EFFECT 11001
 class HitEffect
 {
 	int x, y;

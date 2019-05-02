@@ -8,6 +8,7 @@ TileMap::TileMap(float _width, float _height, CSprite *_sprite, float _frameWidt
 	width = _width;
 	height = _height;
 	sprite = _sprite;
+
 	frameWidth = _frameWidth;
 	frameHeight = _frameHeight;
 
@@ -89,8 +90,6 @@ void TileMap::Render(ViewPort * viewport)
 	int rowEnd;
 	int colStart;
 	int colEnd;
-	
-
 	if ((viewPortPosition.y / frameHeight) < 0)
 		rowStart = 0;
 	else

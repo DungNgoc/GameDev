@@ -2,6 +2,7 @@
 #include "Enemy.h"
 
 
+
 Sword::Sword()
 {
 	isLeft = true;
@@ -24,11 +25,11 @@ void Sword::SetPosition(float x, float y, bool Issit)
 	{
 		if (!isLeft)
 		{
-			x -= SWORD_SET_POSITION_HIT_X;
+			x += NINJA_BBOX_WIDTH;
 			y += SWORD_SET_POSITION_HIT_Y;
 		}		 
 		else	{
-			x += SWORD_SET_POSITION_HIT_X;
+			x -= SWORD_SET_POSITION_HIT_X;
 			y += SWORD_SET_POSITION_HIT_Y;
 		}
 		
@@ -60,9 +61,9 @@ void Sword::GetBoundingBox(float & left, float & top, float & right, float & bot
 	top = y;
 	bottom = y + SWORD_BBOX_HEIGHT;
 	if (isLeft)
-	{
-		right = x;
-		left = x - SWORD_BBOX_WIDTH;
+	{	
+		left = x;
+		right = left + SWORD_BBOX_WIDTH;
 	}
 	else
 	{
@@ -97,13 +98,13 @@ void Sword::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_object)
 			float l1, t1, r1, b1, l2, t2, r2, b2;
 			GetBoundingBox(l1, t1, r1, b1);
 			enemy->GetBoundingBox(l2, t2, r2, b2);
+			if(!enemy->GetDead())
 			if (t1 <= b2 && b1 >= t2 && l1 <= r2 && r1 >= l2) {
 				if ((colliable_object->at(i))->nx != 0) {
 					enemy->GetHitEffect()->SetEnable(true);
 					if (enemy->GetEnable()) {
 						enemy->SetEnable(false);
-
-
+						enemy->SetDead(true);
 					}
 				}
 			}

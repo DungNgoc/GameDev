@@ -7,7 +7,7 @@ CButterfly::CButterfly()
 
 void CButterfly::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
-	left = x;
+	left = x-1;
 	top = y;
 	right = x + BUTTERFLY_BBOX_WIDTH;
 	bottom = y + BUTTERFLY_BBOX_HEIGHT;
@@ -40,7 +40,6 @@ void CButterfly::Render()
 void CButterfly::Render(ViewPort * viewport)
 {
 	int ani = BUTTERFLY_ANI_RIGHT;
-	isLeft = true;
 	//if (state == PANTHER_STATE_DIE) {
 	//	ani = PANTHER_ANI_DIE;
 	//}
@@ -51,7 +50,9 @@ void CButterfly::Render(ViewPort * viewport)
 	{
 		isLeft = true;
 	}
-	animations[ani]->Render(viewport, x, y, alpha, isLeft);
+	
+	if(GetEnable())
+		animations[ani]->Render(viewport, x, y, alpha, isLeft);
 
 	RenderBoundingBox(viewport);
 }

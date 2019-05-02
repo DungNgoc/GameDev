@@ -1,26 +1,29 @@
 #include "Ninja.h"
-
+#include "Item.h"
 #include <algorithm>
 #include "debug.h"
 #include "Brick.h"
 #include "Game.h"
-
+#include "Enemy.h"
 bool isHitting = false;
 
 
 void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	CGameObject::Update(dt);
-	if(!isTouchBrick)
+	if (!isTouchBrick)
 		vy += NINJA_GRAVITY * dt;
 	//vx = 0.1f;*/
-		if (dy == 0)
-		{
-			isJump = false;
-			isTouchBrick = true;
-		}
+	if (dy == 0)
+	{
+		isJump = false;
+		isTouchBrick = true;
+	}
 	if (isHitting && state == NINJA_STATE_IDLE)
 	{
+		if (nx>0)
+			sword->isLeft = false;
+		else sword->isLeft = true;
 		sword->SetPosition(x, y, false);
 		if (sword->GetCurrentFrame() == 2)
 			sword->Update(dt, coObjects);
@@ -33,7 +36,7 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			//reset()
 			//etState(NINJA_STATE_IDLE);
 		}
-		
+
 	}
 	else if (isHitting && state == NINJA_STATE_SIT)
 	{
@@ -59,7 +62,7 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	// turn off collision when die 
 	//if (state != MARIO_STATE_DIE)
-		CalcPotentialCollisions(coObjects, coEvents);
+	CalcPotentialCollisions(coObjects, coEvents);
 
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
@@ -70,15 +73,15 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	}
 	else
 	{
-		
+
 		float min_tx, min_ty, nx = 0, ny;
 
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
 
 		// block 
-	
 
-		
+
+
 		// Collision logic with Goombas
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
@@ -93,26 +96,85 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					if (nx != 0) vx = 0;
 					if (ny != 0) vy = 0;
 				}
-				else {
-					x += dx;
-					if (ny < 0)
-						y += dy + ny * 0.7f;
-					else if (ny > 0)
-						y += dy + ny * -0.7f;
-				}
+				
 			}
-	
+			else {
+				x += dx;
+				if (ny < 0)
+					y += dy + ny * 0.7f;
+				else if (ny > 0)
+					y += dy + ny * -0.7f;
+			}
+			if (dynamic_cast<Item *>(e->obj))
+			{
+				Item *item = dynamic_cast<Item *>(e->obj);
+				if (item->isEnable == true) {
+					switch (item->GetItemType())
+					{
+					case  ITEM_SPIRIT_POINTS_BLU:
+
+						break;
+					case  ITEM_SPIRIT_POINTS_RED:
+						break;
+					case ITEM_THROWING_STAR:
+
+						break;
+					case ITEM_WINDMILL_STAR:
+						break;
+					case ITEM_JUMP_AND_SLASH:
+
+						break;
+					case ITEM_FLAMES:
+
+						break;
+					case ITEM_FIRE_WHEEL:
+
+						break;
+					case ITEM_EXTRA_LIFE:
+
+						break;
+					case ITEM_BONUS_POINTS_BLUE:
+
+						break;
+					case ITEM_BONUS_POINT_RED:
+						//StartUntouchable();
+						break;
+					case ITEM_HEALTH_BLU:
+
+						break;
+					case ITEM_HEALTH_RED:
+
+						break;
+					case ITEM_EXTRA_TIME:
+
+						break;
+					default:
+						//SetTypeOfWeapon(item->GetItemType());
+						break;
+					}
+
+					item->isEnable = false;
+					item->isDead = true;
+				}
+
+
+			}
+
 		}
+		// clean up collision events
+		for (UINT i = 0; i < coEvents.size(); i++)
+			delete coEvents[i];
+
+
+
 	}
-	// clean up collision events
-	for (UINT i = 0; i < coEvents.size(); i++) 
-		delete coEvents[i];
-
-
-	
 }
 void Ninja::Render()
 {
+}
+int Ninja::GetScore()
+{
+	return CEnemy::GetScore();
 }
 void Ninja::Render(ViewPort *viewport)
 {
@@ -214,6 +276,39 @@ void Ninja::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 	//	top = y ;
 	//	bottom = y + 22;
 	//}
+}
+
+void Ninja::SetTypeOfWeapon(int type)
+{
+	for (int i = 0; i < 3; i++)
+	{
+		switch (type)
+		{
+
+			/*case ITEM_HOLY_WATER:
+				weapons[i] = holywater[i];
+				currentWeapon = type;
+				break;
+			case ITEM_AXE:
+				weapons[i] = axe[i];
+				currentWeapon = type;
+				break;
+			case ITEM_DAGGER:
+				weapons[i] = dagger[i];
+				currentWeapon = type;
+				break;
+			case ITEM_BOOMERANG:
+				weapons[i] = boomerang[i];
+				currentWeapon = type;
+				break;
+			case ITEM_STOP_WATCH:
+				weapons[i] = stopwatch[i];
+				currentWeapon = type;
+				break;*/
+		default:
+			break;
+		}
+	}
 }
 
 

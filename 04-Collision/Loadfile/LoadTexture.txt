@@ -2,3 +2,5 @@
 1 textures\\tileset31.png 255 163 177
 100 textures\\bbox.png 123 123 123
 10 textures\\enemy.png 255 163 177
+2 textures\\heal.png 255 163 177
+3 textures\\effect.png 255 163 177

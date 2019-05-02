@@ -20,7 +20,7 @@ void HitEffect::Update(DWORD dt)
 {
 	if (isEnable) {
 		timeDelay += dt;
-		if (timeDelay > 450) {
+		if (timeDelay > 650) {
 			timeDelay = 0;
 			isEnable = false;
 		}

@@ -26,17 +26,19 @@ void CSprite::Draw(float x, float y, int alpha)
 	CGame * game = CGame::GetInstance();
 	game->Draw(x, y, texture, left, top, right, bottom, alpha);
 }
+void CSprite::Draw(ViewPort *viewport, float x, float y, int alpha)
+{
+	CGame * game = CGame::GetInstance();
+	game->Draw(viewport, x, y, texture, left, top, right, bottom, alpha);
+}
+
 
 void CSprite::Draw(D3DXVECTOR3 &position, RECT &rect, int alpha)
 {
 	CGame * game = CGame::GetInstance();
 	game->Draw(position, texture, rect, alpha);
 }
-void CSprite::Draw(ViewPort *viewport, float x, float y, int alpha)
-{
-	CGame * game = CGame::GetInstance();
-	game->Draw(viewport,x, y, texture, left, top, right, bottom, alpha);
-}
+
 void CSprite::Draw(ViewPort *viewport, float x, float y, int alpha, bool isLeft)
 {
 	CGame * game = CGame::GetInstance();
