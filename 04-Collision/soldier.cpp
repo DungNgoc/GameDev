@@ -22,17 +22,12 @@ void CSoldier::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	// TO-DO: make sure SOLDIER can interact with the world and to each of them too!
 	// 
 	//vy += SOLDIER_GRAVITY * dt;
-
+	CEnemy::Update(dt);
 	x += dx;
 	y += dy;
 	
-	if (vx < 0 && x < 0) {
-		x = 0; vx = -vx;
-	}
+	LimitPos(limitX1, limitX2);
 
-	if (vx > 0 && x > 290) {
-		x = 290; vx = -vx;
-	}
 }
 void CSoldier::Render(){}
 void CSoldier::Render(ViewPort * viewport)
@@ -56,6 +51,29 @@ void CSoldier::Render(ViewPort * viewport)
 		animations[ani]->Render(viewport, x, y, alpha, isLeft);
 	//if(GetEnable())
 	RenderBoundingBox(viewport);
+}
+
+void CSoldier::LimitPos(int limitX1, int limitX2)
+{
+	if (vx < 0 && x < 0) {
+		x = limitX1; vx = -vx;
+	}
+
+	if (vx > 0 && x > limitX2) {
+		x = limitX2; vx = -vx;
+	}
+}
+
+CSoldier::CSoldier():CEnemy(1)
+{
+	
+	damage = 1;
+	point = 100;
+}
+
+
+CSoldier::~CSoldier()
+{
 }
 
 void CSoldier::SetState(int state)

@@ -1,5 +1,10 @@
-﻿  HitEffect.cpp
+﻿  Ninja.cpp
 c:\users\dungngoc\desktop\gamedev\04-collision\hiteffect.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 c:\users\dungngoc\desktop\gamedev\04-collision\hiteffect.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\dungngoc\desktop\gamedev\04-collision\hiteffect.cpp(16): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\dungngoc\desktop\gamedev\04-collision\gameobject.h(69): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\04-collision\gameobject.h(72): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\04-collision\ninja.cpp(345): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\dungngoc\desktop\gamedev\04-collision\ninja.cpp(349): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\dungngoc\desktop\gamedev\04-collision\ninja.cpp(352): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\dungngoc\desktop\gamedev\04-collision\ninja.cpp(410): warning C4065: switch statement contains 'default' but no 'case' labels
   04-Collision.vcxproj -> C:\Users\DungNgoc\Desktop\GameDev\Debug\04-Collision.exe

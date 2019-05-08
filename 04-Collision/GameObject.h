@@ -57,7 +57,7 @@ public:
 	DWORD dt;
 	ViewPort *viewport;
 	vector<LPANIMATION> animations;
-
+	int limitX1, limitX2;
 public:
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
@@ -71,6 +71,10 @@ public:
 	int GetHeight() {
 		return height;
 	}
+	void SetLimitX(int limitX1, int limitX2) {
+		this->limitX1 = limitX1;
+		this->limitX2 = limitX2;
+	}
 	int GetState() { return this->state; }
 	void SetId(int id) {
 		this->id = id;
@@ -78,6 +82,7 @@ public:
 	void SetType(int type) {
 		this->type = type;
 	}
+
 	bool GetEnable() { return this->isEnable; }
 	void SetEnable(bool isEnable) {
 		this->isEnable = isEnable;

@@ -2,20 +2,21 @@
 #include "GameObject.h"
 
 #define SWORD_SET_POSITION_HIT_X 21
-#define SWORD_SET_POSITION_HIT_Y 0
-#define SWORD_SET_POSITION_SIT_X 19
-#define SWORD_SET_POSITION_SIT_Y 7
+#define SWORD_SET_POSITION_HIT_Y 4
+#define SWORD_SET_POSITION_SIT_X 21
+#define SWORD_SET_POSITION_SIT_Y 9
 
 #define SWORD_ANI_HIT 0
 
 #define SWORD_BBOX_HEIGHT 8
 #define SWORD_BBOX_WIDTH  21
 
-#define NINJA_BBOX_WIDTH 19
+#define NINJA_BBOX_WIDTH 20
 class Sword:public CGameObject
 {
 	int anirender;
 	CAnimation *ani;
+	int damage;
 
 public:
 	Sword();
@@ -27,6 +28,12 @@ public:
 	int GetCurrentFrame();
 	void resetAni(int ID) {
 		animations[ID]->reset();
+	}
+	int GetDamage() {
+		return damage;
+	}
+	void SetDamage(int damage) {
+		this->damage = damage;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>*colliable_object = NULL);
 	~Sword();//86 6 106 37  131 6 151 37

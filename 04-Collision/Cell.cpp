@@ -4,6 +4,7 @@
 
 Cell::Cell()
 {
+	listObj.clear();
 }
 
 

@@ -13,6 +13,7 @@ public:
 public:
 	Grid(int widthmap, int heightmap, int cellsizex, int cellsizey);
 	~Grid();
+	//void Update(LP)
 	void Add(vector <LPGAMEOBJECT> *listObject);
 	void GetListOfObjects(vector<LPGAMEOBJECT> *list_object, ViewPort *viewport);
 };

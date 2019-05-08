@@ -1,5 +1,5 @@
 #include "Grid.h"
-#define SCREEN_WIDTH 320
+#define SCREEN_WIDTH 680
 #define SCREEN_HEIGHT 240
 
 
@@ -12,7 +12,6 @@ Grid::Grid(int widthmap, int heightmap, int cellsizex, int cellsizey)
 	this->cellsizex = cellsizex;
 	rows = heightmap / cellsizey;
 	columns = widthmap / cellsizex;
-	//Cell cell[r][columns];
 	cells = new Cell*[rows];
 	for (int i = 0; i < rows; i++)
 		cells[i] = new Cell[columns];
@@ -56,6 +55,7 @@ void Grid::Add(vector<LPGAMEOBJECT>* listObject)
 
 void Grid::GetListOfObjects(vector<LPGAMEOBJECT>* list_object, ViewPort * viewport)
 {
+
 	list_object->clear();
 	int xs, ys;
 	int xe, ye;
@@ -65,10 +65,10 @@ void Grid::GetListOfObjects(vector<LPGAMEOBJECT>* list_object, ViewPort * viewpo
 
 	xe = (int)(viewport->GetViewPortPosition().x + SCREEN_WIDTH) / cellsizex;
 	ye = (int)(viewport->GetViewPortPosition().y + SCREEN_HEIGHT) / cellsizey;
-	if (xe == columns - 1)
-		xe += 1;
+	/*if (xe == columns - 1)
+		xe += 1;*/
 	for (i = ys; i < ye; i++)
-		for (j = xs; j <= xe; j++)
+		for (j = xs; j < xe; j++)
 		{
 			if (cells[i][j].GetListObjects().size() != 0)
 				for (k = 0; k < cells[i][j].GetListObjects().size(); k++)
@@ -76,5 +76,6 @@ void Grid::GetListOfObjects(vector<LPGAMEOBJECT>* list_object, ViewPort * viewpo
 					LPGAMEOBJECT e = cells[i][j].GetListObjects()[k];
 					list_object->push_back(e);
 				}
+			
 		}
 }

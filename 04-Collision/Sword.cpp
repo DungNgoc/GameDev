@@ -1,19 +1,17 @@
 #include "Sword.h"
 #include "Enemy.h"
-
+#include "Ninja.h"
 
 
 Sword::Sword()
 {
-	isLeft = true;
+	isLeft = false;
 	AddAnimation(4001);
 
 }
 void Sword::ResetAnimation()
 {
 	resetAni(0);
-	/*resetAni(1);
-	resetAni(2);*/
 	
 }
 
@@ -27,22 +25,23 @@ void Sword::SetPosition(float x, float y, bool Issit)
 		{
 			x += NINJA_BBOX_WIDTH;
 			y += SWORD_SET_POSITION_HIT_Y;
-		}		 
-		else	{
+		}
+		else {
 			x -= SWORD_SET_POSITION_HIT_X;
 			y += SWORD_SET_POSITION_HIT_Y;
 		}
-		
+
 	}
 	else
 	{
 		if (!isLeft)
 		{
 			x -= SWORD_SET_POSITION_SIT_X;
-			y += SWORD_SET_POSITION_SIT_Y;
-		}		
-		else	 {
-			x += SWORD_SET_POSITION_SIT_X;
+			y += SWORD_SET_POSITION_SIT_Y+2;
+		}
+		else {
+			
+			x += NINJA_BBOX_WIDTH;
 			y += SWORD_SET_POSITION_SIT_Y;
 		}
 	}
@@ -103,8 +102,8 @@ void Sword::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_object)
 				if ((colliable_object->at(i))->nx != 0) {
 					enemy->GetHitEffect()->SetEnable(true);
 					if (enemy->GetEnable()) {
-						enemy->SetEnable(false);
-						enemy->SetDead(true);
+						enemy->SetHP(enemy->GetHP() - this->damage);
+						//Ninja::SetScore(Ninja::GetScore());
 					}
 				}
 			}

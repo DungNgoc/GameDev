@@ -70,13 +70,16 @@ CSoldier *soldier;
 CPanther *panther;
 CButterfly *butterfly;
 CEagle *eagle;
-//DWORD time = 0;
-
+DWORD time1 = 0;
+Item *it;
 int stage = 1;
 ScoreBoard *scoreboard;
+
+
+
 //HitEffect *hiteffect;
 vector<LPGAMEOBJECT> listObjectsItem;
-vector<LPITEM> listItem;
+vector<LPGAMEOBJECT> listItem;
 vector<LPGAMEOBJECT> coObjects;
 
 class CSampleKeyHander: public CKeyEventHandler
@@ -94,11 +97,17 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_Z:
-		if(!ninja->getJump())
+		if (!ninja->getJump())
 			ninja->SetState(NINJA_STATE_JUMP);
 		break;
 	case DIK_A: // reset
-		ninja->SetPosition(580, 50);
+		ninja->SetPosition(582, 50);
+		break;
+	case DIK_B: // reset
+		ninja->SetPosition(1220, 50);
+		break;
+	case DIK_T:
+		ninja->SetPosition(0, 0);
 		break;
 	}
 	
@@ -124,11 +133,11 @@ void CSampleKeyHander::KeyState(BYTE *states)
 		//ninja->SetMoveSquare(false);
 		//ninja->SetMoveSinWave(true);
 	}
-	if (game->IsKeyDown(DIK_RIGHT)) {
+	if (game->IsKeyDown(DIK_RIGHT) && !ninja->GetHurt()) {
 		ninja->SetState(NINJA_STATE_WALKING_RIGHT);
 
 	}
-	else if (game->IsKeyDown(DIK_LEFT)) {
+	else if (game->IsKeyDown(DIK_LEFT)&& !ninja->GetHurt()) {
 		ninja->SetState(NINJA_STATE_WALKING_LEFT);
 	}
 	else if (game->IsKeyDown(DIK_X) ){
@@ -137,10 +146,9 @@ void CSampleKeyHander::KeyState(BYTE *states)
 	}
 	else if (game->IsKeyDown(DIK_DOWN))
 	{	
-	
 			ninja->SetState(NINJA_STATE_SIT);
 	}
-	else
+	else  if (!ninja->GetHurt())
 		ninja->SetState(NINJA_STATE_IDLE);
 
 	
@@ -229,6 +237,78 @@ void LoadAnimations(wstring file) {
 		}
 	}
 }
+void LoadItem(wstring file) {
+
+	wifstream input;
+	input.open(file, wistream::in);
+	wstring checkEND;
+	int id;
+	bool checkEnable;
+	while (input >> checkEND) {
+		if (checkEND == L"END")
+			return;
+		else {
+			id = stoi(checkEND.c_str());
+			//input>> ;
+			Item *item = new Item(id);
+			item->SetEnable(false);
+			listItem.push_back(item);
+		}
+	}
+}
+void LoadButterfly(wstring file) {
+	wifstream input;
+	input.open(file, wistream::in);
+	wstring checkEND;
+	int id;
+	int x, y;
+	while (input >> checkEND) {
+		if (checkEND == L"END")
+			return;
+		else {
+			id = stoi(checkEND.c_str());
+			input >> x>>y;
+			if(id == 7001){
+				butterfly = new CButterfly();
+				butterfly->AddAnimation(id);
+				butterfly->SetPosition(x, y);
+				coObjects.push_back(butterfly);
+				listObjectsItem.push_back(butterfly);
+			}
+			else if (id == 8001) {
+				eagle = new CEagle();
+				eagle->AddAnimation(id);
+				eagle->SetPosition(x,y);
+				coObjects.push_back(eagle);
+			}
+			
+		}
+
+	}
+	
+	
+}
+void LoadEnemy(wstring file) {
+	wifstream input;
+	input.open(file, wistream::in);
+	wstring checkEND;
+	int id;
+	int x, y, limitX1, limitX2;
+	while (input >> checkEND) {
+		if (checkEND == L"END")
+			return;
+		else {
+			id = stoi(checkEND.c_str());
+			input >> x >> y >>limitX1 >>limitX2;
+			soldier = new CSoldier();
+			soldier->AddAnimation(3001);
+			soldier->SetPosition(x, y);
+			soldier->SetLimitX(limitX1, limitX2);
+			soldier->SetState(SOLDIER_STATE_WALKING);
+			coObjects.push_back(soldier);
+		}
+	}
+}
 void LoadResources(LPDIRECT3DDEVICE9 d3ddv, LPD3DXSPRITE sprite)
 {
 	CTextures * textures = CTextures::GetInstance();
@@ -239,21 +319,15 @@ void LoadResources(LPDIRECT3DDEVICE9 d3ddv, LPD3DXSPRITE sprite)
 	sprites->Add(1, 0, 0, 1263, 15, textures->Get(ID_TEX_TILESET_31));
 
 	LPDIRECT3DTEXTURE9 texSoldier = textures->Get(ID_TEX_SOLDIER);
-	
-	//hiteffect = new HitEffect();
-	//hiteffect->SetEnable(true);
-	//rites->Add(30004, 282, 51, 306, 92, texSoldier);
+	viewport = new ViewPort(0, 0);
+
 	LPANIMATION ani;
 	
 	ninja = new Ninja();
-	
-	
-	
+
 
 	tilemap = new TileMap(2048, 208, sprites->Get(1), 16, 16);
 	tilemap->LoadListTileFromFile("Loadfile\\tileset31.txt");
-
-	
 
 	ninja->AddAnimation(1001);//walking right
 	ninja->AddAnimation(1002);// idle right
@@ -266,67 +340,51 @@ void LoadResources(LPDIRECT3DDEVICE9 d3ddv, LPD3DXSPRITE sprite)
 
 	ninja->SetPosition(0, 50);
 	
-
 	loadobjects = new LoadObject();
 	loadobjects->Load("Loadfile\\LoadObject.txt", &coObjects);
 	
 
-	for (int i = 0; i < 2; i++)
-	{
-		soldier = new CSoldier();
-		soldier->AddAnimation(3001);
-		soldier->AddAnimation(3002);
-		soldier->SetPosition( 150 + i * 30, 127) ;
-		//soldier->SetEnable(true);
-		soldier->SetState(SOLDIER_STATE_WALKING);
-		coObjects.push_back(soldier);
-	}
 	
 	for (int i = 0; i < 1; i++)
 	{
 		panther = new CPanther();
 		panther->AddAnimation(5001);
 		//panther->AddAnimation(5002);
-		panther->SetPosition(150 , 75);
+		panther->SetPosition(150 , 147);
 		panther->SetState(PANTHER_STATE_WALKING);
 		coObjects.push_back(panther);
 	}
 	
-	butterfly = new CButterfly();
-	butterfly->AddAnimation(7001);
-	butterfly->SetPosition(180, 130);
-	coObjects.push_back(butterfly);
-	listObjectsItem.push_back(butterfly);
+	LoadButterfly(L"Loadfile\\LoadButterfly.txt");
+	LoadItem(L"Loadfile\\LoadItem.txt");
+	LoadEnemy(L"Loadfile\\LoadEnemy.txt");
 	
-	Item *item = new Item(ITEM_SPIRIT_POINTS_BLU);
-	item->SetEnable(false);
-	//item->SetPosition(100, 100);
-	listItem.push_back(item);
-
-	/*for (int i = 0; i < 2; i++) {*/
-	eagle = new CEagle();
+	/*eagle = new CEagle();
 	eagle->AddAnimation(8001);
 	eagle->SetPosition(200, 45);
-	coObjects.push_back(eagle);
+	coObjects.push_back(eagle);*/
 	
-	
+	scoreboard = new ScoreBoard(ninja, 16, d3ddv, sprite);
 
+	it = new Item(ITEM_ENERGY);
+	it->SetPosition(40, 20);
+	//listIte.push_back(item);
 
-	viewport = new ViewPort(0, 0);
-	grid = new Grid(2048, 176, 256, 88);
+	grid = new Grid(2048, 176, 512, 88);
 	grid->Add(&coObjects);
 
-
-	scoreboard = new ScoreBoard(ninja, 16, d3ddv, sprite);
 }
 
 
 void Update(DWORD dt)
 
 {
+	time1 += dt;
+	scoreboard->Update(16, 500 - time1 * 0.001, 3, 2);
+	grid->GetListOfObjects(&coObjects, viewport);
 	ninja->Update(dt, &coObjects);
-	//time += dt;
-	scoreboard->Update(16, 1000, ninja->GetLife(), 1);
+	
+	scoreboard->Update(16, 150 - time1*0.001, ninja->GetLife(), 1);
 	for (int i = 0; i < listObjectsItem.size(); i++)
 	{
 		listObjectsItem[i]->Update(dt, &coObjects);
@@ -341,18 +399,28 @@ void Update(DWORD dt)
 		}
 
 	}
-	grid->GetListOfObjects(&coObjects, viewport);
-	for (int i = 0; i < listItem.size(); i++)
-	{
-		listItem[i]->Update(dt, &coObjects);
-	}
-	
+	//for (int i = 0; i < listItem.size(); i++)
+	//{
+	//	listItem[i]->Update(dt, &coObjects);
+	//}
+	//it->Update(dt,&coObjects);
+	if (CEnemy::IsStop == true) {
 
+		if (GetTickCount() - CEnemy::timestop_start > 2000)
+		{
+			CEnemy::IsStop = false;
+			CEnemy::timestop = 0;
+			CEnemy::timestop_start = 0;
+		}
+
+	}
+	if (CEnemy::IsStop == false)
 	for (int i = 0; i < coObjects.size(); i++)
 	{
 		coObjects[i]->Update(dt,&coObjects);
 	}
-	if (ninja->x >= SCREEN_WIDTH / 2 - NINJA_BBOX_WIDTH / 2 && ninja->x <= 2048 - SCREEN_WIDTH / 2 - NINJA_BBOX_WIDTH / 2)
+	
+	if (ninja->x >= SCREEN_WIDTH / 2 - NINJA_BBOX_WIDTH / 2  && ninja->x <= 2048 - SCREEN_WIDTH / 2 - NINJA_BBOX_WIDTH / 2)
 	{
 		D3DXVECTOR3 currentViewPortPos = viewport->GetViewPortPosition();
 		currentViewPortPos.x = ninja->x - SCREEN_WIDTH / 2 + NINJA_BBOX_WIDTH / 2;
@@ -382,12 +450,13 @@ void Render()
 		/*D3DXMATRIX mt;
 		D3DXMatrixScaling(&mt, -1.0, -1.0f, .0f);*/
 		tilemap->Render(viewport);
+		scoreboard->Render(viewport);
+		it->Render();
+		//listItem[0]->Render();
 		for (int i = 0; i < listItem.size(); i++)
 		{
 			listItem[i]->Render(viewport);
 		}
-		//listItem[0]->Render();
-		scoreboard->Render(viewport);
 		//listItem[0]->Render(viewport);
 		ninja->Render(viewport);
 		//hiteffect->Render(viewport);

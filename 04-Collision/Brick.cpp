@@ -19,11 +19,11 @@ void CBrick::GetBoundingBox(float &l, float &t, float &r, float &b)
 	b = y + height;
 }
 
-Brick::Brick()
+CBrick::CBrick()
 {
 }
 
-
-Brick::~Brick()
+CBrick::~CBrick()
 {
 }
+

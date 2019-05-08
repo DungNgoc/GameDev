@@ -49,6 +49,8 @@ public:
 
 	void Draw(ViewPort * viewport, float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha);
 
+	void Draw(ViewPort * viewport, float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha, int a);
+
 	void Draw(ViewPort * viewport, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha);
 
 	void Draw(ViewPort * viewport, float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha, bool isLeft);

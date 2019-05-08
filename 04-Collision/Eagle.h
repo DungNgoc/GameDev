@@ -1,13 +1,14 @@
 #pragma once
-#include "GameObject.h"
+#include "Enemy.h"
 #define EAGLE_BBOX_WIDTH     15
 #define EAGLE_BBOX_HEIGHT    15
 	
 #define EAGLE_ANI_RIGHT     0
 	
 #define EAGLE_FLY_SPEED   0.05f
-class CEagle: public CGameObject
+class CEagle: public CEnemy
 {
+	//bool isLeft;
 public:
 	CEagle();
 	

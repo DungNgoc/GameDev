@@ -1,8 +1,10 @@
 #include "Butterfly.h"
 
 
-CButterfly::CButterfly()
+CButterfly::CButterfly():CEnemy(1)
 {
+
+	
 }
 
 void CButterfly::GetBoundingBox(float & left, float & top, float & right, float & bottom)
@@ -20,7 +22,7 @@ void CButterfly::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//
 	// TO-DO: make sure BUTERFLY can interact with the world and to each of them too!
 	// 
-
+	CEnemy::Update(dt);
 	x += dx;
 	y += dy;
 

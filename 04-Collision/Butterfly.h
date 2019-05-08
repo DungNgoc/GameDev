@@ -10,6 +10,7 @@ class CButterfly : public CEnemy
 {
 public:
 	CButterfly();
+	
 	//int untouchable;
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);

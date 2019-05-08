@@ -14,6 +14,7 @@ void LoadObject::Load(string file, vector<LPGAMEOBJECT>* listObject)
 	float y;
 	int width;
 	int height;
+	//int itemtype;
 
 	int count = 0;
 
@@ -27,8 +28,8 @@ void LoadObject::Load(string file, vector<LPGAMEOBJECT>* listObject)
 		if (count == 0)
 		{
 			id = atoi(checkEnd.c_str());
-			input >> type >> x >> y >> width >> height;
-			LoadObjects(id, type, x, y, width, height, listObject);
+			input >> type >> x >> y >> width >> height;// >> itemtype;
+			LoadObjects(id, type, x, y, width, height, listObject);//. , itemtype);
 		}
 	}
 }
@@ -37,15 +38,17 @@ void LoadObject::LoadObjects(int id, int type, float x, float y, int width, int 
 {
 	if (type == 4)
 	{
-		CGameObject *object;
+
+	CGameObject *object;
 		object = new CBrick();
-		object->SetId(id);
 		object->SetType(type);
+		object->SetId(id);
 		object->SetPosition(x, y);
 		object->SetWidth(width);
 		object->SetHeight(height);
 		listObject->push_back(object);
 	}
+	
 }
 
 LoadObject::LoadObject()

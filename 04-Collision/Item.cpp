@@ -14,7 +14,7 @@ Item::Item()
 		this->height = 15;
 		break;
 	case ITEM_SPIRIT_POINTS_RED:
-		this->width = 15;
+		this->width = 14;
 		this->height = 15;
 		break;
 	case ITEM_THROWING_STAR:
@@ -53,7 +53,7 @@ Item::Item()
 		this->width = 12;
 		this->height = 16;
 		break;
-	case ITEM_EXTRA_TIME:
+	case ITEM_TIME_FREEZE:
 		this->width = 12;
 		this->height = 15;
 		break;
@@ -73,7 +73,7 @@ Item::Item(int itemType)
 		this->height = 15;
 		break;
 	case ITEM_SPIRIT_POINTS_RED:
-		this->width = 15;
+		this->width = 16;
 		this->height = 15;
 		break;
 	case ITEM_THROWING_STAR:
@@ -112,7 +112,7 @@ Item::Item(int itemType)
 		this->width = 12;
 		this->height = 16;
 		break;
-	case ITEM_EXTRA_TIME:
+	case ITEM_TIME_FREEZE:
 		this->width = 12;
 		this->height = 15;
 		break;
@@ -147,6 +147,7 @@ void Item::Render(ViewPort *viewport)
 		sprite = sprites->Get(itemType);
 		sprite->Draw(viewport, x, y, 255);
 	}
+	RenderBoundingBox(viewport);
 }
 
 int Item::GetCurrentFrame()
@@ -165,7 +166,7 @@ void Item::GetBoundingBox(float & left, float & top, float & right, float & bott
 {
 	left = x - 1;
 	top = y;
-	right = x + width;
+	right = left + width;
 	bottom = y + height;
 }
 
@@ -173,14 +174,17 @@ void Item::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt, coObjects);
 	//if (itemType != ITEM_MONEY)
-		vy += NINJA_GRAVITY * dt;
+	
 	//vy = 0;
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
-
+	//if (isTouchBrick)
+		//vy = 0;
 	coEvents.clear();
 	if (this->isEnable == true)
 	{
+		//if(!isTouchBrick)
+			vy += NINJA_GRAVITY * dt;
 		CalcPotentialCollisions(coObjects, coEvents);
 	}
 
@@ -214,6 +218,7 @@ void Item::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			if (dynamic_cast<CBrick *>(e->obj))
 			{
+				//isTouchBrick = true;
 				if (e->ny < 0)
 				{
 					x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
@@ -274,7 +279,7 @@ void Item::RandomItem()
 	}
 	else if (percent < 90)
 	{
-		itemType = ITEM_EXTRA_TIME;
+		itemType = ITEM_TIME_FREEZE;
 	}
 	else if (percent < 100)
 	{
