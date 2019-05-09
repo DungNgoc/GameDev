@@ -29,7 +29,6 @@ public:
 	 void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
 	 void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	 static int GetScore();
-	 void Render() = 0;
 	 void AddScore();
 	 static void SetScore(int score);
 	 void Render(ViewPort *viewport);

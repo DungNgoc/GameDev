@@ -118,14 +118,14 @@ void ScoreBoard::Update(int bossHP, int time, int life, int stage)
 		weapon = nullptr;
 		weapon = flames;
 		break;
-	/*case ITEM_ORG_FLO:
+	case ITEM_FIRE_WHEEL:
 		weapon = nullptr;
 		weapon = firewheel;
 		break;
-	case ITEM_BLUE_S:
+	case ITEM_JUMP_AND_SLASH:
 		weapon = nullptr;
 		weapon = jumpandslash;
-		break;*/
+		break;
 	default:
 		break;
 	}
@@ -152,13 +152,17 @@ void ScoreBoard::Render(ViewPort * viewport)
 		count++;
 	}
 	count = 0;
-	for (int i = 0; i<enemyHPList->size(); i++)
+	for (int i = 0; i < enemyHPList->size(); i++)
 	{
 		if (count < bossHP)
 		{
 			enemyHPList->at(i)->Render();
 		}
 		count++;
+	}
+	if (weapon != nullptr)
+	{		weapon->SetPosition(87, 12);
+			weapon->Render();	
 	}
 	
 }

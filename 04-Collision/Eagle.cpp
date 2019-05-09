@@ -24,24 +24,35 @@ void CEagle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//// 
 	x += dx;
 	y += dy;
-	vx = - EAGLE_FLY_SPEED;
-	vy = EAGLE_FLY_SPEED;
+	//
 	
-	if (y >= 90)
+	LimitPos(limitX1, limitX2);
+}
+void CEagle::LimitPos(int limitX1, int limitX2)
+{
+	if(y<=110 && x<= limitX1 ){
+		vx = -EAGLE_FLY_SPEED;
+		vy = EAGLE_FLY_SPEED;
+	}
+	if (y >= 110)
 	{
 		vx = EAGLE_FLY_SPEED;
 		vy = 0;
-	}///*if (vx < 0 && x < 0) {
-	//	x = 0; vx = -vx;
-	//}
-
-	//if (vx > 0 && x > 290) {
-	//	x = 290; vx = -vx;
-	//}*/
+	}
+	if (vx > 0 && x >= limitX2  ) {
+		x = limitX1;
+		y = 45;
+	/*	vx = -EAGLE_FLY_SPEED;
+		vy = -EAGLE_FLY_SPEED;*/
+	}
+	/*if (vx < 0 && x < limitX1) {
+		x = limitX1, vx = -vx;
+		vy = -EAGLE_FLY_SPEED;
+	}*/
 }
-
 void CEagle::Render()
 {
+	
 	
 }
 

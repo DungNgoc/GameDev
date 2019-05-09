@@ -1,0 +1,12 @@
+#pragma once
+#define BACKGROUND_COLOR D3DCOLOR_XRGB(0, 0, 0)
+#define SCREEN_WIDTH 320
+#define SCREEN_HEIGHT 240
+
+#define MAX_FRAME_RATE 120
+
+#define ID_TEX_NINJA 0
+#define ID_TEX_TILESET_31 1
+#define ID_TEX_MISC 20
+#define ID_TEX_SOLDIER 10
+

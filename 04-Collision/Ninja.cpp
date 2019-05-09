@@ -6,17 +6,23 @@
 #include "Game.h"
 #include "Enemy.h"
 bool isHitting = false;
-
+bool Ninja::isThrowing = false;
 
 Ninja::Ninja()
 {
 	untouchable = 0;
 	sword = new Sword();
 	life =03;
-	energy = 0;
+	energy = 35;
 	hp = 16;
 	damage = 1;
 	sword->SetDamage(damage);
+	throwingstar = new CThrowingStar();
+	windmillstar = new CWindmillStar();
+	weapons = throwingstar;
+	
+
+
 }
 
 void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -81,8 +87,35 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 		}
 	}
+	if (isThrowing)
+	{
+		if (animations[ani]->getCurrentFrame() == 2)
+		{
+
+			if (!weapons->GetEnable())
+			{
+				weapons->SetPosition(this->x, this->y);
+				weapons->SetEnable(true);
+
+				if (isLeft)
+					weapons->isLeft = true;
+				else
+					weapons->isLeft = false;
+			}
 
 
+		}
+		if (GetTickCount() - throw_start > NINJA_THROW_TIME)
+		{
+			throw_start = 0;
+			isThrowing = false;
+			this->reset(NINJA_ANI_FIGHT);
+	
+		}
+	
+}
+	if (weapons->GetEnable())
+		weapons->Update(dt, coObjects);
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
@@ -117,8 +150,6 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 							//	isTouchBrick = true;
 							}
 						}
-
-
 					}
 				}
 			}
@@ -161,20 +192,6 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						case  ITEM_SPIRIT_POINTS_RED:
 							energy += 10;
 							break;
-						case ITEM_THROWING_STAR:
-
-							break;
-						case ITEM_WINDMILL_STAR:
-							break;
-						case ITEM_JUMP_AND_SLASH:
-
-							break;
-						case ITEM_FLAMES:
-
-							break;
-						case ITEM_FIRE_WHEEL:
-
-							break;
 						case ITEM_EXTRA_LIFE:
 
 							break;
@@ -195,7 +212,7 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 							CEnemy::StartTimeStop();
 							break;
 						default:
-							//SetTypeOfWeapon(item->GetItemType());
+							SetTypeOfWeapon(item->GetItemType());
 							break;
 						}
 
@@ -248,7 +265,6 @@ void Ninja::SetScore(int score) {
 }
 void Ninja::Render(ViewPort *viewport)
 {
-	int ani = 0;
 	if (nx > 0) {
 		isLeft = true;
 		sword->isLeft = true;
@@ -265,22 +281,13 @@ void Ninja::Render(ViewPort *viewport)
 		if (state == NINJA_STATE_SIT)
 			ani = NINJA_SIT_RIGHT;
 		else ani = NINJA_IDLE_RIGHT;
-		/*if (state == NINJA_STATE_SIT && isHitting)
-		{
-			ani = NINJA_SIT_HIT;
-		}
-		else if (state == NINJA_STATE_SIT)
-			ani = NINJA_SIT_RIGHT;
-		else 
-			ani = NINJA_IDLE_RIGHT;*/
-			
 	}
-	/*if (isHitting && vx == 0)
-	{
+	if (isThrowing) {
+		ani = NINJA_ANI_FIGHT;
 		
-		sword->Render(viewport);
-		ani = NINJA_HIT_RIGHT;
-	}*/
+	}
+	if (weapons->GetEnable())
+		weapons->Render(viewport);
 	if (isHitting && vx == 0)
 	{
 		if (state == NINJA_STATE_SIT)
@@ -303,7 +310,7 @@ void Ninja::Render(ViewPort *viewport)
 	if (untouchable)   alpha = 200;
 	animations[ani]->Render(viewport, x, y, alpha, isLeft);
 	
-
+	
 	RenderBoundingBox(viewport);
 }
 
@@ -361,10 +368,11 @@ void Ninja::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 	left = x;
 	top = y;
 	bottom = y + 32;
-	//if (isJump) 
-	//bottom = y + 22;
-	//
-	//else 
+	if (isJump)
+	{
+		top = y + 10;
+		bottom = top +22;
+	}
 
 		if (state == NINJA_STATE_IDLE || state == NINJA_STATE_SIT)
 		{
@@ -379,34 +387,43 @@ void Ninja::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 
 void Ninja::SetTypeOfWeapon(int type)
 {
-	for (int i = 0; i < 3; i++)
+	
+	switch (type)
 	{
-		switch (type)
-		{
 
-			/*case ITEM_HOLY_WATER:
-				weapons[i] = holywater[i];
-				currentWeapon = type;
-				break;
-			case ITEM_AXE:
-				weapons[i] = axe[i];
-				currentWeapon = type;
-				break;
-			case ITEM_DAGGER:
-				weapons[i] = dagger[i];
-				currentWeapon = type;
-				break;
-			case ITEM_BOOMERANG:
-				weapons[i] = boomerang[i];
-				currentWeapon = type;
-				break;
-			case ITEM_STOP_WATCH:
-				weapons[i] = stopwatch[i];
-				currentWeapon = type;
-				break;*/
-		default:
-			break;
-		}
+	case ITEM_THROWING_STAR:
+		weapons = throwingstar;
+		currentWeapon = type;
+		break;
+	case ITEM_WINDMILL_STAR:
+		weapons = windmillstar;
+		currentWeapon = type;
+		break;
+	case ITEM_FLAMES:
+		//weapons = flames;
+		currentWeapon = type;
+		break;
+	case ITEM_FIRE_WHEEL:
+		//weapons = firewheel;
+		currentWeapon = type;
+		break;
+	case ITEM_JUMP_AND_SLASH:
+		//weapon = jumpandslash;
+		currentWeapon = type;
+		break;
+	default:
+		break;
+	}
+	
+}
+
+void Ninja::StartThrowing()
+{
+	if (!weapons->GetEnable() && (energy - weapons->GetUseEnergy() >= 0))
+	{
+		energy -= weapons->GetUseEnergy();
+		isThrowing = true;
+		throw_start = GetTickCount();
 	}
 }
 

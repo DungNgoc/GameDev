@@ -1,23 +1,3 @@
-/* =============================================================
-	INTRODUCTION TO GAME PROGRAMMING SE102
-	
-	SAMPLE 04 - COLLISION
-
-	This sample illustrates how to:
-
-		1/ Implement SweptAABB algorithm between moving objects
-		2/ Implement a simple (yet effective) collision frame work
-
-	Key functions: 
-		CGame::SweptAABB
-		CGameObject::SweptAABBEx
-		CGameObject::CalcPotentialCollisions
-		CGameObject::FilterCollision
-
-		CGameObject::GetBoundingBox
-		
-================================================================ */
-
 #include <windows.h>
 #include <d3d9.h>
 #include <d3dx9.h>
@@ -38,12 +18,17 @@
 #include "Panther.h"
 #include "Butterfly.h"
 #include "Eagle.h"
+#include "Zoombie.h"
 
 #include "main.h"
 
 
 #include "LoadObject.h"
 #include "ScoreBoard.h"
+
+
+#include "ThrowingStar.h"
+#include "WindmillStar.h"
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"04 - Collision"
@@ -66,10 +51,13 @@ Ninja *ninja;
 LoadObject *loadobjects;
 ViewPort *viewport;
 TileMap *tilemap;
+
 CSoldier *soldier;
 CPanther *panther;
 CButterfly *butterfly;
 CEagle *eagle;
+CZoombie *zoombie;
+
 DWORD time1 = 0;
 Item *it;
 int stage = 1;
@@ -77,7 +65,9 @@ ScoreBoard *scoreboard;
 
 
 
-//HitEffect *hiteffect;
+//CThrowingStar *ts;
+CWindmillStar *ws;
+
 vector<LPGAMEOBJECT> listObjectsItem;
 vector<LPGAMEOBJECT> listItem;
 vector<LPGAMEOBJECT> coObjects;
@@ -109,7 +99,11 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	case DIK_T:
 		ninja->SetPosition(0, 0);
 		break;
+	case DIK_C:
+		ninja->StartThrowing();
 	}
+	
+	
 	
 }
 
@@ -167,12 +161,6 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-/*
-	Load all game resources 
-	In this example: load textures, sprites, animations and ninja object
-
-	TO-DO: Improve this function by loading texture,sprite,animation,object from file
-*/
 
 void LoadTextures(wstring file) {
 	wifstream input;
@@ -275,12 +263,7 @@ void LoadButterfly(wstring file) {
 				coObjects.push_back(butterfly);
 				listObjectsItem.push_back(butterfly);
 			}
-			else if (id == 8001) {
-				eagle = new CEagle();
-				eagle->AddAnimation(id);
-				eagle->SetPosition(x,y);
-				coObjects.push_back(eagle);
-			}
+			
 			
 		}
 
@@ -300,13 +283,40 @@ void LoadEnemy(wstring file) {
 		else {
 			id = stoi(checkEND.c_str());
 			input >> x >> y >>limitX1 >>limitX2;
-			soldier = new CSoldier();
-			soldier->AddAnimation(3001);
-			soldier->SetPosition(x, y);
-			soldier->SetLimitX(limitX1, limitX2);
-			soldier->SetState(SOLDIER_STATE_WALKING);
-			coObjects.push_back(soldier);
+			if (id == 3001) {
+				soldier = new CSoldier();
+				soldier->AddAnimation(id);
+				soldier->SetPosition(x, y);
+				soldier->SetLimitX(limitX1, limitX2);
+				soldier->SetState(SOLDIER_STATE_WALKING);
+				coObjects.push_back(soldier);
+			}
+			else if (id == 5001) {
+				panther = new CPanther();
+				panther->AddAnimation(id);
+				panther->SetPosition(x , y);
+				panther->SetLimitX(limitX1, limitX2);
+				panther->SetState(PANTHER_STATE_WALKING);
+				coObjects.push_back(panther);
+			}
+			else if (id == 8001) {
+				eagle = new CEagle();
+				eagle->AddAnimation(id);
+				eagle->SetPosition(x, y);
+				eagle->SetLimitX(limitX1, limitX2);
+				coObjects.push_back(eagle);
+			}
+			else if (id == 12001) {
+				zoombie = new CZoombie();
+				zoombie->AddAnimation(id);
+				zoombie->SetPosition(x, y);
+				zoombie->SetLimitX(limitX1, limitX2);
+				zoombie->SetState(ZOOMBIE_STATE_WALKING);
+				coObjects.push_back(zoombie);
+			}
+			
 		}
+		
 	}
 }
 void LoadResources(LPDIRECT3DDEVICE9 d3ddv, LPD3DXSPRITE sprite)
@@ -335,25 +345,20 @@ void LoadResources(LPDIRECT3DDEVICE9 d3ddv, LPD3DXSPRITE sprite)
 	ninja->AddAnimation(1004);//spin right
 	ninja->AddAnimation(1005);//idle sit
 	ninja->AddAnimation(1006);//hit sit
-
+	ninja->AddAnimation(1007);//fight
 	
 
-	ninja->SetPosition(0, 50);
+	ninja->SetPosition(0, 100);
 	
 	loadobjects = new LoadObject();
 	loadobjects->Load("Loadfile\\LoadObject.txt", &coObjects);
 	
 
 	
-	for (int i = 0; i < 1; i++)
-	{
-		panther = new CPanther();
-		panther->AddAnimation(5001);
-		//panther->AddAnimation(5002);
-		panther->SetPosition(150 , 147);
-		panther->SetState(PANTHER_STATE_WALKING);
-		coObjects.push_back(panther);
-	}
+	//for (int i = 0; i < 1; i++)
+	//{
+	//	
+	//}
 	
 	LoadButterfly(L"Loadfile\\LoadButterfly.txt");
 	LoadItem(L"Loadfile\\LoadItem.txt");
@@ -372,6 +377,13 @@ void LoadResources(LPDIRECT3DDEVICE9 d3ddv, LPD3DXSPRITE sprite)
 
 	grid = new Grid(2048, 176, 512, 88);
 	grid->Add(&coObjects);
+
+
+
+	/*ts = new CThrowingStar();
+	ts->SetPosition(ninja->x,ninja->y);*/
+
+	//ws = new CWindmillStar();
 
 }
 
@@ -452,11 +464,13 @@ void Render()
 		tilemap->Render(viewport);
 		scoreboard->Render(viewport);
 		it->Render();
+	//	ts->Render(viewport);
 		//listItem[0]->Render();
 		for (int i = 0; i < listItem.size(); i++)
 		{
 			listItem[i]->Render(viewport);
 		}
+		
 		//listItem[0]->Render(viewport);
 		ninja->Render(viewport);
 		//hiteffect->Render(viewport);

@@ -27,12 +27,16 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	x += dx;
 	y += dy;
 
-	if (vx < 0 && x < 0) {
-		x = 0; vx = -vx;
+	LimitPos(limitX1, limitX2);
+}
+void CPanther::LimitPos(int limitX1, int limitX2)
+{
+	if (vx < 0 && x < limitX1) {
+		x = limitX1; vx = -vx;
 	}
 
-	if (vx > 0 && x > 290) {
-		x = 290; vx = -vx;
+	if (vx > 0 && x > limitX2) {
+		x = limitX2; vx = -vx;
 	}
 }
 void CPanther::Render() {}

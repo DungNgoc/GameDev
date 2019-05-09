@@ -55,7 +55,7 @@ void CSoldier::Render(ViewPort * viewport)
 
 void CSoldier::LimitPos(int limitX1, int limitX2)
 {
-	if (vx < 0 && x < 0) {
+	if (vx < 0 && x < limitX1) {
 		x = limitX1; vx = -vx;
 	}
 

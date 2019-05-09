@@ -1,5 +1,5 @@
 #include "Grid.h"
-#define SCREEN_WIDTH 680
+#define SCREEN_WIDTH 320
 #define SCREEN_HEIGHT 240
 
 
@@ -68,7 +68,7 @@ void Grid::GetListOfObjects(vector<LPGAMEOBJECT>* list_object, ViewPort * viewpo
 	/*if (xe == columns - 1)
 		xe += 1;*/
 	for (i = ys; i < ye; i++)
-		for (j = xs; j < xe; j++)
+		for (j = xs; j <= xe; j++)
 		{
 			if (cells[i][j].GetListObjects().size() != 0)
 				for (k = 0; k < cells[i][j].GetListObjects().size(); k++)
