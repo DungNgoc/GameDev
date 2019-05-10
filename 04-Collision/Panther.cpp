@@ -19,11 +19,7 @@ void CPanther::GetBoundingBox(float &left, float &top, float &right, float &bott
 void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	CGameObject::Update(dt, coObjects);
-
-	//
-	// TO-DO: make sure SOLDIER can interact with the world and to each of them too!
-	// 
-
+	CEnemy::Update(dt);
 	x += dx;
 	y += dy;
 
@@ -55,9 +51,21 @@ void CPanther::Render(ViewPort * viewport)
 	{
 		isLeft = true;
 	}
-	animations[ani]->Render(viewport, x, y, alpha, isLeft);
+	CEnemy::Render(viewport);
+	if (GetEnable())
+		animations[ani]->Render(viewport, x, y, alpha, isLeft);
 
 	RenderBoundingBox(viewport);
+}
+
+CPanther::CPanther() :CEnemy(1)
+{
+	damage = 1;
+	point = 100;
+}
+
+CPanther::~CPanther()
+{
 }
 
 void CPanther::SetState(int state)

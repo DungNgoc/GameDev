@@ -65,12 +65,16 @@ class Ninja: public CGameObject
 	int ny;
 	int currentWeapon;
 	int ani;
+	bool isUseWeapon;
 public:
 	CWeapon * weapons;
 	CThrowingStar *throwingstar;
 	CWindmillStar *windmillstar;
 	Ninja(); //: CGameObject()
-
+	
+	bool GetUseWeapon() {
+		return isUseWeapon;
+	}
 	bool get() {
 		return isHitting;
 	}

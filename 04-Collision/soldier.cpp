@@ -18,10 +18,6 @@ void CSoldier::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	CGameObject::Update(dt, coObjects);
 
-	//
-	// TO-DO: make sure SOLDIER can interact with the world and to each of them too!
-	// 
-	//vy += SOLDIER_GRAVITY * dt;
 	CEnemy::Update(dt);
 	x += dx;
 	y += dy;

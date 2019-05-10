@@ -123,6 +123,9 @@
     <ClInclude Include="Textures.h">
       <Filter>Header Files\Sprite</Filter>
     </ClInclude>
+    <ClInclude Include="ZoombieSword.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="debug.cpp">
@@ -205,6 +208,9 @@
     </ClCompile>
     <ClCompile Include="Textures.cpp">
       <Filter>Source Files\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="ZoombieSword.cpp">
+      <Filter>Source Files\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

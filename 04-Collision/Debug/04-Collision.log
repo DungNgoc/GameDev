@@ -1,1 +1,9 @@
-﻿  04-Collision.vcxproj -> C:\Users\DungNgoc\Desktop\Game\GameDev\Debug\04-Collision.exe
+﻿  Ninja.cpp
+c:\users\dungngoc\desktop\game\gamedev\04-collision\hiteffect.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\game\gamedev\04-collision\hiteffect.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\game\gamedev\04-collision\gameobject.h(69): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\game\gamedev\04-collision\gameobject.h(72): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\game\gamedev\04-collision\ninja.cpp(354): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\dungngoc\desktop\game\gamedev\04-collision\ninja.cpp(358): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\dungngoc\desktop\game\gamedev\04-collision\ninja.cpp(361): warning C4305: '=': truncation from 'double' to 'float'
+  04-Collision.vcxproj -> C:\Users\DungNgoc\Desktop\Game\GameDev\Debug\04-Collision.exe

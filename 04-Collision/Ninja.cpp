@@ -20,7 +20,7 @@ Ninja::Ninja()
 	throwingstar = new CThrowingStar();
 	windmillstar = new CWindmillStar();
 	weapons = throwingstar;
-	
+	isUseWeapon = false;
 
 
 }
@@ -91,7 +91,7 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	{
 		if (animations[ani]->getCurrentFrame() == 2)
 		{
-
+			if(isUseWeapon)
 			if (!weapons->GetEnable())
 			{
 				weapons->SetPosition(this->x, this->y);
@@ -212,6 +212,7 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 							CEnemy::StartTimeStop();
 							break;
 						default:
+							isUseWeapon = true;
 							SetTypeOfWeapon(item->GetItemType());
 							break;
 						}
@@ -265,6 +266,7 @@ void Ninja::SetScore(int score) {
 }
 void Ninja::Render(ViewPort *viewport)
 {
+	ani = 0;
 	if (nx > 0) {
 		isLeft = true;
 		sword->isLeft = true;
@@ -421,6 +423,7 @@ void Ninja::StartThrowing()
 {
 	if (!weapons->GetEnable() && (energy - weapons->GetUseEnergy() >= 0))
 	{
+		if(isUseWeapon)
 		energy -= weapons->GetUseEnergy();
 		isThrowing = true;
 		throw_start = GetTickCount();

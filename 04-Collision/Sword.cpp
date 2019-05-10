@@ -103,7 +103,7 @@ void Sword::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_object)
 					enemy->GetHitEffect()->SetEnable(true);
 					if (enemy->GetEnable()) {
 						enemy->SetHP(enemy->GetHP() - this->damage);
-						//Ninja::SetScore(Ninja::GetScore());
+					
 					}
 				}
 			}
