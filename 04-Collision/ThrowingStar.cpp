@@ -45,7 +45,7 @@ void CThrowingStar::Update (DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CThrowingStar::Render(ViewPort *viewport)
 {
 	CWeapon::Render(viewport);
-	RenderBoundingBox(viewport);
+	//RenderBoundingBox(viewport);
 }
 
 void CThrowingStar::GetBoundingBox(float & left, float & top, float & right, float & bottom)

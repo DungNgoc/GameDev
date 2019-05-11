@@ -124,7 +124,7 @@
       <Filter>Header Files\Sprite</Filter>
     </ClInclude>
     <ClInclude Include="ZoombieSword.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

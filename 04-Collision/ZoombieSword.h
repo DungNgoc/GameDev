@@ -7,8 +7,8 @@
 	
 #define ZOOMBIE_SWORD_ANI_HIT 0
 		
-#define ZOOMBIE_SWORD_BBOX_HEIGHT 8
-#define ZOOMBIE_SWORD_BBOX_WIDTH  21
+#define ZOOMBIE_SWORD_BBOX_HEIGHT 16
+#define ZOOMBIE_SWORD_BBOX_WIDTH  8
 		
 #define ZOOMBIE_NINJA_BBOX_WIDTH 20
 class CZoombieSword:public CGameObject
@@ -21,7 +21,7 @@ public:
 	CZoombieSword();
 	~CZoombieSword();
 	void ResetAnimation();
-	void SetPosition(float x, float y, bool Issit);
+	void SetPosition(float x, float y);
 	void Render();
 	void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	void Render(ViewPort *viewport);

@@ -46,7 +46,7 @@ void CSoldier::Render(ViewPort * viewport)
 	if(GetEnable())
 		animations[ani]->Render(viewport, x, y, alpha, isLeft);
 	//if(GetEnable())
-	RenderBoundingBox(viewport);
+	//RenderBoundingBox(viewport);
 }
 
 void CSoldier::LimitPos(int limitX1, int limitX2)

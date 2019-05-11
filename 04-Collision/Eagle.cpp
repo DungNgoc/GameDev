@@ -11,20 +11,21 @@ CEagle::CEagle():CEnemy(1)
 
 void CEagle::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
-	//if (ani->getCurrentFrame() == EAGLE_ANI_1)
+	if (animations[0]->getCurrentFrame() == EAGLE_ANI_1)
 	{
 		left = x;
-		top = y;
-		right = x + EAGLE_BBOX_WIDTH;
-		bottom = y + EAGLE_BBOX_HEIGHT;
+		top = y + EAGLE_BBOX_HEIGHT;
+		right = left  + EAGLE_BBOX_WIDTH;
+		bottom = top + EAGLE_BBOX_HEIGHT;
+		
 	}
-	//else if (ani->getCurrentFrame() == EAGLE_ANI_2)
-	/*{
+	else
+	{
 		left = x;
 		top = y;
 		right = x + 17;
 		bottom = y + 25;
-	}*/
+	}
 }
 
 void CEagle::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -46,14 +47,15 @@ void CEagle::LimitPos(int limitX1, int limitX2)
 	
 	if (y >= 110)
 	{
-		if (vx > 0 && x >= limitX2) {
-			x = limitX2;
-			vx = -EAGLE_FLY_SPEED;
-			vy = 0;
-		}else {
+		//if (x <limitX2) {
 			vx = EAGLE_FLY_SPEED;
 			vy = 0;
-		}
+		//}
+		//else if(x>=limitX2){
+		//	vx = -EAGLE_FLY_SPEED;
+		//	vy = 0;
+		//}
+			
 		
 	}
 
@@ -76,9 +78,10 @@ void CEagle::Render(ViewPort * viewport)
 	{
 		isLeft = true;
 	}
+	if (GetEnable())
 	animations[ani]->Render(viewport, x, y, alpha, isLeft);
 
-	RenderBoundingBox(viewport);
+//	RenderBoundingBox(viewport);
 }
 
 

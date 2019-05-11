@@ -1,5 +1,5 @@
 #include "Panther.h"
-
+#include "Brick.h"
 
 
 void CPanther::GetBoundingBox(float &left, float &top, float &right, float &bottom)
@@ -8,16 +8,28 @@ void CPanther::GetBoundingBox(float &left, float &top, float &right, float &bott
 	left = x;
 	top = y;
 	right = x + PANTHER_BBOX_WIDTH;
-	bottom = y + PANTHER_BBOX_HEIGHT;
+	bottom = top + PANTHER_BBOX_HEIGHT;
 
-	//if (state == PANTHER_STATE_DIE)
-		//bottom = y + SOLDIER_BBOX_HEIGHT_DIE;
-	//else
-	//	bottom = y + SOLDIER_BBOX_HEIGHT;
 }
 
 void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
+	if (isEnable == true)
+		vy += 0.000900 * dt;
+	for (UINT i = 0; i < coObjects->size(); i++)
+	{
+		if (dynamic_cast<CBrick *>(coObjects->at(i)))
+		{
+			CBrick *brick = dynamic_cast<CBrick *>(coObjects->at(i));
+			float l1, t1, r1, b1, l2, t2, r2, b2;
+			GetBoundingBox(l1, t1, r1, b1);
+			brick->GetBoundingBox(l2, t2, r2, b2);
+			if (t1 <= b2 && b1 >= t2 && l1 <= r2 && r1 >= l2) {
+				vy = -0.09;
+				//isEnable = false;
+			}
+		}
+	}
 	CGameObject::Update(dt, coObjects);
 	CEnemy::Update(dt);
 	x += dx;
@@ -39,10 +51,8 @@ void CPanther::Render() {}
 void CPanther::Render(ViewPort * viewport)
 {
 	int ani = PANTHER_ANI_WALKING;
-	isLeft = true;
-	//if (state == PANTHER_STATE_DIE) {
-	//	ani = PANTHER_ANI_DIE;
-	//}
+	//isLeft = true;
+	
 	int alpha = 255;
 	if (untouchable)   alpha = 255;
 	if (vx < 0)
@@ -51,11 +61,11 @@ void CPanther::Render(ViewPort * viewport)
 	{
 		isLeft = true;
 	}
-	CEnemy::Render(viewport);
+	//CEnemy::Render(viewport);
 	if (GetEnable())
 		animations[ani]->Render(viewport, x, y, alpha, isLeft);
 
-	RenderBoundingBox(viewport);
+	//RenderBoundingBox(viewport);
 }
 
 CPanther::CPanther() :CEnemy(1)

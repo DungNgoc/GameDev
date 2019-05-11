@@ -13,13 +13,13 @@ Ninja::Ninja()
 	untouchable = 0;
 	sword = new Sword();
 	life =03;
-	energy = 35;
+	energy = 0;
 	hp = 16;
 	damage = 1;
 	sword->SetDamage(damage);
 	throwingstar = new CThrowingStar();
 	windmillstar = new CWindmillStar();
-	weapons = throwingstar;
+	weapons =  new CWeapon();
 	isUseWeapon = false;
 
 
@@ -56,7 +56,7 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		if (nx>0)
 			sword->isLeft = false;
 		else sword->isLeft = true;
-		sword->SetPosition(x, y, false);
+		sword->SetPosition(x, y, isSit);
 		if (sword->GetCurrentFrame() == 2)
 			sword->Update(dt, coObjects);
 		if (GetTickCount() - hitting_start > NINJA_HITTING_TIME)
@@ -77,7 +77,8 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		untouchable_start = 0;
 		untouchable = 0;
 	}
-
+	if (this->GetState() != NINJA_STATE_SIT)
+		isSit = false;
 	if (isHurt) {
 		if (GetTickCount() - hurtable_start > 600)
 		{
@@ -202,10 +203,10 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 							SetScore(GetScore() + 1000);
 							break;
 						case ITEM_HEALTH_BLU:
-
+							hp++;
 							break;
 						case ITEM_HEALTH_RED:
-
+							hp += 2;
 							break;
 						case ITEM_TIME_FREEZE:
 							CEnemy::IsStop = true;
@@ -313,7 +314,7 @@ void Ninja::Render(ViewPort *viewport)
 	animations[ani]->Render(viewport, x, y, alpha, isLeft);
 	
 	
-	RenderBoundingBox(viewport);
+	//RenderBoundingBox(viewport);
 }
 
 void Ninja::SetState(int state)
@@ -343,7 +344,7 @@ void Ninja::SetState(int state)
 
 	case NINJA_STATE_SIT:
 		vx = 0;
-		
+		isSit = true;
 		break;
 
 	case NINJA_STATE_HURT:

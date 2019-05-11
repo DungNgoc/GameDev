@@ -4,6 +4,7 @@
 
 ScoreBoard::ScoreBoard()
 {
+	
 }
 
 
@@ -13,8 +14,7 @@ ScoreBoard::ScoreBoard(Ninja * ninja, int bossHP, LPDIRECT3DDEVICE9 d3ddv, LPD3D
 	this->ninja = ninja;
 	this->d3ddv = d3ddv;
 	this->spriteHandler = spriteHandler;
-	/*BlackObject = new blackObject(SCREEN_WIDTH, 80);
-	startkeyobject->SetPosition(0, 0);*/
+	
 
 	ninjaHPList = new std::vector<HP*>();
 	for (int i = 0; i < 16; i++)
@@ -38,13 +38,14 @@ ScoreBoard::ScoreBoard(Ninja * ninja, int bossHP, LPDIRECT3DDEVICE9 d3ddv, LPD3D
 		noHPList->push_back(noHP);
 	}
 
-	spiritpoints = new Item(ITEM_SPIRIT_POINTS_BLU);
-	spiritpoints->SetPosition(80, 43);
+	/*spiritpoints = new Item(ITEM_SPIRIT_POINTS_BLU);
+	spiritpoints->SetPosition(80, 43);*/
 
 	throwingstar = new Item(ITEM_THROWING_STAR);
-	throwingstar->SetPosition(335, 45);
+	//throwingstar->SetPosition(335, 45);
 
-	//windmillstar = new Item(ITEM_BLUE_WATER);
+	windmillstar = new Item(ITEM_WINDMILL_STAR);
+	
 	//holyWater->SetPosition(335, 45);
 
 	//boomerang = new Item(ITEM_BOOMERANG);
@@ -97,11 +98,13 @@ void ScoreBoard::Update(int bossHP, int time, int life, int stage)
 	wstring stageString = to_wstring(this->stage);
 	while (stageString.length() < 2)
 		stageString = L"0" + stageString;
-
+	wstring energyString = to_wstring(ninja->GetEnergy());
+	while (energyString.length() < 2)
+		energyString = L"0" + energyString;
 
 	information =  L"SCORE - " + scoreString  + L" STAGE -" + stageString + L"\n";
 	information += L"TIME - " + timeString+ L"         PLAYER                             "  + L"\n";
-	information += L"P-0" + to_wstring(ninja->GetLife())+ L"      - "+ to_wstring(ninja->GetEnergy()) +L"           ENEMY                          "+ L"\n";
+	information += L"P-0" + to_wstring(ninja->GetLife())+ L"      - "+ energyString +L"         ENEMY                          "+ L"\n";
 
 
 	switch (ninja->GetTypeOfWeapon())
@@ -134,6 +137,7 @@ void ScoreBoard::Update(int bossHP, int time, int life, int stage)
 void ScoreBoard::Render(ViewPort * viewport)
 {
 	RECT newRect;
+	
 	//startkeyobject->Render();
 	SetRect(&newRect, 0, 0, SCREEN_WIDTH, 100);
 	font->DrawText(spriteHandler, information.c_str(), -1, &rect, DT_LEFT, D3DCOLOR_XRGB(255, 255, 255));
@@ -164,5 +168,8 @@ void ScoreBoard::Render(ViewPort * viewport)
 	{		weapon->SetPosition(87, 12);
 			weapon->Render();	
 	}
+	it = new Item(ITEM_ENERGY);
+	it->SetPosition(40, 20);
+	it->Render();
 	
 }

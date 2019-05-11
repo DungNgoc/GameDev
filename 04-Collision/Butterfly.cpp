@@ -56,7 +56,7 @@ void CButterfly::Render(ViewPort * viewport)
 	if(GetEnable())
 		animations[ani]->Render(viewport, x, y, alpha, isLeft);
 
-	RenderBoundingBox(viewport);
+	//RenderBoundingBox(viewport);
 }
 
 CButterfly::~CButterfly()

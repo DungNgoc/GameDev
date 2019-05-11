@@ -116,6 +116,8 @@ Item::Item(int itemType)
 		this->width = 12;
 		this->height = 15;
 		break;
+
+
 	default:
 		break;
 	}
@@ -125,6 +127,8 @@ Item::Item(int itemType)
 
 Item::~Item()
 {
+
+
 }
 
 void Item::SetState(int state)
@@ -142,12 +146,13 @@ void Item::Render(ViewPort *viewport)
 {
 	if (this->isEnable == true) {
 		
-		//animations[0]->Render(viewport, x, y);
+		
 		CSprites * sprites = CSprites::GetInstance();
 		sprite = sprites->Get(itemType);
 		sprite->Draw(viewport, x, y, 255);
 	}
-	RenderBoundingBox(viewport);
+	//RenderBoundingBox(viewport);
+	
 }
 
 int Item::GetCurrentFrame()
@@ -160,6 +165,7 @@ void Item::Render()
 	CSprites * sprites = CSprites::GetInstance();
 	sprite = sprites->Get(itemType);
 	sprite->Draw(x, y);
+	
 }
 
 void Item::GetBoundingBox(float & left, float & top, float & right, float & bottom)
@@ -188,15 +194,6 @@ void Item::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		CalcPotentialCollisions(coObjects, coEvents);
 	}
 
-	//reset untouchable timer if untouchable time has passed
-
-	/*if (this->GetState() == ITEM_STATE_UP)
-	{
-		vy += -0.00100f;
-		if (vy <= -0.118f)
-			this->SetState(ITEM_STATE_IDLE);
-
-	}*/
 
 
 	if (coEvents.size() == 0)
@@ -210,8 +207,6 @@ void Item::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
 
-		//block 
-		// nx*0.4f : need to push out a bit to avoid overlapping next frame
 
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{

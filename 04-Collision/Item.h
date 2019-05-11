@@ -42,6 +42,7 @@ class Item : public CGameObject
 	int itemType;
 	CAnimation *anirender;
 	bool isTouchBrick;
+	Item *it;
 public:
 	Item();
 	Item(int itemType);

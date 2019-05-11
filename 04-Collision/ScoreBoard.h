@@ -31,6 +31,7 @@ private:
 	Item* flames;
 	Item* firewheel;
 	Item* jumpandslash;
+	Item*it;
 		
 	int bossHP;
 	int score;

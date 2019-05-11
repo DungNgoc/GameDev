@@ -51,6 +51,7 @@ class Ninja: public CGameObject
 	bool isMoveSquare;
 	bool isMoveSinWave;
 	bool isHitting;
+	bool isSit;
 	
 	bool isJump;
 	bool isTouchBrick;

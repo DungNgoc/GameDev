@@ -47,6 +47,7 @@ public:
 	float height;
 	int id;
 	int nx;
+	int ny;
 	int type;
 	int state;
 	bool isLeft;

@@ -58,15 +58,17 @@ CButterfly *butterfly;
 CEagle *eagle;
 CZoombie *zoombie;
 
+
+
 DWORD time1 = 0;
-Item *it;
+
 int stage = 1;
 ScoreBoard *scoreboard;
 
 
 
-//CThrowingStar *ts;
-CWindmillStar *ws;
+CThrowingStar *ts;
+//CWindmillStar *ws;
 
 vector<LPGAMEOBJECT> listObjectsItem;
 vector<LPGAMEOBJECT> listItem;
@@ -348,42 +350,25 @@ void LoadResources(LPDIRECT3DDEVICE9 d3ddv, LPD3DXSPRITE sprite)
 	ninja->AddAnimation(1007);//fight
 	
 
-	ninja->SetPosition(0, 100);
+	ninja->SetPosition(1220, 100);
 	
 	loadobjects = new LoadObject();
 	loadobjects->Load("Loadfile\\LoadObject.txt", &coObjects);
 	
-
-	
-	//for (int i = 0; i < 1; i++)
-	//{
-	//	
-	//}
 	
 	LoadButterfly(L"Loadfile\\LoadButterfly.txt");
 	LoadItem(L"Loadfile\\LoadItem.txt");
 	LoadEnemy(L"Loadfile\\LoadEnemy.txt");
 	
-	/*eagle = new CEagle();
-	eagle->AddAnimation(8001);
-	eagle->SetPosition(200, 45);
-	coObjects.push_back(eagle);*/
+	
 	
 	scoreboard = new ScoreBoard(ninja, 16, d3ddv, sprite);
+	
 
-	it = new Item(ITEM_ENERGY);
-	it->SetPosition(40, 20);
-	//listIte.push_back(item);
+	
 
 	grid = new Grid(2048, 176, 512, 88);
 	grid->Add(&coObjects);
-
-
-
-	/*ts = new CThrowingStar();
-	ts->SetPosition(ninja->x,ninja->y);*/
-
-	//ws = new CWindmillStar();
 
 }
 
@@ -392,7 +377,7 @@ void Update(DWORD dt)
 
 {
 	time1 += dt;
-	scoreboard->Update(16, 500 - time1 * 0.001, 3, 2);
+//	scoreboard->Update(16, 500 - time1 * 0.001, 3, 2);
 	grid->GetListOfObjects(&coObjects, viewport);
 	ninja->Update(dt, &coObjects);
 	
@@ -459,21 +444,15 @@ void Render()
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 	
-		/*D3DXMATRIX mt;
-		D3DXMatrixScaling(&mt, -1.0, -1.0f, .0f);*/
+		
 		tilemap->Render(viewport);
 		scoreboard->Render(viewport);
-		it->Render();
-	//	ts->Render(viewport);
-		//listItem[0]->Render();
 		for (int i = 0; i < listItem.size(); i++)
 		{
 			listItem[i]->Render(viewport);
 		}
 		
-		//listItem[0]->Render(viewport);
 		ninja->Render(viewport);
-		//hiteffect->Render(viewport);
 		for (int i = 0; i < coObjects.size(); i++)
 			coObjects[i]->Render(viewport);
 		

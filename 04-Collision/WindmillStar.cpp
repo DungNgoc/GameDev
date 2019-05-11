@@ -7,16 +7,35 @@ CWindmillStar::CWindmillStar()
 	this->AddAnimation(13001);
 	useEnergy = 5;
 	damage = 1;
+	nx = -1;
 }
 
 
 CWindmillStar::~CWindmillStar()
 {
 }
-
+//void CWindmillStar::CalculateNinjaPos(Ninja *ninja, DWORD dt) {
+//
+//	if (flytoboundingviewport == true)
+//	{
+//		distance = sqrt(
+//			pow(ninjaPos.x - x, 2) +
+//			pow(ninjaPos.y - y, 2));
+//
+//		nx = (ninjaPos.x - x) / distance;
+//		ny = (ninjaPos.y - y) / distance;
+//	}
+//}
 void CWindmillStar::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CWeapon::Update(dt, coObjects);
+	if (isLeft)
+		vx = 0.2;
+	else vx = -0.2;
+	/*D3DXVECTOR2 currentvp = viewport->GetViewPortPosition();
+
+	if (x > currentvp.x + SCREEN_WIDTH || x < currentvp.x)
+		vx = -vx;*/
 	for (UINT i = 0; i < coObjects->size(); i++)
 	{
 		if (dynamic_cast<CEnemy *>(coObjects->at(i))) {
@@ -34,19 +53,20 @@ void CWindmillStar::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						enemy->SetHP(enemy->GetHP() - this->damage);
 						Ninja::isThrowing = false;
 						enemy->GetHitEffect()->SetEnable(true);
-						isEnable = false;
+						//isEnable = false;
 					}
 				}
 			}
 
 		}
 	}
+
 }
 
 void CWindmillStar::Render(ViewPort * viewport)
 {
 	CWeapon::Render(viewport);
-	RenderBoundingBox(viewport);
+	//RenderBoundingBox(viewport);
 }
 
 void CWindmillStar::GetBoundingBox(float & left, float & top, float & right, float & bottom)
@@ -71,4 +91,5 @@ void CWindmillStar::SetPosition(float & x, float & y)
 {
 	CGameObject::SetPosition(x, y);
 	x += NINJA_BBOX_WIDTH / 2;
+
 }
