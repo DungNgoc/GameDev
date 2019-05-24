@@ -46,5 +46,5 @@ void ViewPort::SetViewPortPosition(float x, float y)
 
 D3DXVECTOR3 ViewPort::GetViewPortPosition()
 {
-	return viewPortPos;
+	return this->viewPortPos;
 }

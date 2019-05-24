@@ -69,6 +69,6 @@ void CThrowingStar::GetBoundingBox(float & left, float & top, float & right, flo
 
 void CThrowingStar::SetPosition(float & x, float & y)
 {
-	CGameObject::SetPosition(x, y);
+	CGameObject::SetPosition(x+5, y);
 	x += NINJA_BBOX_WIDTH / 2;
 }

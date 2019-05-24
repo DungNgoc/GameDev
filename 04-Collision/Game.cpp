@@ -107,7 +107,7 @@ void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top
 	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
 	//spriteHandler->End();
 }
-void CGame::Draw(D3DXVECTOR3 position, LPDIRECT3DTEXTURE9 texture, RECT rect, int alpha)
+void CGame::Draw(D3DXVECTOR3 &position, LPDIRECT3DTEXTURE9 texture, RECT &rect, int alpha)
 {
 	//spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 	spriteHandler->Draw(texture, &rect, NULL, &position, D3DCOLOR_ARGB(alpha, 255, 255, 255));

@@ -1,6 +1,6 @@
 #pragma once
 #include "Weapon.h"
-#define NINJA_BBOX_WIDTH 20
+
 class CThrowingStar: public CWeapon
 {
 public:

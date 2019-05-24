@@ -45,7 +45,7 @@ public:
 	void Init(HWND hWnd);
 	void Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha = 255);
 
-	void Draw(D3DXVECTOR3 position, LPDIRECT3DTEXTURE9 texture, RECT rect, int alpha);
+	void Draw(D3DXVECTOR3 &position, LPDIRECT3DTEXTURE9 texture, RECT &rect, int alpha);
 
 	void Draw(ViewPort * viewport, float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha);
 

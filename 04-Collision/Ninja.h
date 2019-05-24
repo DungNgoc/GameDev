@@ -5,34 +5,7 @@
 #include "ThrowingStar.h"
 #include "WindmillStar.h"
 
-#define NINJA_WALKING_RIGHT		0
-#define NINJA_IDLE_RIGHT		1
-#define NINJA_HIT_RIGHT         2
-#define NINJA_ANI_JUMP			3
-#define NINJA_SIT_RIGHT         4
-#define NINJA_SIT_HIT			5
-#define NINJA_ANI_FIGHT         6
 
-#define NINJA_STATE_HIT -5
-#define NINJA_STATE_WALKING_RIGHT -4
-#define NINJA_STATE_WALKING_LEFT -3
-#define NINJA_STATE_DIE        -2
-#define NINJA_STATE_IDLE      0
-#define NINJA_STATE_JUMP      1
-#define NINJA_STATE_SIT		  2
-#define NINJA_STATE_
-
-#define NINJA_STATE_HURT      3
-
-#define NINJA_WALKING_SPEED 0.1f
-
-#define NINJA_BBOX_WIDTH  20
-
-#define NINJA_GRAVITY 0.002f
-#define NINJA_JUMP_SPEED_Y		0.5f
-
-#define NINJA_HITTING_TIME 300
-#define NINJA_THROW_TIME 300
 
 class Ninja: public CGameObject
 {
@@ -68,11 +41,12 @@ class Ninja: public CGameObject
 	int ani;
 	bool isUseWeapon;
 public:
+	static Ninja * __instance;
 	CWeapon * weapons;
 	CThrowingStar *throwingstar;
 	CWindmillStar *windmillstar;
 	Ninja(); //: CGameObject()
-	
+	static Ninja * GetInstance();
 	bool GetUseWeapon() {
 		return isUseWeapon;
 	}

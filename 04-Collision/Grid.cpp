@@ -4,7 +4,12 @@
 
 
 
-
+Grid * Grid::__instance = NULL;
+Grid * Grid::GetInstance(int widthmap, int heightmap, int cellsizex, int cellsizey)
+{
+	if (__instance == NULL) __instance = new Grid(widthmap, heightmap, cellsizex,cellsizey);
+	return __instance;
+}
 
 Grid::Grid(int widthmap, int heightmap, int cellsizex, int cellsizey)
 {

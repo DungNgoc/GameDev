@@ -1,6 +1,6 @@
 #pragma once
 #include <d3dx9.h>
-
+#include "Define.h"
 class ViewPort
 {
 public:

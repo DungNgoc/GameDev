@@ -1,13 +1,6 @@
 #pragma once
 #include "Enemy.h"
-#define PANTHER_BBOX_WIDTH     31 
-#define PANTHER_BBOX_HEIGHT    17
 
-
-#define PANTHER_STATE_WALKING   1 
-#define PANTHER_ANI_WALKING     0
-
-#define PANTHER_WALKING_SPEED   0.05f
 class CPanther : public CEnemy
 {
 	int untouchable;

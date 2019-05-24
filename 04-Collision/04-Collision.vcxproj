@@ -137,7 +137,6 @@
     <ClInclude Include="HP.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="LoadObject.h" />
-    <ClInclude Include="main.h" />
     <ClInclude Include="Ninja.h" />
     <ClInclude Include="Panther.h" />
     <ClInclude Include="ScoreBoard.h" />
@@ -147,6 +146,8 @@
     <ClInclude Include="Textures.h" />
     <ClInclude Include="ThrowingStar.h" />
     <ClInclude Include="TileMap.h" />
+    <ClInclude Include="Trooper.h" />
+    <ClInclude Include="TrooperSword.h" />
     <ClInclude Include="ViewPort.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="WindmillStar.h" />
@@ -177,6 +178,8 @@
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="ThrowingStar.cpp" />
     <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="Trooper.cpp" />
+    <ClCompile Include="TrooperSword.cpp" />
     <ClCompile Include="ViewPort.cpp" />
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="WindmillStar.cpp" />

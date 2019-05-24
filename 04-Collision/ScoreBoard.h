@@ -7,7 +7,7 @@
 #include "HP.h"
 #include "BlackObject.h"
 
-#define SCREEN_WIDTH 320
+
 class ScoreBoard
 {
 

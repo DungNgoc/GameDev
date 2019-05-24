@@ -1,6 +1,6 @@
 #include "TileMap.h"
 #define SCREEN_WIDTH 320
-#define SCREEN_HEIGHT 270
+#define SCREEN_HEIGHT 240
 
 
 TileMap::TileMap(float _width, float _height, CSprite *_sprite, float _frameWidth, float _frameHeight)
@@ -12,7 +12,7 @@ TileMap::TileMap(float _width, float _height, CSprite *_sprite, float _frameWidt
 	frameWidth = _frameWidth;
 	frameHeight = _frameHeight;
 
-	spritePerRow =  (sprite->right-sprite->left+1)/ frameWidth;
+	spritePerRow = (sprite->right - sprite->left + 1) / frameWidth;
 
 	rows = height / frameHeight;
 	cols = width / frameWidth;
@@ -43,6 +43,7 @@ TileMap::~TileMap()
 
 void TileMap::LoadListTileFromFile(const char *file)
 {
+
 	fstream pFile;
 	pFile.open(file, fstream::in);
 	string lineString;
@@ -66,7 +67,7 @@ void TileMap::LoadListTileFromFile(const char *file)
 				matrix[i][j] = id;
 			}
 			else
-			{	
+			{
 				posSpace[j] = lineString.find(" ", posSpace[j - 1] + 1);
 				subString = lineString.substr(posSpace[j - 1] + 1, posSpace[j] - (posSpace[j - 1] + 1));
 				int id = atoi(subString.c_str());
@@ -83,29 +84,27 @@ void TileMap::Render(ViewPort * viewport)
 	RECT rect;
 	D3DXVECTOR3 pos;
 
-	
-	D3DXVECTOR3 viewPortPosition = viewport->GetViewPortPosition();
-	
+	D3DXVECTOR3 viewportPosition = viewport->GetViewPortPosition();
 	int rowStart;
 	int rowEnd;
 	int colStart;
 	int colEnd;
-	if ((viewPortPosition.y / frameHeight) < 0)
+	if ((viewportPosition.y / frameHeight) < 0)
 		rowStart = 0;
 	else
-		rowStart = (viewPortPosition.y / frameHeight);
-	if ((viewPortPosition.y / frameHeight + SCREEN_HEIGHT / frameHeight + 1) >rows)
+		rowStart = (viewportPosition.y / frameHeight);
+	if ((viewportPosition.y / frameHeight + SCREEN_HEIGHT / frameHeight + 1) >rows)
 		rowEnd = rows;
 	else
-		rowEnd = (viewPortPosition.y / frameHeight + SCREEN_HEIGHT / frameHeight + 1);
-	if ((viewPortPosition.x / frameWidth)<0)
+		rowEnd = (viewportPosition.y / frameHeight + SCREEN_HEIGHT / frameHeight + 1);
+	if ((viewportPosition.x / frameWidth)<0)
 		colStart = 0;
 	else
-		colStart = (viewPortPosition.x / frameWidth);
-	if ((viewPortPosition.x / frameWidth + SCREEN_WIDTH / frameWidth + 1) > cols)
+		colStart = (viewportPosition.x / frameWidth);
+	if ((viewportPosition.x / frameWidth + SCREEN_WIDTH / frameWidth + 1) > cols)
 		colEnd = cols;
 	else
-		colEnd = (viewPortPosition.x / frameWidth + SCREEN_WIDTH / frameWidth + 1);
+		colEnd = (viewportPosition.x / frameWidth + SCREEN_WIDTH / frameWidth + 1);
 
 	for (int i = rowStart; i < rowEnd; i++)
 	{

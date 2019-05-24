@@ -14,28 +14,34 @@ CWindmillStar::CWindmillStar()
 CWindmillStar::~CWindmillStar()
 {
 }
-//void CWindmillStar::CalculateNinjaPos(Ninja *ninja, DWORD dt) {
-//
-//	if (flytoboundingviewport == true)
-//	{
-//		distance = sqrt(
-//			pow(ninjaPos.x - x, 2) +
-//			pow(ninjaPos.y - y, 2));
-//
-//		nx = (ninjaPos.x - x) / distance;
-//		ny = (ninjaPos.y - y) / distance;
-//	}
-//}
+void CWindmillStar::CalculateNinjaPos( DWORD dt) {
+
+	Ninja *ninja = Ninja::GetInstance();
+	ninjaPos = D3DXVECTOR2(ninja->x, ninja->y);
+	if (flytoboundingviewport == true)
+	{
+		distance = sqrt(
+			pow(ninjaPos.x - x, 2) +
+			pow(ninjaPos.y - y, 2));
+
+		nx = (ninjaPos.x - x) / distance;
+		ny = (ninjaPos.y - y) / distance;
+	}
+}
 void CWindmillStar::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	CWeapon::Update(dt, coObjects);
+	//CWeapon::Update(dt, coObjects);
 	if (isLeft)
+	{
 		vx = 0.2;
-	else vx = -0.2;
-	/*D3DXVECTOR2 currentvp = viewport->GetViewPortPosition();
-
-	if (x > currentvp.x + SCREEN_WIDTH || x < currentvp.x)
-		vx = -vx;*/
+		vy = 0.2;
+	}
+	else {
+		vx = -0.2;
+		vy = 0.2;
+	}
+	x += nx * vx * dt;
+	y += ny * vy * dt;
 	for (UINT i = 0; i < coObjects->size(); i++)
 	{
 		if (dynamic_cast<CEnemy *>(coObjects->at(i))) {
@@ -65,6 +71,12 @@ void CWindmillStar::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CWindmillStar::Render(ViewPort * viewport)
 {
+	D3DXVECTOR2 currentvp = viewport->GetViewPortPosition();
+	if (x <= viewport->GetViewPortPosition().x + 100 || x >= viewport->GetViewPortPosition().x + 320 - 100)
+	{
+		vx = -vx;
+		flytoboundingviewport = true;
+	}
 	CWeapon::Render(viewport);
 	//RenderBoundingBox(viewport);
 }

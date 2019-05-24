@@ -1,22 +1,20 @@
 #pragma once
 #include "Enemy.h"
-	
 
-class CZoombieSword: public CEnemy
+
+
+class CTrooperSword : public CEnemy
 {
 	CAnimation *ani;
-	DWORD time;
-
 public:
-	CZoombieSword();
-	~CZoombieSword();
+	CTrooperSword();
+	~CTrooperSword();
 	void ResetAnimation();
 	void SetPosition(float x, float y);
 	void Render();
 	void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	void Render(ViewPort *viewport);
 	int GetCurrentFrame();
-	void SetState(int state);
 	void resetAni(int ID) {
 		animations[ID]->reset();
 	}

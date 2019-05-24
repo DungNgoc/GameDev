@@ -10,7 +10,7 @@ class CWindmillStar:public CWeapon
 public:
 	CWindmillStar();
 	~CWindmillStar();
-	//void CalculateNinjaPos(Ninja * ninja, DWORD dt);
+	void CalculateNinjaPos( DWORD dt);
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render(ViewPort *viewport);
 	void GetBoundingBox(float &left, float &top, float &right, float &bottom);

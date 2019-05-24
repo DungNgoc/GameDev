@@ -19,8 +19,7 @@
 #include "Butterfly.h"
 #include "Eagle.h"
 #include "Zoombie.h"
-
-#include "main.h"
+#include "Trooper.h"
 
 
 #include "LoadObject.h"
@@ -57,7 +56,7 @@ CPanther *panther;
 CButterfly *butterfly;
 CEagle *eagle;
 CZoombie *zoombie;
-
+CTrooper *trooper;
 
 
 DWORD time1 = 0;
@@ -311,10 +310,21 @@ void LoadEnemy(wstring file) {
 			else if (id == 12001) {
 				zoombie = new CZoombie();
 				zoombie->AddAnimation(id);
+				zoombie->AddAnimation(id+1);
 				zoombie->SetPosition(x, y);
 				zoombie->SetLimitX(limitX1, limitX2);
-				zoombie->SetState(ZOOMBIE_STATE_WALKING);
+				//12001 796 88 796 810
+				zoombie->SetState(ZOOMBIE_STATE_RUN);
 				coObjects.push_back(zoombie);
+			}
+			else if (id == 16001) {
+				trooper = new CTrooper();
+				trooper->AddAnimation(id);
+				trooper->AddAnimation(id + 1);
+				trooper->SetPosition(x, y);
+				trooper->SetLimitX(limitX1, limitX2);
+				trooper->SetState(TROOPER_STATE_RUN);
+				coObjects.push_back(trooper);
 			}
 			
 		}
@@ -335,7 +345,7 @@ void LoadResources(LPDIRECT3DDEVICE9 d3ddv, LPD3DXSPRITE sprite)
 
 	LPANIMATION ani;
 	
-	ninja = new Ninja();
+	ninja = Ninja::GetInstance();
 
 
 	tilemap = new TileMap(2048, 208, sprites->Get(1), 16, 16);
@@ -350,7 +360,7 @@ void LoadResources(LPDIRECT3DDEVICE9 d3ddv, LPD3DXSPRITE sprite)
 	ninja->AddAnimation(1007);//fight
 	
 
-	ninja->SetPosition(1220, 100);
+	ninja->SetPosition(0, 100);
 	
 	loadobjects = new LoadObject();
 	loadobjects->Load("Loadfile\\LoadObject.txt", &coObjects);
@@ -367,7 +377,7 @@ void LoadResources(LPDIRECT3DDEVICE9 d3ddv, LPD3DXSPRITE sprite)
 
 	
 
-	grid = new Grid(2048, 176, 512, 88);
+	grid = Grid::GetInstance(2048, 176, 512, 88);
 	grid->Add(&coObjects);
 
 }
@@ -378,6 +388,7 @@ void Update(DWORD dt)
 {
 	time1 += dt;
 //	scoreboard->Update(16, 500 - time1 * 0.001, 3, 2);
+
 	grid->GetListOfObjects(&coObjects, viewport);
 	ninja->Update(dt, &coObjects);
 	

@@ -2,7 +2,7 @@
 #include "Sprites.h"
 #include "Textures.h"
 #include "ViewPort.h"
-#define ID_ANI_EFFECT 11001
+
 class HitEffect
 {
 	int x, y;
@@ -19,6 +19,10 @@ public:
 	} 
 	void SetEnable(bool isEnable) {
 		this->isEnable = isEnable;
+	}
+	void ResetAnimation();
+	void resetAni(int ID) {
+		animation[ID]->reset();
 	}
 	~HitEffect();
 };

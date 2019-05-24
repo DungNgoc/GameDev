@@ -27,7 +27,7 @@ void Sword::SetPosition(float x, float y, bool Issit)
 			y += SWORD_SET_POSITION_HIT_Y;
 		}
 		else {
-			x -= SWORD_SET_POSITION_HIT_X;
+			x -= SWORD_SET_POSITION_HIT_X-2;
 			y += SWORD_SET_POSITION_HIT_Y;
 		}
 
@@ -78,7 +78,7 @@ void Sword::Render(ViewPort * viewport)
 	int ani = 0;
 	int alpha = 255;
 	animations[ani]->Render(viewport, x, y, alpha, isLeft);
-	RenderBoundingBox(viewport);
+	//RenderBoundingBox(viewport);
 }
 int Sword::GetCurrentFrame() {
 	if (anirender == SWORD_ANI_HIT)

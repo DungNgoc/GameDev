@@ -1,11 +1,11 @@
 #include "Zoombie.h"
-
+#include "Grid.h"
 
 
 CZoombie::CZoombie():CEnemy(1)
 {
 	damage = 1;
-	point = 100;
+	point = 200;
 	zoombiesword = new CZoombieSword();
 	zoombiesword->SetEnable(false);
 	
@@ -26,7 +26,10 @@ void CZoombie::SetState(int state)
 		vx = 0;
 		break;
 	case ZOOMBIE_STATE_RUN:
-		vx = -ZOOMBIE_WALKING_SPEED;
+		if (isLeft)
+			vx = ZOOMBIE_WALKING_SPEED;
+		else
+			vx = -ZOOMBIE_WALKING_SPEED;
 	}
 }
 
@@ -42,24 +45,47 @@ void CZoombie::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt, coObjects);
 	CEnemy::Update(dt);
-
 	x += dx;
 	y += dy;
-	
-	if (animations[0]->getCurrentFrame() == 2)
-	{
-		zoombiesword->SetPosition(x, y);
-		zoombiesword->resetAni(0);
-		zoombiesword->SetEnable(true);
-		SetState(ZOOMBIE_STATE_HIT);
-	}
-	else {
+	if (isEnable && !isDead) {
+		timeDelay += dt;
+		if (!zoombiesword->GetEnable() && state == ZOOMBIE_STATE_RUN && timeDelay > 1000)
+		{
+			SetState(ZOOMBIE_STATE_HIT);
+			timeDelay = 0;
+			if (isLeft)
+				zoombiesword->SetLeft(true);
+			else
+				zoombiesword->SetLeft(false);
+			zoombiesword->SetPosition(x, y);
+			zoombiesword->SetEnable(true);
+			
+			for (UINT i = 0; i < coObjects->size(); i++)
+			{
+				if (dynamic_cast<CZoombieSword *>(coObjects->at(i)))
+				{
+					isCheck = true;
+					break;
+				}
+			}
+			if (!isCheck)
+			{
+				Grid *grid = Grid::GetInstance(0, 0, 0, 0);
+				vector<LPGAMEOBJECT> ob;
+				ob.push_back(this->zoombiesword);
+				grid->Add(&ob);
+			}
 
+		
+		}
+		if (state == ZOOMBIE_STATE_HIT && timeDelay > 100)
+		{
+			SetState(ZOOMBIE_STATE_RUN);
+			timeDelay = 0;
+		}
 	}
-	if(zoombiesword->GetEnable())
-		zoombiesword->Update(dt, coObjects);
+	zoombiesword->Update(dt, coObjects);
 	LimitPos(limitX1, limitX2);
-	
 }
 
 void CZoombie::Render()
@@ -68,39 +94,31 @@ void CZoombie::Render()
 
 void CZoombie::Render(ViewPort * viewport)
 {
-	int ani = ZOOMBIE_ANI_WALKING;
-	isLeft = true;
-	//if (state == ZOOMBIE_STATE_DIE) {
-		//ani = ZOOMBIE_ANI_DIE;
-	//}
+	int ani;
 	int alpha = 255;
 	if (untouchable)   alpha = 255;
-	if (vx < 0)
-		isLeft = false;
-	else
-	{
-		isLeft = false;
-	}
-	/*if(GetDead())*/
-	CEnemy::Render(viewport);
-	if (GetEnable())
+	if (isEnable) {
+		if (state == ZOOMBIE_STATE_RUN)
+			ani = ZOOMBIE_ANI_RUN;
+		else if (state == ZOOMBIE_STATE_HIT)
+			ani = ZOOMBIE_ANI_HIT;
 		animations[ani]->Render(viewport, x, y, alpha, isLeft);
+	}
 
-	if(zoombiesword->GetEnable())
-	zoombiesword->Render(viewport);
 	
-	//if(GetEnable())
-	//RenderBoundingBox(viewport);
+	CEnemy::Render(viewport);
 
 }
 
 void CZoombie::LimitPos(int limitX1, int limitY1)
 {
-	if (vx < 0 && x < limitX1) {
-		x = limitX1; vx = -vx;
+	if (vx < 0 && x <= limitX1) {
+		x = limitX1;
+		isLeft = true;
 	}
 
-	if (vx > 0 && x > limitX2) {
-		x = limitX2; vx = -vx;
+	if (vx > 0 && x >= limitX2) {
+		x = limitX2;
+		isLeft = false;
 	}
 }

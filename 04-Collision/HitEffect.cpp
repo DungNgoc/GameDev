@@ -20,13 +20,19 @@ void HitEffect::Update(DWORD dt)
 {
 	if (isEnable) {
 		timeDelay += dt;
-		if (timeDelay > 900) {
+		if (timeDelay > 1000) {
 			timeDelay = 0;
 			isEnable = false;
+			ResetAnimation();
 		}
 	}
 }
 
+
+void HitEffect::ResetAnimation()
+{
+	resetAni(0);
+}
 
 HitEffect::~HitEffect()
 {

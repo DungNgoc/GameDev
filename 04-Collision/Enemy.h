@@ -45,6 +45,9 @@ public:
 	 int GetHP() {
 		 return hp;
 	 }
+	 void SetLeft(int isLeft) {
+		 this->isLeft = isLeft;
+	 }
 
 };
 

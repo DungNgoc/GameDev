@@ -6,7 +6,7 @@ void CPanther::GetBoundingBox(float &left, float &top, float &right, float &bott
 {
 
 	left = x;
-	top = y;
+	top = y  ;
 	right = x + PANTHER_BBOX_WIDTH;
 	bottom = top + PANTHER_BBOX_HEIGHT;
 
@@ -25,8 +25,7 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			GetBoundingBox(l1, t1, r1, b1);
 			brick->GetBoundingBox(l2, t2, r2, b2);
 			if (t1 <= b2 && b1 >= t2 && l1 <= r2 && r1 >= l2) {
-				vy = -0.09;
-				//isEnable = false;
+				vy = -0.15;
 			}
 		}
 	}
@@ -65,13 +64,14 @@ void CPanther::Render(ViewPort * viewport)
 	if (GetEnable())
 		animations[ani]->Render(viewport, x, y, alpha, isLeft);
 
-	//RenderBoundingBox(viewport);
+	RenderBoundingBox(viewport);
 }
 
 CPanther::CPanther() :CEnemy(1)
 {
 	damage = 1;
 	point = 100;
+	vy = -0.15;
 }
 
 CPanther::~CPanther()
@@ -83,11 +83,7 @@ void CPanther::SetState(int state)
 	CGameObject::SetState(state);
 	switch (state)
 	{
-	/*case PANTHER_STATE_DIE:
-		y += SOLDIER_BBOX_HEIGHT - SOLDIER_BBOX_HEIGHT_DIE + 1;
-		vx = 0.1;
-		vy = 0;
-		break;*/
+	
 	case PANTHER_STATE_WALKING:
 		vx = -PANTHER_WALKING_SPEED;
 	}

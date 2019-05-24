@@ -7,13 +7,13 @@
 #include "Enemy.h"
 bool isHitting = false;
 bool Ninja::isThrowing = false;
-
+Ninja * Ninja::__instance = NULL;
 Ninja::Ninja()
 {
 	untouchable = 0;
 	sword = new Sword();
 	life =03;
-	energy = 0;
+	energy = 35;
 	hp = 16;
 	damage = 1;
 	sword->SetDamage(damage);
@@ -25,10 +25,16 @@ Ninja::Ninja()
 
 }
 
+Ninja * Ninja::GetInstance()
+{
+	if (__instance == NULL) __instance = new Ninja();
+	return __instance;
+}
+
 void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	CGameObject::Update(dt);
-	if (!isTouchBrick|| isHurt)
+	if (!isTouchBrick || isHurt)
 		vy += NINJA_GRAVITY * dt;
 	//vx = 0.1f;*/
 
@@ -40,37 +46,38 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	if (isHitting && state == NINJA_STATE_SIT)
 	{
 		sword->SetPosition(x, y, true);
-		if (GetTickCount() - hitting_start > NINJA_HITTING_TIME)
-		{
-			hitting_start = 0;
-			isHitting = false;
-			reset(NINJA_SIT_HIT);
-			sword->ResetAnimation();
-			//reset()
-			//etState(NINJA_STATE_IDLE);
-		}
-
-	}else
-	if (isHitting)
-	{
-		if (nx>0)
-			sword->isLeft = false;
-		else sword->isLeft = true;
-		sword->SetPosition(x, y, isSit);
 		if (sword->GetCurrentFrame() == 2)
 			sword->Update(dt, coObjects);
 		if (GetTickCount() - hitting_start > NINJA_HITTING_TIME)
 		{
 			hitting_start = 0;
 			isHitting = false;
-			reset(NINJA_HIT_RIGHT);
+			reset(NINJA_SIT_HIT);
 			sword->ResetAnimation();
-			//reset()
-			//etState(NINJA_STATE_IDLE);
+			
 		}
 
 	}
-	
+	else
+		if (isHitting)
+		{
+			if (nx > 0)
+				sword->isLeft = false;
+			else sword->isLeft = true;
+			sword->SetPosition(x, y, isSit);
+			if (sword->GetCurrentFrame() == 2)
+				sword->Update(dt, coObjects);
+			if (GetTickCount() - hitting_start > NINJA_HITTING_TIME)
+			{
+				hitting_start = 0;
+				isHitting = false;
+				reset(NINJA_HIT_RIGHT);
+				sword->ResetAnimation();
+			
+			}
+
+		}
+
 
 	if (GetTickCount() - untouchable_start > 2000)
 	{
@@ -92,17 +99,17 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	{
 		if (animations[ani]->getCurrentFrame() == 2)
 		{
-			if(isUseWeapon)
-			if (!weapons->GetEnable())
-			{
-				weapons->SetPosition(this->x, this->y);
-				weapons->SetEnable(true);
+			if (isUseWeapon)
+				if (!weapons->GetEnable())
+				{
+					weapons->SetPosition(this->x, this->y);
+					weapons->SetEnable(true);
 
-				if (isLeft)
-					weapons->isLeft = true;
-				else
-					weapons->isLeft = false;
-			}
+					if (isLeft)
+						weapons->isLeft = true;
+					else
+						weapons->isLeft = false;
+				}
 
 
 		}
@@ -111,12 +118,18 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			throw_start = 0;
 			isThrowing = false;
 			this->reset(NINJA_ANI_FIGHT);
-	
+
 		}
-	
-}
+
+	}
 	if (weapons->GetEnable())
+	{
+		if (dynamic_cast<CWindmillStar *>(weapons)) {
+			CWindmillStar*windmillstar = dynamic_cast<CWindmillStar *>(weapons);
+			windmillstar->CalculateNinjaPos(dt);
+		}
 		weapons->Update(dt, coObjects);
+	}
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 

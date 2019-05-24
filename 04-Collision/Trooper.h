@@ -1,19 +1,18 @@
 #pragma once
 #include "Enemy.h"
-#include "ZoombieSword.h"
+#include "TrooperSword.h"
 
 
 
-class CZoombie : public CEnemy
+class CTrooper:public CEnemy
 {
-	CZoombieSword *zoombiesword;
 	int untouchable;
-	bool isLeft;
+	CTrooperSword *troopersword[2];
 	DWORD timeDelay;
 	bool isCheck;
 public:
-	CZoombie();
-	~CZoombie();
+	CTrooper();
+	~CTrooper();
 	virtual void SetState(int state);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects);
@@ -21,4 +20,9 @@ public:
 	void Render(ViewPort * viewport);
 	void LimitPos(int limitX1, int limitY1);
 };
+
+
+
+
+
 

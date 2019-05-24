@@ -1,11 +1,6 @@
 #pragma once
 #include "Enemy.h"
-#define BUTTERFLY_BBOX_WIDTH     15
-#define BUTTERFLY_BBOX_HEIGHT    15
-		
-#define BUTTERFLY_ANI_RIGHT     0
-	
-#define BUTTERFLY_WALKING_SPEED   0
+
 class CButterfly : public CEnemy
 {
 public:
