@@ -44,6 +44,11 @@ void CThrowingStar::Update (DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CThrowingStar::Render(ViewPort *viewport)
 {
+	/*D3DXVECTOR3 currentvp = viewport->GetViewPortPosition();
+	if (x <= viewport->GetViewPortPosition().x || x >= viewport->GetViewPortPosition().x )
+	{
+		isEnable = false;
+	}*/
 	CWeapon::Render(viewport);
 	//RenderBoundingBox(viewport);
 }
@@ -69,6 +74,6 @@ void CThrowingStar::GetBoundingBox(float & left, float & top, float & right, flo
 
 void CThrowingStar::SetPosition(float & x, float & y)
 {
-	CGameObject::SetPosition(x+5, y);
+	CGameObject::SetPosition(x + 5, y);
 	x += NINJA_BBOX_WIDTH / 2;
 }

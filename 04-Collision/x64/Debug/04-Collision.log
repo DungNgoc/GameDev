@@ -1,0 +1,10 @@
+﻿  Game.cpp
+c:\users\dungngoc\desktop\new folder (4)\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\new folder (4)\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+c:\users\dungngoc\desktop\new folder (4)\gamedev\04-collision\game.cpp(137): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+c:\users\dungngoc\desktop\new folder (4)\gamedev\04-collision\game.cpp(165): warning C4312: 'type cast': conversion from 'LONG' to 'HINSTANCE' of greater size
+c:\users\dungngoc\desktop\new folder (4)\gamedev\04-collision\game.cpp(345): warning C4305: '=': truncation from '__int64' to 'float'
+c:\users\dungngoc\desktop\new folder (4)\gamedev\04-collision\game.cpp(346): warning C4305: '=': truncation from '__int64' to 'float'
+c:\users\dungngoc\desktop\new folder (4)\gamedev\04-collision\game.cpp(356): warning C4305: '=': truncation from '__int64' to 'float'
+c:\users\dungngoc\desktop\new folder (4)\gamedev\04-collision\game.cpp(357): warning C4305: '=': truncation from '__int64' to 'float'
+LINK : fatal error LNK1104: cannot open file 'd3dx9d.lib'

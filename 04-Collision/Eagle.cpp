@@ -78,8 +78,10 @@ void CEagle::Render(ViewPort * viewport)
 	{
 		isLeft = true;
 	}
+	/*if (GetEnable())
+		animations[ani]->Render(viewport, x, y, alpha, isLeft);*/
 	if (GetEnable())
-	animations[ani]->Render(viewport, x, y, alpha, isLeft);
+		animations[ani]->Render(viewport, x, y, alpha, isLeft, IsStop); 
 
 //	RenderBoundingBox(viewport);
 }

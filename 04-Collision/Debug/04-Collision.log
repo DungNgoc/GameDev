@@ -1,13 +1,260 @@
-﻿  Panther.cpp
-c:\users\dungngoc\desktop\gamedev\04-collision\define.h(118): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
-  c:\users\dungngoc\desktop\gamedev\04-collision\define.h(60): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
-c:\users\dungngoc\desktop\gamedev\04-collision\hiteffect.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\dungngoc\desktop\gamedev\04-collision\hiteffect.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\dungngoc\desktop\gamedev\04-collision\gameobject.h(70): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-c:\users\dungngoc\desktop\gamedev\04-collision\gameobject.h(73): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-c:\users\dungngoc\desktop\gamedev\04-collision\panther.cpp(18): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-c:\users\dungngoc\desktop\gamedev\04-collision\panther.cpp(28): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\dungngoc\desktop\gamedev\04-collision\panther.cpp(42): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\dungngoc\desktop\gamedev\04-collision\panther.cpp(46): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\dungngoc\desktop\gamedev\04-collision\panther.cpp(74): warning C4305: '=': truncation from 'double' to 'float'
-  04-Collision.vcxproj -> C:\Users\DungNgoc\Desktop\GameDev\Debug\04-Collision.exe
+﻿  Brick.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(70): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(73): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+  Butterfly.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(70): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(73): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+  Cell.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(70): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(73): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+  debug.cpp
+  Eagle.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(70): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(73): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+  Enemy.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(70): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(73): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+  Game.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\game.cpp(137): warning C4244: 'argument': conversion from 'int' to 'FLOAT', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\game.cpp(345): warning C4305: '=': truncation from '__int64' to 'float'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\game.cpp(346): warning C4305: '=': truncation from '__int64' to 'float'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\game.cpp(356): warning C4305: '=': truncation from '__int64' to 'float'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\game.cpp(357): warning C4305: '=': truncation from '__int64' to 'float'
+  GameObject.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(70): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(73): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+  Grid.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(70): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(73): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\grid.cpp(31): warning C4018: '<': signed/unsigned mismatch
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\grid.cpp(83): warning C4018: '<': signed/unsigned mismatch
+  HitEffect.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.cpp(16): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  HP.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(70): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(73): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+  Item.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(70): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(73): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\item.cpp(8): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  LoadObject.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(70): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(73): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\loadobject.cpp(47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\loadobject.cpp(48): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  main.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(70): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(73): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\main.cpp(245): warning C4101: 'checkEnable': unreferenced local variable
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\main.cpp(273): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\main.cpp(300): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\main.cpp(308): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\main.cpp(316): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\main.cpp(324): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\main.cpp(334): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\main.cpp(356): warning C4101: 'ani': unreferenced local variable
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\main.cpp(402): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\main.cpp(403): warning C4018: '<': signed/unsigned mismatch
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\main.cpp(430): warning C4018: '<': signed/unsigned mismatch
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\main.cpp(438): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\main.cpp(456): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\main.cpp(485): warning C4018: '<': signed/unsigned mismatch
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\main.cpp(491): warning C4018: '<': signed/unsigned mismatch
+  Ninja.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(70): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(73): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\ninja.cpp(149): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\ninja.cpp(154): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\ninja.cpp(438): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\ninja.cpp(442): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\ninja.cpp(445): warning C4305: '=': truncation from 'double' to 'float'
+  Panther.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(70): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(73): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\panther.cpp(18): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\panther.cpp(28): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\panther.cpp(42): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\panther.cpp(46): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\panther.cpp(75): warning C4305: '=': truncation from 'double' to 'float'
+  ScoreBoard.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(70): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(73): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\scoreboard.cpp(23): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\scoreboard.cpp(30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\scoreboard.cpp(37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\scoreboard.cpp(145): warning C4018: '<': signed/unsigned mismatch
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\scoreboard.cpp(150): warning C4018: '<': signed/unsigned mismatch
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\scoreboard.cpp(159): warning C4018: '<': signed/unsigned mismatch
+  Soldier.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(70): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(73): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\soldier.cpp(48): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\soldier.cpp(52): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\soldier.cpp(75): warning C4305: '=': truncation from 'double' to 'float'
+  Sprites.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+  Stage32.cpp
+  Generating Code...
+  Compiling...
+  Sword.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(70): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(73): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+  Textures.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+  ThrowingStar.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(70): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(73): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+  TileMap.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\tilemap.cpp(15): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\tilemap.cpp(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\tilemap.cpp(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\tilemap.cpp(95): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\tilemap.cpp(99): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\tilemap.cpp(103): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\tilemap.cpp(107): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\tilemap.cpp(113): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\tilemap.cpp(114): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\tilemap.cpp(115): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\tilemap.cpp(116): warning C4244: '=': conversion from 'float' to 'LONG', possible loss of data
+  Trooper.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(70): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(73): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\trooper.cpp(139): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\trooper.cpp(144): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  TrooperSword.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(70): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(73): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\troopersword.cpp(77): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\troopersword.cpp(78): warning C4305: '=': truncation from 'double' to 'float'
+  ViewPort.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+  Weapon.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(70): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(73): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\weapon.cpp(19): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\weapon.cpp(21): warning C4305: '=': truncation from 'double' to 'float'
+  WindmillStar.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(70): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(73): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\windmillstar.cpp(11): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\windmillstar.cpp(12): warning C4305: '=': truncation from 'double' to 'float'
+  Zoombie.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(70): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(73): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\zoombie.cpp(118): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\zoombie.cpp(123): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  ZoombieSword.cpp
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(119): warning C4005: 'ZOOMBIE_BBOX_WIDTH': macro redefinition
+  c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\define.h(61): note: see previous definition of 'ZOOMBIE_BBOX_WIDTH'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(17): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\hiteffect.h(18): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(70): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\gameobject.h(73): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\zoombiesword.cpp(13): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\zoombiesword.cpp(57): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\zoombiesword.cpp(73): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\zoombiesword.cpp(77): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\zoombiesword.cpp(145): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\zoombiesword.cpp(147): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\dungngoc\desktop\gamedev\gamedev\04-collision\zoombiesword.cpp(155): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+  Generating Code...
+  04-Collision.vcxproj -> C:\Users\DungNgoc\Desktop\GameDev\GameDev\Debug\04-Collision.exe

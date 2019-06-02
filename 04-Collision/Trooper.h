@@ -7,7 +7,7 @@
 class CTrooper:public CEnemy
 {
 	int untouchable;
-	CTrooperSword *troopersword[2];
+	CTrooperSword *troopersword;
 	DWORD timeDelay;
 	bool isCheck;
 public:

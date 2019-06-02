@@ -1,5 +1,6 @@
 0 textures\\ninja.png 255 163 177
 1 textures\\tileset31.png 255 163 177
+4 textures\\tileset32.png 255 255 255
 100 textures\\bbox.png 123 123 123
 10 textures\\enemy.png 255 163 177
 2 textures\\heal.png 255 163 177

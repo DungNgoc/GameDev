@@ -169,6 +169,29 @@ void CAnimation::Render(ViewPort *viewport, float x, float y, int alpha, bool is
 
 	frames[currentFrame]->GetSprite()->Draw(viewport, x, y, alpha, isLeft);
 }
+void CAnimation::Render(ViewPort *viewport, float x, float y, int alpha, bool isLeft, bool isStop)
+{
+	DWORD now = GetTickCount();
+	if (currentFrame == -1)
+	{
+		currentFrame = 0;
+		lastFrameTime = now;
+	}
+	else
+	{
+		DWORD t = frames[currentFrame]->GetTime();
+		if (now - lastFrameTime > t)
+		{
+			if(!isStop)
+				currentFrame++;
+			lastFrameTime = now;
+			if (currentFrame == frames.size()) currentFrame = 0;
+		}
+
+	}
+
+	frames[currentFrame]->GetSprite()->Draw(viewport, x, y, alpha, isLeft);
+}
 
 
 CAnimations * CAnimations::__instance = NULL;

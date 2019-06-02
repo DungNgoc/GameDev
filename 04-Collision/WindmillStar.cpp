@@ -7,7 +7,9 @@ CWindmillStar::CWindmillStar()
 	this->AddAnimation(13001);
 	useEnergy = 5;
 	damage = 1;
-	nx = -1;
+	nx = 1;
+	vy = 0.09;
+	vx = 0.18;
 }
 
 
@@ -18,29 +20,28 @@ void CWindmillStar::CalculateNinjaPos( DWORD dt) {
 
 	Ninja *ninja = Ninja::GetInstance();
 	ninjaPos = D3DXVECTOR2(ninja->x, ninja->y);
-	if (flytoboundingviewport == true)
-	{
+	//if (flytoboundingviewport == true)
+	//{
 		distance = sqrt(
 			pow(ninjaPos.x - x, 2) +
 			pow(ninjaPos.y - y, 2));
 
 		nx = (ninjaPos.x - x) / distance;
 		ny = (ninjaPos.y - y) / distance;
-	}
+		flytoboundingviewport = false;
+	//}
 }
 void CWindmillStar::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	//CWeapon::Update(dt, coObjects);
-	if (isLeft)
+	/*if (isLeft)
 	{
-		vx = 0.2;
-		vy = 0.2;
+		nx = 1;
 	}
 	else {
-		vx = -0.2;
-		vy = 0.2;
-	}
-	x += nx * vx * dt;
+		nx = -1;
+	}*/
+	x += nx* vx * dt;
 	y += ny * vy * dt;
 	for (UINT i = 0; i < coObjects->size(); i++)
 	{
@@ -71,14 +72,14 @@ void CWindmillStar::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CWindmillStar::Render(ViewPort * viewport)
 {
-	D3DXVECTOR2 currentvp = viewport->GetViewPortPosition();
-	if (x <= viewport->GetViewPortPosition().x + 100 || x >= viewport->GetViewPortPosition().x + 320 - 100)
+	D3DXVECTOR3 currentvp = viewport->GetViewPortPosition();
+	if (x <= viewport->GetViewPortPosition().x + 70 || x >= viewport->GetViewPortPosition().x + 320 - 70)
 	{
-		vx = -vx;
+		//vx = -vx;
 		flytoboundingviewport = true;
 	}
 	CWeapon::Render(viewport);
-	//RenderBoundingBox(viewport);
+	RenderBoundingBox(viewport);
 }
 
 void CWindmillStar::GetBoundingBox(float & left, float & top, float & right, float & bottom)
@@ -99,9 +100,12 @@ void CWindmillStar::GetBoundingBox(float & left, float & top, float & right, flo
 	}
 }
 
-void CWindmillStar::SetPosition(float & x, float & y)
+void CWindmillStar::SetPosition(float  x, float  y)
 {
-	CGameObject::SetPosition(x, y);
-	x += NINJA_BBOX_WIDTH / 2;
+	if(isLeft)
+	x += NINJA_BBOX_WIDTH +10;
+	else x -= (NINJA_BBOX_WIDTH + 10);
+	CGameObject::SetPosition(x , y);
+
 
 }

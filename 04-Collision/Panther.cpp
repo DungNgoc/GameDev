@@ -64,11 +64,12 @@ void CPanther::Render(ViewPort * viewport)
 	if (GetEnable())
 		animations[ani]->Render(viewport, x, y, alpha, isLeft);
 
-	RenderBoundingBox(viewport);
+	//RenderBoundingBox(viewport);
 }
 
-CPanther::CPanther() :CEnemy(1)
+CPanther::CPanther()
 {
+	hp = 1;
 	damage = 1;
 	point = 100;
 	vy = -0.15;

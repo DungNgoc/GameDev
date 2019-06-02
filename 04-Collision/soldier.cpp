@@ -53,9 +53,9 @@ void CSoldier::LimitPos(int limitX1, int limitX2)
 	}
 }
 
-CSoldier::CSoldier():CEnemy(1)
+CSoldier::CSoldier()//:CEnemy(1)
 {
-	
+	hp = 1;
 	damage = 1;
 	point = 100;
 }

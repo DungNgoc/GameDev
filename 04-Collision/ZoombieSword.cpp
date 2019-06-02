@@ -57,7 +57,7 @@ void CZoombieSword::Render(ViewPort * viewport)
 		vy = -0.15;
 	}
 	
-	CGameObject::Render(viewport);
+	//CGameObject::Render(viewport);
 }
 
 int CZoombieSword::GetCurrentFrame()
@@ -147,6 +147,7 @@ void CZoombieSword::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vx = -0.05;
 
 	CGameObject::Update(dt);
+	CEnemy::Update(dt);
 	x += dx;
 	y += dy;
 

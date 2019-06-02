@@ -10,10 +10,18 @@ bool Ninja::isThrowing = false;
 Ninja * Ninja::__instance = NULL;
 Ninja::Ninja()
 {
+	AddAnimation(1001);//walking right
+	AddAnimation(1002);// idle right
+	AddAnimation(1003);//hit right
+	AddAnimation(1004);//spin right
+	AddAnimation(1005);//idle sit
+	AddAnimation(1006);//hit sit
+	AddAnimation(1007);//fight
+
 	untouchable = 0;
 	sword = new Sword();
 	life =03;
-	energy = 35;
+	energy = 100;
 	hp = 16;
 	damage = 1;
 	sword->SetDamage(damage);
@@ -106,9 +114,14 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					weapons->SetEnable(true);
 
 					if (isLeft)
+					{
 						weapons->isLeft = true;
+					}
 					else
+					{
 						weapons->isLeft = false;
+						
+					}
 				}
 
 
@@ -124,10 +137,60 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	}
 	if (weapons->GetEnable())
 	{
+
 		if (dynamic_cast<CWindmillStar *>(weapons)) {
 			CWindmillStar*windmillstar = dynamic_cast<CWindmillStar *>(weapons);
-			windmillstar->CalculateNinjaPos(dt);
+			
+			if(windmillstar->getFlytoboudingviewport())
+				windmillstar->CalculateNinjaPos(dt);
+			if (isLeft)
+			{
+				windmillstar->isLeft = true;
+				windmillstar->SetSpeed(0.18, 0.09);
+			}
+			else
+			{
+				windmillstar->isLeft = false;
+				windmillstar->SetSpeed(0.18, 0.09);
+			}
+			float l1, t1, r1, b1, l2, t2, r2, b2;
+			GetBoundingBox(l1, t1, r1, b1);
+			windmillstar->GetBoundingBox(l2, t2, r2, b2);
+			if (t1 <= b2 && b1 >= t2 && l1 <= r2 && r1 >= l2) {
+				windmillstar->SetEnable(false);
+				if (isLeft)
+					//windmillstar->isLeft = true;
+				windmillstar->Setnx(1);
+				else windmillstar->Setnx(-1);
+					//windmillstar->isLeft = false;
+			}
+			
 		}
+	/*	if (dynamic_cast<CThrowingStar *>(throwingstar)) {
+			CThrowingStar*throwingstar = dynamic_cast<CThrowingStar *>(throwingstar);
+			if (windmillstar->getFlytoboudingviewport())
+				windmillstar->CalculateNinjaPos(dt);
+			if (isLeft)
+			{
+				windmillstar->isLeft = true;
+				windmillstar->SetSpeed(0.18, 0.09);
+			}
+			else
+			{
+				windmillstar->isLeft = false;
+				windmillstar->SetSpeed(0.18, 0.09);
+			}
+			float l1, t1, r1, b1, l2, t2, r2, b2;
+			GetBoundingBox(l1, t1, r1, b1);
+			windmillstar->GetBoundingBox(l2, t2, r2, b2);
+			if (t1 <= b2 && b1 >= t2 && l1 <= r2 && r1 >= l2) {
+				windmillstar->SetEnable(false);
+				if (isLeft)
+					windmillstar->Setnx(1);
+				else windmillstar->Setnx(-1);
+			}
+
+		}*/
 		weapons->Update(dt, coObjects);
 	}
 	vector<LPCOLLISIONEVENT> coEvents;
@@ -140,6 +203,7 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	CalcPotentialCollisions(coObjects, coEvents);
 
 	// No collision occured, proceed normally
+
 	for (UINT i = 0; i < coObjects->size(); i++)
 	{
 		if (dynamic_cast<CEnemy *>(coObjects->at(i)))
@@ -248,6 +312,12 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 							if (ny != 0) vy = 0;
 						}
 					}
+					if (e->ny > 0)
+					{
+						isTouchBrick = false;
+						y += dy;
+					}
+						
 
 				}
 				else {
@@ -363,11 +433,11 @@ void Ninja::SetState(int state)
 	case NINJA_STATE_HURT:
 	isTouchBrick = false;
 		
-		if (nx > 0)
+		if (isLeft)
 		{
 			vx = -0.1;
 		}
-		if (nx < 0)
+		else
 		{
 			vx = 0.1;
 		}
@@ -390,15 +460,13 @@ void Ninja::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 		bottom = top +22;
 	}
 
-		if (state == NINJA_STATE_IDLE || state == NINJA_STATE_SIT)
-		{
-			right = x + 17;
-
-
-		}
-		else {
-			right = x + 20;
-		}
+	if (state == NINJA_STATE_IDLE || state == NINJA_STATE_SIT)
+	{
+		right = x + 17;
+	}
+	else {
+		right = x + 20;
+	}
 }
 
 void Ninja::SetTypeOfWeapon(int type)

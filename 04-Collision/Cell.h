@@ -8,6 +8,10 @@ public:
 	~Cell();
 	void Insert(LPGAMEOBJECT object);
 	vector<LPGAMEOBJECT> GetListObjects() { return listObj; }
+	void SetListObjects(vector<LPGAMEOBJECT> ob)
+	{
+		listObj = ob;
+	}
 };
 
 class Cell;

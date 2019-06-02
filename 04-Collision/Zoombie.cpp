@@ -59,6 +59,8 @@ void CZoombie::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				zoombiesword->SetLeft(false);
 			zoombiesword->SetPosition(x, y);
 			zoombiesword->SetEnable(true);
+			zoombiesword->SetDead(false);
+			zoombiesword->SetHP(1);
 			
 			for (UINT i = 0; i < coObjects->size(); i++)
 			{

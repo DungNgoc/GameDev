@@ -7,13 +7,14 @@
 
 #define ID_TEX_NINJA         0
 #define ID_TEX_TILESET_31    1
+#define ID_TEX_TILESET_32	 4
 #define ID_TEX_MISC          20
 #define ID_TEX_SOLDIER       10
 
 
 
-#define PANTHER_BBOX_WIDTH     31 
-#define PANTHER_BBOX_HEIGHT    19
+#define PANTHER_BBOX_WIDTH     32 
+#define PANTHER_BBOX_HEIGHT    16
 #define PANTHER_STATE_WALKING   1 
 #define PANTHER_ANI_WALKING     0
 #define PANTHER_WALKING_SPEED   0.05f

@@ -79,6 +79,7 @@ public:
 	void Render(ViewPort * viewport, float x, float y, int alpha=255);
 
 	void Render(ViewPort * viewport, float x, float y, int alpha, bool isLeft);
+	void Render(ViewPort * viewport, float x, float y, int alpha, bool isLeft, bool isStop);
 	void reset() { currentFrame = -1; lastFrameTime = -1; }
 	int getCurrentFrame() {
 		return currentFrame;

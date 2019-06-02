@@ -7,12 +7,15 @@ CTrooper::CTrooper():CEnemy(1)
 
 	damage = 1;
 	point = 200;
-	for (i = 0; i < 1; i++) {
-		troopersword[i] = new CTrooperSword();
-		troopersword[i]->SetEnable(false);
-	}
+	//for (i = 0; i < 1; i++) {
+		troopersword = new CTrooperSword();
+		troopersword->SetEnable(false);
+	//}
 	//isCheck = true;
-	
+	/*	Grid *grid = Grid::GetInstance(0, 0, 0, 0);
+		vector<LPGAMEOBJECT> ob;
+		ob.push_back(troopersword);
+		grid->Add(&ob);*/
 }
 
 
@@ -57,19 +60,20 @@ void CTrooper::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			for (i = 0; i < 1; i++)
 			{
-				if (!troopersword[i]->GetEnable())// && state == TROOPER_STATE_RUN && timeDelay > 2000)
+				if (!troopersword->GetEnable())// && state == TROOPER_STATE_RUN && timeDelay > 2000)
 				{
 					SetState(TROOPER_STATE_HIT);
 					timeDelay = 0;
 					if (isLeft)
-						troopersword[i]->SetLeft(true);
+						troopersword->SetLeft(true);
 					else
-						troopersword[i]->SetLeft(false);
+						troopersword->SetLeft(false);
 
-					troopersword[i]->SetPosition(x + i * 15, y);
-					troopersword[i]->SetEnable(true);
-
-					for (UINT i = 0; i < coObjects->size(); i++)
+					troopersword->SetPosition(x + i * 15, y);
+					troopersword->SetEnable(true);
+					troopersword->SetDead(false);
+					troopersword->SetHP(1);
+					/*for (UINT i = 0; i < coObjects->size(); i++)
 					{
 						if (dynamic_cast<CTrooperSword *>(coObjects->at(i)))
 						{
@@ -78,12 +82,13 @@ void CTrooper::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						}
 					}
 					if (!isCheck)
-					{
+					{*/
 						Grid *grid = Grid::GetInstance(0, 0, 0, 0);
+						
 						vector<LPGAMEOBJECT> ob;
-						ob.push_back(troopersword[i]);
+						ob.push_back(troopersword);
 						grid->Add(&ob);
-					}
+					//}
 				}
 				
 
@@ -101,7 +106,7 @@ void CTrooper::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 //	if (troopersword->GetEnable())
 	for(i =0;i<1;i++)
-		troopersword[i]->Update(dt, coObjects);
+		troopersword->Update(dt, coObjects);
 	LimitPos(limitX1, limitX2);
 
 }
@@ -124,7 +129,7 @@ void CTrooper::Render(ViewPort * viewport)
 		animations[ani]->Render(viewport, x, y, alpha, isLeft);
 	}
 	
-
+	troopersword->Render(viewport);
 	CEnemy::Render(viewport);
 }
 

@@ -16,9 +16,9 @@ CWeapon::~CWeapon()
 void CWeapon::Update( DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (isLeft)
-		vx = 0.2;
+		vx = 0.18;
 	else
-		vx = -0.2;
+		vx = -0.18;
 	
 	CGameObject::Update(dt);
 	x += dx;
@@ -36,14 +36,19 @@ void CWeapon::ResetAnimation()
 	resetAni(1);
 }
 
+void CWeapon::SetPosition(float x, float y)
+{
+	CGameObject::SetPosition(x, y);
+}
+
 void CWeapon::Render(ViewPort * viewport)
 {
-	if (vx < 0)
+	/*if (vx < 0)
 		isLeft = false;
 	else
 	{
 		isLeft = true;
-	}
+	}*/
 	//if(!isEnable)
 	animations[0]->Render(viewport, x, y, 255, isLeft);
 	D3DXVECTOR3 currentviewport = viewport->GetViewPortPosition();

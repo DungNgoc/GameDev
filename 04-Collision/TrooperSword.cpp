@@ -57,7 +57,7 @@ void CTrooperSword::Render(ViewPort * viewport)
 		//isDead = true;
 	}
 	//RenderBoundingBox(viewport);
-	CGameObject::Render(viewport);
+	//CGameObject::Render(viewport);
 }
 
 int CTrooperSword::GetCurrentFrame()

@@ -58,10 +58,14 @@ void Grid::Add(vector<LPGAMEOBJECT>* listObject)
 	}
 }
 
-void Grid::GetListOfObjects(vector<LPGAMEOBJECT>* list_object, ViewPort * viewport)
-{
+//vector<LPGAMEOBJECT> Grid::GetListObjects(ViewPort * viewport)
+//{
+//	return vector<LPGAMEOBJECT>();
+//}
 
-	list_object->clear();
+vector<LPGAMEOBJECT> Grid::GetListObjects(ViewPort * viewport)
+{
+	list_object.clear();
 	int xs, ys;
 	int xe, ye;
 	int i, j, k;
@@ -79,8 +83,15 @@ void Grid::GetListOfObjects(vector<LPGAMEOBJECT>* list_object, ViewPort * viewpo
 				for (k = 0; k < cells[i][j].GetListObjects().size(); k++)
 				{
 					LPGAMEOBJECT e = cells[i][j].GetListObjects()[k];
-					list_object->push_back(e);
+					list_object.push_back(e);
 				}
-			
+
 		}
+	return list_object;
+}
+
+void Grid::DeleteCoObject() {
+	for (int i = 0; i < rows; i++)
+		for (int j = 0; j < columns; j++);
+			//delete cells[i][j].GetListObjects();
 }

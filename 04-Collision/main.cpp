@@ -68,7 +68,7 @@ ScoreBoard *scoreboard;
 
 CThrowingStar *ts;
 //CWindmillStar *ws;
-
+CSprites * sprites = CSprites::GetInstance();
 vector<LPGAMEOBJECT> listObjectsItem;
 vector<LPGAMEOBJECT> listItem;
 vector<LPGAMEOBJECT> coObjects;
@@ -98,10 +98,20 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		ninja->SetPosition(1220, 50);
 		break;
 	case DIK_T:
-		ninja->SetPosition(0, 0);
+		ninja->SetPosition(0, 50);
+		break;
+	case DIK_D:
+		ninja->SetPosition(2030, 50);
 		break;
 	case DIK_C:
 		ninja->StartThrowing();
+		break;
+	case DIK_8:
+	{
+		stage++;
+		tilemap = new TileMap(3073, 208, sprites->Get(2), 16, 16);
+		tilemap->LoadListTileFromFile("Loadfile\\tileset32.txt");
+	}
 	}
 	
 	
@@ -334,13 +344,13 @@ void LoadEnemy(wstring file) {
 void LoadResources(LPDIRECT3DDEVICE9 d3ddv, LPD3DXSPRITE sprite)
 {
 	CTextures * textures = CTextures::GetInstance();
-	CSprites * sprites = CSprites::GetInstance();
+
 	CAnimations * animations = CAnimations::GetInstance();
 	
 	LPDIRECT3DTEXTURE9 texninja = textures->Get(ID_TEX_NINJA);
-	sprites->Add(1, 0, 0, 1263, 15, textures->Get(ID_TEX_TILESET_31));
-
-	LPDIRECT3DTEXTURE9 texSoldier = textures->Get(ID_TEX_SOLDIER);
+	sprites->Add(1, 0, 0, 1264, 16, textures->Get(ID_TEX_TILESET_31));
+	sprites->Add(2, 0, 0, 800, 16, textures->Get(ID_TEX_TILESET_32));
+	//LPDIRECT3DTEXTURE9 texSoldier = textures->Get(ID_TEX_SOLDIER);
 	viewport = new ViewPort(0, 0);
 
 	LPANIMATION ani;
@@ -351,13 +361,10 @@ void LoadResources(LPDIRECT3DDEVICE9 d3ddv, LPD3DXSPRITE sprite)
 	tilemap = new TileMap(2048, 208, sprites->Get(1), 16, 16);
 	tilemap->LoadListTileFromFile("Loadfile\\tileset31.txt");
 
-	ninja->AddAnimation(1001);//walking right
-	ninja->AddAnimation(1002);// idle right
-	ninja->AddAnimation(1003);//hit right
-	ninja->AddAnimation(1004);//spin right
-	ninja->AddAnimation(1005);//idle sit
-	ninja->AddAnimation(1006);//hit sit
-	ninja->AddAnimation(1007);//fight
+	//tilemap = new TileMap(3073, 208, sprites->Get(1), 16, 16);
+	//tilemap->LoadListTileFromFile("Loadfile\\tileset32.txt");
+
+
 	
 
 	ninja->SetPosition(0, 100);
@@ -386,54 +393,71 @@ void LoadResources(LPDIRECT3DDEVICE9 d3ddv, LPD3DXSPRITE sprite)
 void Update(DWORD dt)
 
 {
-	time1 += dt;
-//	scoreboard->Update(16, 500 - time1 * 0.001, 3, 2);
+	if(stage ==1){
+		time1 += dt;
 
-	grid->GetListOfObjects(&coObjects, viewport);
-	ninja->Update(dt, &coObjects);
-	
-	scoreboard->Update(16, 150 - time1*0.001, ninja->GetLife(), 1);
-	for (int i = 0; i < listObjectsItem.size(); i++)
-	{
-		listObjectsItem[i]->Update(dt, &coObjects);
-		if (listObjectsItem[i]->GetDead())
+		coObjects = grid->GetListObjects(viewport);
+		ninja->Update(dt, &coObjects);
+
+		scoreboard->Update(16, 150 - time1 * 0.001, ninja->GetLife(), 1);
+		for (int i = 0; i < listObjectsItem.size(); i++)
 		{
-			listObjectsItem[i]->SetDead(false);
-			listItem[i]->SetEnable(true);
-			listItem[i]->SetPosition(listObjectsItem[i]->x, listObjectsItem[i]->y);
+			listObjectsItem[i]->Update(dt, &coObjects);
+			if (listObjectsItem[i]->GetDead())
+			{
+				listObjectsItem[i]->SetDead(false);
+				listItem[i]->SetEnable(true);
+				listItem[i]->SetPosition(listObjectsItem[i]->x, listObjectsItem[i]->y);
+				coObjects.clear();
+				coObjects.push_back(listItem[i]);
+				grid->Add(&coObjects);
+			}
+
+		}
+
+
+		if (CEnemy::IsStop == true) {
+
+			if (GetTickCount() - CEnemy::timestop_start > 2000)
+			{
+				CEnemy::IsStop = false;
+				CEnemy::timestop = 0;
+				CEnemy::timestop_start = 0;
+			}
+
+		}
+		if (CEnemy::IsStop == false)
+			for (int i = 0; i < coObjects.size(); i++)
+			{
+				coObjects[i]->Update(dt, &coObjects);
+			}
+
+		if (ninja->x >= SCREEN_WIDTH / 2 - NINJA_BBOX_WIDTH / 2 && ninja->x <= 2048 - SCREEN_WIDTH / 2 - NINJA_BBOX_WIDTH / 2)
+		{
+			D3DXVECTOR3 currentViewPortPos = viewport->GetViewPortPosition();
+			currentViewPortPos.x = (int)ninja->x - SCREEN_WIDTH / 2 + NINJA_BBOX_WIDTH / 2;
+			viewport->SetViewPortPosition(currentViewPortPos.x, currentViewPortPos.y);
+		}
+	}
+		
+		
+		if (ninja->x >= 2040)
+		{
+			stage++;
+			tilemap = new TileMap(3073, 208, sprites->Get(2), 16, 16);
+			tilemap->LoadListTileFromFile("Loadfile\\tileset32.txt");
+			ninja->SetPosition(0, 0);
+			viewport->SetViewPortPosition(0, 0);
+			time1 += dt;
+
+			coObjects = grid->GetListObjects(viewport);
+			ninja->Update(dt, &coObjects);
+
+			scoreboard->Update(16, 150 - time1 * 0.001, ninja->GetLife(), 1);
 			coObjects.clear();
-			coObjects.push_back(listItem[i]);
-			grid->Add(&coObjects);
+			//delete &grid->GetListObjects(viewport);
 		}
-
-	}
-	//for (int i = 0; i < listItem.size(); i++)
-	//{
-	//	listItem[i]->Update(dt, &coObjects);
-	//}
-	//it->Update(dt,&coObjects);
-	if (CEnemy::IsStop == true) {
-
-		if (GetTickCount() - CEnemy::timestop_start > 2000)
-		{
-			CEnemy::IsStop = false;
-			CEnemy::timestop = 0;
-			CEnemy::timestop_start = 0;
-		}
-
-	}
-	if (CEnemy::IsStop == false)
-	for (int i = 0; i < coObjects.size(); i++)
-	{
-		coObjects[i]->Update(dt,&coObjects);
-	}
 	
-	if (ninja->x >= SCREEN_WIDTH / 2 - NINJA_BBOX_WIDTH / 2  && ninja->x <= 2048 - SCREEN_WIDTH / 2 - NINJA_BBOX_WIDTH / 2)
-	{
-		D3DXVECTOR3 currentViewPortPos = viewport->GetViewPortPosition();
-		currentViewPortPos.x = ninja->x - SCREEN_WIDTH / 2 + NINJA_BBOX_WIDTH / 2;
-		viewport->SetViewPortPosition(currentViewPortPos.x, currentViewPortPos.y);
-	}
 
 }
 
@@ -574,8 +598,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	LoadTextures(L"Loadfile\\LoadTexture.txt");
 	LoadSprites(L"Loadfile\\LoadSprite.txt");
 	LoadAnimations(L"Loadfile\\LoadAnimation.txt");
+	//if(stage ==1)
 	LoadResources(game->d3ddv, game->spriteHandler);
-
+	//else LoadResource(game->d3ddv, game->spriteHandler, 2);
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH*2, SCREEN_HEIGHT*2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
 	Run();
