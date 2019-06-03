@@ -1,44 +1,30 @@
 #pragma once
-#include "Define.h"
+#include <map>
+#include "dxsound.h"
 
+enum eSoundID
+{
+	SOUND_STAGE1,
+	SOUND_HIT_EFFECT,
+	SOUND_HURT,
+	SOUND_JUMP,
+	SOUND_EAT_ITEM
+};
 
-
-#pragma comment(lib, "dsound.lib")
-#pragma comment(lib, "winmm.lib")
-#pragma comment(lib, "dxguid.lib")
-
-#include <sstream>
-#include <iostream>
-#include <dsound.h>
-#include<vector>
-#include "WaveFile.h"
-
-
-// -----------------------------------------------
-// Name: class TSound
-// Desc: used to load/ store/ play an audio with wav extension.
-// -----------------------------------------------
 class Sound
 {
+private:
+	std::map<eSoundID, CSound*> listSound;
+	Sound();
+	static Sound* instance;
 public:
-	Sound(const char* audioPath);
-	~Sound(void);
 
-	static HRESULT initializeSoundClass(HWND windowsHandler);
-	static HRESULT releaseSoundClass();
-
-	HRESULT play(bool isLoop = false, DWORD priority = 0);
-	HRESULT stop();
-
-
-private:
-	HRESULT loadAudio(const char* audioPath);
-
-private:
-	static WAVEFORMATEX bufferFormat_;
-	static DSBUFFERDESC bufferDescription_;
-	static LPDIRECTSOUND8 audioHandler_;
-	static HWND windowsHandler_;
-
-	LPDIRECTSOUNDBUFFER soundBuffer_;
+	~Sound();
+	static Sound* GetInstance();
+	void loadSound(HWND hwnd);
+	void Play(eSoundID);
+	void Stop(eSoundID);
+	void PlayLoop(eSoundID);
+	bool IsPLaying(eSoundID);
 };
+

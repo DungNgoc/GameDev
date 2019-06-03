@@ -23,7 +23,7 @@ int InitDirectSound(HWND hwnd)
 	return 1;
 }
 
-CSound *LoadSound(LPTSTR fileName)
+CSound *LoadSound(char* fileName)
 {
 	HRESULT result;
 

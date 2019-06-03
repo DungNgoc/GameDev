@@ -5,6 +5,7 @@
 #include "Brick.h"
 #include "Game.h"
 #include "Enemy.h"
+#include "Sound.h"
 bool isHitting = false;
 bool Ninja::isThrowing = false;
 Ninja * Ninja::__instance = NULL;
@@ -95,6 +96,8 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	if (this->GetState() != NINJA_STATE_SIT)
 		isSit = false;
 	if (isHurt) {
+		//if (!Sound::GetInstance()->IsPLaying(SOUND_HURT))
+			Sound::GetInstance()->Play(SOUND_HURT);
 		if (GetTickCount() - hurtable_start > 600)
 		{
 			hurtable_start = 0;
@@ -102,6 +105,7 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			isHurt = false;
 
 		}
+
 	}
 	if (isThrowing)
 	{
@@ -262,6 +266,8 @@ void Ninja::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				{
 					Item *item = dynamic_cast<Item *>(e->obj);
 					if (item->isEnable == true) {
+						if (!Sound::GetInstance()->IsPLaying(SOUND_EAT_ITEM))
+							Sound::GetInstance()->Play(SOUND_EAT_ITEM);
 						switch (item->GetItemType())
 						{
 						case  ITEM_SPIRIT_POINTS_BLU:

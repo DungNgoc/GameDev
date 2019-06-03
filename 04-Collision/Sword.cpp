@@ -1,7 +1,7 @@
 #include "Sword.h"
 #include "Enemy.h"
 #include "Ninja.h"
-
+#include "Sound.h"
 
 Sword::Sword()
 {
@@ -104,7 +104,8 @@ void Sword::Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_object)
 						enemy->GetHitEffect()->SetEnable(true);
 						if (enemy->GetEnable()) {
 							enemy->SetHP(enemy->GetHP() - this->damage);
-
+							//if (!Sound::GetInstance()->IsPLaying(SOUND_HIT_EFFECT))
+								Sound::GetInstance()->Play(SOUND_HIT_EFFECT);
 						}
 					}
 				}

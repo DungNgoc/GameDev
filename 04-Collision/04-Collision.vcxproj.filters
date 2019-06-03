@@ -43,6 +43,9 @@
     <Filter Include="Header Files\Character">
       <UniqueIdentifier>{5e1d4d9d-1ea7-45d5-b915-746ee260343b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{756c1aa5-7e9e-4045-b633-3d4ab08ab939}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Brick.h">
@@ -141,6 +144,18 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="dsutil.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="dxsound.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="dxutil.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -234,6 +249,18 @@
       <Filter>Source Files\Character</Filter>
     </ClCompile>
     <ClCompile Include="Stage32.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dsutil.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="dxsound.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="dxutil.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

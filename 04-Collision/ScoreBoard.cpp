@@ -63,7 +63,7 @@ ScoreBoard::ScoreBoard(Ninja * ninja, int bossHP, LPDIRECT3DDEVICE9 d3ddv, LPD3D
 		DEFAULT_CHARSET,
 		OUT_DEFAULT_PRECIS,
 		CLEARTYPE_QUALITY,
-		FF_DONTCARE, L"font\\prstart.ttf" };
+		FF_DONTCARE, "font\\prstart.ttf" };
 
 
 	D3DXCreateFontIndirect(d3ddv, &FontDesc, &font);
@@ -140,7 +140,7 @@ void ScoreBoard::Render(ViewPort * viewport)
 	
 	//startkeyobject->Render();
 	SetRect(&newRect, 0, 0, SCREEN_WIDTH, 100);
-	font->DrawText(spriteHandler, information.c_str(), -1, &rect, DT_LEFT, D3DCOLOR_XRGB(255, 255, 255));
+	font->DrawTextW(spriteHandler, information.c_str(), -1, &rect, DT_LEFT, D3DCOLOR_XRGB(255, 255, 255));
 
 	for (int i = 0; i < noHPList->size(); i++)
 	{

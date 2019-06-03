@@ -20,7 +20,7 @@
 #include "Eagle.h"
 #include "Zoombie.h"
 #include "Trooper.h"
-
+#include "Sound.h"
 
 #include "LoadObject.h"
 #include "ScoreBoard.h"
@@ -29,8 +29,8 @@
 #include "ThrowingStar.h"
 #include "WindmillStar.h"
 
-#define WINDOW_CLASS_NAME L"SampleWindow"
-#define MAIN_WINDOW_TITLE L"04 - Collision"
+#define WINDOW_CLASS_NAME "SampleWindow"
+#define MAIN_WINDOW_TITLE "04 - Collision"
 
 #define BACKGROUND_COLOR D3DCOLOR_XRGB(0, 0, 0)
 #define SCREEN_WIDTH 320
@@ -57,7 +57,7 @@ CButterfly *butterfly;
 CEagle *eagle;
 CZoombie *zoombie;
 CTrooper *trooper;
-
+Sound *sound;
 
 DWORD time1 = 0;
 
@@ -90,6 +90,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	case DIK_Z:
 		if (!ninja->getJump())
 			ninja->SetState(NINJA_STATE_JUMP);
+			sound->Play(SOUND_JUMP);
 		break;
 	case DIK_A: // reset
 		ninja->SetPosition(582, 50);
@@ -146,6 +147,7 @@ void CSampleKeyHander::KeyState(BYTE *states)
 		ninja->SetState(NINJA_STATE_WALKING_LEFT);
 	}
 	else if (game->IsKeyDown(DIK_X) ){
+		//sound->Play(SOUND_HIT_EFFECT);
 		ninja->StartHitting();
 		ninja->setHitting(true);
 	}
@@ -386,14 +388,17 @@ void LoadResources(LPDIRECT3DDEVICE9 d3ddv, LPD3DXSPRITE sprite)
 
 	grid = Grid::GetInstance(2048, 176, 512, 88);
 	grid->Add(&coObjects);
+	//if (!Sound::GetInstance()->IsPLaying(SOUND_STAGE1))
+		Sound::GetInstance()->PlayLoop(SOUND_STAGE1);
 
 }
 
 
 void Update(DWORD dt)
-
 {
+	
 	if(stage ==1){
+		
 		time1 += dt;
 
 		coObjects = grid->GetListObjects(viewport);
@@ -535,7 +540,7 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 
 	if (!hWnd) 
 	{
-		OutputDebugString(L"[ERROR] CreateWindow failed");
+		OutputDebugString("[ERROR] CreateWindow failed");
 		DWORD ErrCode = GetLastError();
 		return FALSE;
 	}
@@ -591,6 +596,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	game = CGame::GetInstance();
 	game->Init(hWnd);
+
+	sound = sound->GetInstance();
+	sound->loadSound(hWnd);
 
 	keyHandler = new CSampleKeyHander();
 	game->InitKeyboard(keyHandler);

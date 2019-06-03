@@ -40,7 +40,7 @@ void CGame::Init(HWND hWnd)
 
 	if (d3ddv == NULL)
 	{
-		OutputDebugString(L"[ERROR] CreateDevice failed\n");
+		OutputDebugStringW(L"[ERROR] CreateDevice failed\n");
 		return;
 	}
 
@@ -49,7 +49,7 @@ void CGame::Init(HWND hWnd)
 	// Initialize sprite helper from Direct3DX helper library
 	D3DXCreateSprite(d3ddv, &spriteHandler);
 
-	OutputDebugString(L"[INFO] InitGame done;\n");
+	OutputDebugStringW(L"[INFO] InitGame done;\n");
 }
 
 /*

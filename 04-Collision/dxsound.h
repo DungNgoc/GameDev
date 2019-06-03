@@ -4,7 +4,7 @@
 
 #include "dsutil.h"
 int InitDirectSound(HWND);
-CSound* LoadSound(LPTSTR a);
+CSound* LoadSound(char *);
 void PlaySound(CSound*);
 void LoopSound(CSound*);
 void StopSound(CSound*);

@@ -29,7 +29,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -124,9 +124,10 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>d3dx9.lib;d3d9.lib;dxguid.lib;dxerr.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dsound.lib;DxErr.lib;dinput8.lib;dxguid.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -135,6 +136,9 @@
     <ClInclude Include="Cell.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="Define.h" />
+    <ClInclude Include="dsutil.h" />
+    <ClInclude Include="dxsound.h" />
+    <ClInclude Include="dxutil.h" />
     <ClInclude Include="Eagle.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
@@ -149,6 +153,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="ScoreBoard.h" />
     <ClInclude Include="Soldier.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Stage32.h" />
     <ClInclude Include="Sword.h" />
@@ -168,6 +173,9 @@
     <ClCompile Include="Butterfly.cpp" />
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="debug.cpp" />
+    <ClCompile Include="dsutil.cpp" />
+    <ClCompile Include="dxsound.cpp" />
+    <ClCompile Include="dxutil.cpp" />
     <ClCompile Include="Eagle.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -182,6 +190,7 @@
     <ClCompile Include="Panther.cpp" />
     <ClCompile Include="ScoreBoard.cpp" />
     <ClCompile Include="Soldier.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Stage32.cpp" />
     <ClCompile Include="Sword.cpp" />

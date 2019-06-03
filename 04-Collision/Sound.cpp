@@ -1,147 +1,66 @@
 #include "Sound.h"
 
-#if MEMORY_LEAK_DEBUG == 1
-#include <vld.h>
-#endif
+Sound::Sound() {}
+Sound::~Sound() {}
 
-WAVEFORMATEX Sound::bufferFormat_;
-DSBUFFERDESC Sound::bufferDescription_;
-LPDIRECTSOUND8 Sound::audioHandler_;
-HWND Sound::windowsHandler_;
-#define AUDIO_FORMAT_TAG		WAVE_FORMAT_PCM
-#define	AUDIO_NUM_OF_CHANNEL	2
-#define AUDIO_SAMPLE_SPEED		22050
-#define AUDIO_BITS_PER_SAMPLE	16
-#define AUDIO_FLAGS				0
-#define AUDIO_BUFFER_SIZE		640000
-#define AUDIO_GUID				GUID_NULL
-#define AUDIO_BLOCK_ALIGN(bitPerSample, nChannels)		(WORD)(bitPerSample / 8 * nChannels)
-#define AUDIO_AVERAGE_BPS(samplesPerSec, blockAlign)	(DWORD)(samplesPerSec * blockAlign)
-// -----------------------------------------------
-// Name: T6_Sound::T6_Sound()
-// Desc: Get the audio Name and Path, ready to load.
-// -----------------------------------------------
-Sound::Sound(const char* audioPath)
+Sound* Sound::instance;
+
+Sound* Sound::GetInstance()
 {
-	loadAudio(audioPath);
+	if (instance == nullptr)
+		instance = new Sound();
+	return instance;
 }
 
-
-
-Sound::~Sound(void)
+void Sound::loadSound(HWND hwnd)
 {
-	soundBuffer_->Stop();
+	InitDirectSound(hwnd);
+
+	CSound* sound = NULL;
+	sound = LoadSound("sounds//stage1.wav");
+	listSound[eSoundID::SOUND_STAGE1] = sound;
+
+	sound = LoadSound("sounds//hiteffect.wav");
+	listSound[eSoundID::SOUND_HIT_EFFECT] = sound;
+
+	sound = LoadSound("sounds//item.wav");
+	listSound[eSoundID::SOUND_EAT_ITEM] = sound;
+
+	sound = LoadSound("sounds//jump.wav");
+	listSound[eSoundID::SOUND_JUMP] = sound;
+
+	sound = LoadSound("sounds//hurt.wav");
+	listSound[eSoundID::SOUND_HURT] = sound;
+	
+
+	
 }
 
-
-// -----------------------------------------------
-// Name: T6_Sound::initializeSoundClass()
-// Desc: Initialize the basic PROPERTIESs for loading audio
-// -----------------------------------------------
-HRESULT Sound::initializeSoundClass(HWND windowsHandler)
+void Sound::Play(eSoundID id)
 {
-	windowsHandler_ = windowsHandler;
-
-	HRESULT result;
-	result = DirectSoundCreate8(0, &audioHandler_, 0);
-	result = result | audioHandler_->SetCooperativeLevel(windowsHandler_, DSSCL_PRIORITY);
-
-	ZeroMemory(&bufferFormat_, sizeof(WAVEFORMATEX));
-	ZeroMemory(&bufferDescription_, sizeof(DSBUFFERDESC));
-
-	bufferFormat_.wFormatTag = AUDIO_FORMAT_TAG;
-	bufferFormat_.nChannels = AUDIO_NUM_OF_CHANNEL;
-	bufferFormat_.nSamplesPerSec = AUDIO_SAMPLE_SPEED;
-	bufferFormat_.wBitsPerSample = AUDIO_BITS_PER_SAMPLE;
-	bufferFormat_.nBlockAlign = AUDIO_BLOCK_ALIGN(bufferFormat_.wBitsPerSample,
-		bufferFormat_.nChannels);
-	bufferFormat_.nAvgBytesPerSec = AUDIO_AVERAGE_BPS(bufferFormat_.nSamplesPerSec,
-		bufferFormat_.nBlockAlign);
-
-	bufferDescription_.dwFlags = AUDIO_FLAGS;
-	bufferDescription_.guid3DAlgorithm = AUDIO_GUID;
-	bufferDescription_.dwSize = sizeof(DSBUFFERDESC);
-
-	return result;
+	auto sound = listSound[id];
+	if (sound != NULL)
+		PlaySound(sound);
 }
 
-
-// -----------------------------------------------
-// Name: T6_Sound::releaseSoundClass()
-// Desc: Release the basic PROPERTIES after used (close game).
-// -----------------------------------------------
-HRESULT Sound::releaseSoundClass()
+void Sound::PlayLoop(eSoundID id)
 {
-	if (audioHandler_ != 0)
-		return audioHandler_->Release();
-
-	return S_OK;
+	auto sound = listSound[id];
+	if (sound != NULL)
+		LoopSound(sound);
 }
 
-
-// -----------------------------------------------
-// Name: T6_Sound::loadAudio()
-// Desc: Load the Audio stored in audioPath.
-// -----------------------------------------------
-wchar_t* convert(const char* str)
+void Sound::Stop(eSoundID id)
 {
-	int n = strlen(str);
-	wchar_t*s = new wchar_t[n + 1];
-	for (int i = 0; i < n; i++)
-		s[i] = str[i];
-	s[n] = 0;
-	return s;
-}
-HRESULT Sound::loadAudio(const char* audioPath_)
-{
-	HRESULT result;
-	CWaveFile audioObject;
-	result = audioObject.Open((LPTSTR)audioPath_, 0, 1);
-
-	if (!FAILED(result)) {
-
-		bufferDescription_.dwBufferBytes = audioObject.GetSize();
-		bufferDescription_.lpwfxFormat = audioObject.m_pwfx;
-
-		result = audioHandler_->CreateSoundBuffer(&bufferDescription_, &soundBuffer_, 0);
-
-		VOID* pointerToLockedBuffer = 0;
-		DWORD lockedSize = 0;
-		result = result | (soundBuffer_)->Lock(0, AUDIO_BUFFER_SIZE, &pointerToLockedBuffer,
-			&lockedSize, 0, 0, DSBLOCK_ENTIREBUFFER);
-
-		if (!FAILED(result)) {
-			DWORD readedData = 0;
-			audioObject.ResetFile();
-			result = audioObject.Read((BYTE*)pointerToLockedBuffer, lockedSize, &readedData);
-			if (!FAILED(result)) {
-				(soundBuffer_)->Unlock(pointerToLockedBuffer, lockedSize, 0, 0);
-			}
-		}
-	}
-
-	audioObject.Close();
-	return result;
+	auto sound = listSound[id];
+	if (sound != NULL)
+		StopSound(sound);
 }
 
-
-// -----------------------------------------------
-// T6_Sound::play()
-// Desc: Play loaded audio, may choose loop or no.
-// -----------------------------------------------
-HRESULT Sound::play(bool isLoop, DWORD priority)
+bool Sound::IsPLaying(eSoundID id)
 {
-	return soundBuffer_->Play(0, priority, isLoop & DSBPLAY_LOOPING);
-}
-
-
-// -----------------------------------------------
-// T6_Sound:stop()
-// Desc: Stop the audio if it is playing.
-// -----------------------------------------------
-HRESULT Sound::stop()
-{
-	HRESULT result = soundBuffer_->Stop();
-	soundBuffer_->SetCurrentPosition(0);
-	return result;
+	auto sound = listSound[id];
+	if (sound != NULL)
+		return sound->IsSoundPlaying();
+	return false;
 }
